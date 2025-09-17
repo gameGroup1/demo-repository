@@ -1,5 +1,5 @@
 public class minh {
     public static void main(String[]args){
-        System.out.println("Minhdz");
+        System.out.println("Minh_LEARN_IT");
     }
 }
