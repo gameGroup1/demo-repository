@@ -1,7 +1,7 @@
 import java.util.Scanner;
 public class minh {
     public static void game(){
-        System.out.println("lodechiton");
+        System.out.println("tung");
     }
     public static void main(String[]args){
         Scanner sc=new Scanner(System.in);
