@@ -4,13 +4,9 @@ public class minh {
         System.out.println("lodechiton");
     }
     public static void main(String[]args){
-        Scanner sc=new Scanner(System.in);
-        String tuong=sc.next();
-        int comp=sc.nextInt();
-        if(comp==1){
-            System.out.println("tuongdglo"+"-"+tuong);
-            game();
-        }
-            else System.out.println("tuongkolo");
+        
+        in.pr();
+        side loi=new side(36.18);
+        System.out.println(loi.val);
     }
 }
