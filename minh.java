@@ -5,7 +5,7 @@ public class minh {
         String tuong=sc.next();
         int comp=sc.nextInt();
         if(comp==1)
-        System.out.println("tuongdglo"+" "+tuong);
+        System.out.println("tuongdglo"+"-"+tuong);
             else System.out.println("tuongkolo");
     }
 }
