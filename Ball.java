@@ -1,9 +1,12 @@
-import java.util.Scanner;
-
-public class in {
-    public static void pr(){
-     Scanner sc=new Scanner(System.in);
-        String tuong=sc.next();
-        int comp=sc.nextInt();
+public class Ball {
+    public int x, y, radius;
+    Ball(int x, int y, int radius){
+         this.x = x;
+         this.y = y;
+         this.radius =radius;
+    }
+    public void move(int dx, int dy){
+         x += dx;
+         y += dy;
     }
 }

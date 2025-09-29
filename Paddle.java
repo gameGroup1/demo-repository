@@ -1,9 +1,17 @@
+public class Paddle {
+    public int x, y, width, height;
 
-public class side{
-    double val;
-    side(double val){
-        this.val=val;
+    public Paddle(int x, int y, int width, int height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
     }
+
+    public void move(int dx) {
+        x += dx;
+   }
+  
 }
 
 
