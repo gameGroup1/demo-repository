@@ -21,9 +21,18 @@ public class update {
     /* Cập nhật vị trí của quả bóng sau khi va vào tấm ván */
     public void updateBP(Ball ball, Paddle paddle, checkCollision collisionChecker) {
         if (collisionChecker.checkBallPaddle(ball, paddle)) {
-            ball.dy = -ball.dy; 
-            int hitPos = (ball.x - paddle.x) - (paddle.width / 2);
-            ball.dx = hitPos / (paddle.width / 2) * ball.speed; 
+            ball.dy = -ball.dy;
+            double ColPosition = ((ball.x - paddle.x) - (paddle.width / 2.0)) / (paddle.width / 2.0);
+
+            if (ColPosition < -1) ColPosition = -1;
+            if (ColPosition > 1) ColPosition = 1;
+            // Góc lệch tối đa 60 độ (PI/3)
+            double maxAngle = Math.PI / 3;
+            double angle = ColPosition * maxAngle;
+            double speed = ball.speed;
+
+            ball.dx = speed * Math.sin(angle);
+            ball.dy = -speed * Math.cos(angle);
         }
     }
     /* Cập nhật vị trí của quả bóng sau khi va vào gạch */
