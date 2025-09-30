@@ -1,3 +1,4 @@
+/* Lớp kiểm tra các đối tượng trong trò chơi */
 public class checkCollision {
     public boolean checkBallWall(Ball ball, Wall wall) {
         if (ball != null && wall != null) {
@@ -44,7 +45,7 @@ public class checkCollision {
     public boolean checkPaddleWall(Paddle paddle, Wall wall) {
         if (paddle != null && wall != null) {
             int paddleX = paddle.x;
-            
+
             if (paddleX < wall.x) {
                 paddle.x = wall.x;
                 return true;

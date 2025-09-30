@@ -1,3 +1,4 @@
+/* Lớp đại diện cho tấm ván */
 public class Paddle {
     public int x, y, width, height;
 

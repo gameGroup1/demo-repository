@@ -1,3 +1,4 @@
+/* main */
 public class mainGame {
     private int widthW = 400, heightW = 600;
     private int widthP = 100, heightP = 20;
