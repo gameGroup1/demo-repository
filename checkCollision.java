@@ -12,7 +12,7 @@ public class checkCollision {
         }
         return false;
     }
-    
+
     public boolean checkBallPaddle(Ball ball, Paddle paddle) {
         if (ball != null && paddle != null) {
             int ballX = ball.x;
@@ -44,8 +44,7 @@ public class checkCollision {
     public boolean checkPaddleWall(Paddle paddle, Wall wall) {
         if (paddle != null && wall != null) {
             int paddleX = paddle.x;
-            int paddleY = paddle.y;
-
+            
             if (paddleX < wall.x) {
                 paddle.x = wall.x;
                 return true;
