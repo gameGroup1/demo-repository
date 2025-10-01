@@ -3,18 +3,18 @@ public class update {
     /* Cập nhật vị trí của bóng */
     public void updateBallPosition(Ball ball) {
         if (ball != null) {
-            ball.x += ball.dx;
-            ball.y += ball.dy;
+            ball.setX(ball.getX() + ball.getDx());
+            ball.setY(ball.getY() + ball.getDy());
         }
     }
     /* Cập nhật vị trí của quả bóng sau khi va vào tường */
     public void updateBW(Ball ball, Wall wall, checkCollision collisionChecker) {
         if (collisionChecker.checkBallWall(ball, wall)) {
-            if (ball.x - ball.radius <= wall.x || ball.x + ball.radius >= wall.x + wall.width) {
-                ball.dx = -ball.dx; 
+            if (ball.getX() - ball.getRadius() <= wall.x || ball.getX() + ball.getRadius() >= wall.x + wall.width) {
+                ball.setDx(-ball.getDx()); 
             }
-            if (ball.y - ball.radius <= wall.y || ball.y + ball.radius >= wall.y + wall.height) {
-                ball.dy = -ball.dy; 
+            if (ball.getY() - ball.getRadius() <= wall.y || ball.getY() + ball.getRadius() >= wall.y + wall.height) {
+                ball.setDy(-ball.getDy()); 
             }
         }
     }
