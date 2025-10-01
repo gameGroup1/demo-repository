@@ -1,4 +1,7 @@
 /* main */
+
+import javax.swing.SwingUtilities;
+
 public class mainGame {
     private int widthW = 400, heightW = 600;
     private int widthP = 100, heightP = 20;
@@ -9,6 +12,6 @@ public class mainGame {
     Wall wall = new Wall(0, 0, widthW, heightW);
     Bricks[] bricks;
     public static void main(String[]args){
-        
+        StartMenu.Start();
     }
 }
