@@ -70,7 +70,7 @@ public class update {
             }
         }
     }
-
+    /* Cập nhật vị trí của tấm ván */
     public void updatePaddlePosition(Paddle paddle, int newX, Wall wall, checkCollision collisionChecker) {
         paddle.x = newX;
         collisionChecker.checkPaddleWall(paddle, wall);
