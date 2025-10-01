@@ -12,6 +12,6 @@ public class mainGame {
     Wall wall = new Wall(0, 0, widthW, heightW);
     Bricks[] bricks;
     public static void main(String[]args){
-        
+        GameMenu.Start();
     }
 }

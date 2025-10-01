@@ -4,8 +4,9 @@ import java.awt.event.*;
 
 public class GameMenu extends JFrame {
     public GameMenu() {
-        setTitle("Arkanoid - Menu");
-        setSize(400, 300);
+    // Loại bỏ khung ngoài của nút Start
+        setTitle("Arkanoid - Start Menu");
+        setSize(1400, 1300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -22,43 +23,44 @@ public class GameMenu extends JFrame {
         panel.add(title);
         panel.add(Box.createVerticalStrut(30));
 
-        JButton startBtn = new JButton("Bắt đầu chơi");
-        JButton highScoreBtn = new JButton("Điểm Cao Nhất");
+        JButton startBtn = new JButton("Start");
+        JButton bestScoreBtn = new JButton("BestScore");
         JButton exitBtn = new JButton("Exit");
 
+        // Loại bỏ focus rectangle cho nút Start
+        startBtn.setFocusPainted(false);
+
+        Dimension btnSize = new Dimension(200, 40);
+        startBtn.setPreferredSize(btnSize);
+        bestScoreBtn.setPreferredSize(btnSize);
+        exitBtn.setPreferredSize(btnSize);
+
         startBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        highScoreBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        bestScoreBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         exitBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        startBtn.setMaximumSize(new Dimension(200, 40));
-        highScoreBtn.setMaximumSize(new Dimension(200, 40));
-        exitBtn.setMaximumSize(new Dimension(200, 40));
-
         startBtn.setFont(new Font("Arial", Font.PLAIN, 18));
-        highScoreBtn.setFont(new Font("Arial", Font.PLAIN, 18));
+        bestScoreBtn.setFont(new Font("Arial", Font.PLAIN, 18));
         exitBtn.setFont(new Font("Arial", Font.PLAIN, 18));
 
         panel.add(startBtn);
         panel.add(Box.createVerticalStrut(15));
-        panel.add(highScoreBtn);
+        panel.add(bestScoreBtn);
         panel.add(Box.createVerticalStrut(15));
         panel.add(exitBtn);
 
         add(panel);
 
-        // Sự kiện nút
         startBtn.addActionListener(e -> {
-            // TODO: mở game chính
-            JOptionPane.showMessageDialog(this, "Bắt đầu game!");
+            JOptionPane.showMessageDialog(this, "Game Start!");
         });
-        highScoreBtn.addActionListener(e -> {
-            // TODO: hiển thị điểm cao nhất
-            JOptionPane.showMessageDialog(this, "Điểm cao nhất: 0");
+        bestScoreBtn.addActionListener(e -> {
+            JOptionPane.showMessageDialog(this, "Best Score: 0");
         });
         exitBtn.addActionListener(e -> System.exit(0));
     }
 
-    public static void main(String[] args) {
+    public static void Start() {
         SwingUtilities.invokeLater(() -> {
             new GameMenu().setVisible(true);
         });
