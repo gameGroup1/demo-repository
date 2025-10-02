@@ -33,11 +33,11 @@ public class VideoDemo extends Application {
             // You can add additional actions here, e.g., start the game or close the video
         });
 
-        VBox menuBox = new VBox(30, titleLabel, startButton);
+        VBox menuBox = new VBox(25, titleLabel, startButton);
         menuBox.setAlignment(Pos.CENTER);
 
         StackPane root = new StackPane(mediaView, menuBox);
-        Scene scene = new Scene(root, 1000, 800);
+        Scene scene = new Scene(root, 1000, 400);
 
         primaryStage.setTitle("JavaFX Video Demo");
         primaryStage.setScene(scene);
