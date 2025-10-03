@@ -4,7 +4,7 @@ import java.awt.event.*;
 
 public class GameMenu extends JFrame {
     public GameMenu() {
-    // Loại bỏ khung ngoài của nút Start
+        // Loại bỏ khung ngoài của nút Start
         setTitle("Arkanoid - Start Menu");
         setSize(1400, 1300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
