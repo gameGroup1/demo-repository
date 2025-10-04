@@ -12,41 +12,57 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class VideoDemo extends Application {
+    
+    private Stage primaryStage;  // Lưu stage để truyền cho game
+    
     @Override
-    public void start(Stage primaryStage) {
-        // Đường dẫn tới file video (có thể là file mp4 trong thư mục project)
-        String videoPath = getClass().getResource("VideoBackGround.mp4").toExternalForm();
-        Media media = new Media(videoPath);
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        MediaView mediaView = new MediaView(mediaPlayer);
+    public void start(Stage stage) {
+        primaryStage = stage;  // Lưu stage
+        
+        try {
+            String videoPath = getClass().getResource("/VideoBackGround.mp4").toExternalForm();
+            if (videoPath == null) {
+                System.err.println("Không tìm thấy VideoBackGround.mp4!");
+                return;
+            }
+            
+            Media media = new Media(videoPath);
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            MediaView mediaView = new MediaView(mediaPlayer);
+            
+            // Loop video
+            mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 
-        Label titleLabel = new Label("ARKANOID");
-        titleLabel.setTextFill(Color.CYAN);
-        titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 50));
+            Label titleLabel = new Label("ARKANOID");
+            titleLabel.setTextFill(Color.CYAN);
+            titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 50));
 
-        Button startButton = new Button("Start");
-        startButton.setFont(Font.font("Arial", 18));
-        startButton.setOnAction(event -> {
-            System.out.println("Start button clicked!");
-            // You can add additional actions here, e.g., start the game or close the video
-        });
+            Button startButton = new Button("Start");
+            startButton.setFont(Font.font("Arial", 18));
+            startButton.setOnAction(event -> {
+                System.out.println("Start button clicked!");
+                mediaPlayer.stop();
+                // Chuyển sang game: Tạo instance MainGame và gọi start với cùng stage
+                //new MainGame().start(primaryStage);  // Đóng menu ngầm bằng cách thay scene
+            });
 
-        VBox menuBox = new VBox(25, titleLabel, startButton);
-        menuBox.setAlignment(Pos.CENTER);
+            VBox menuBox = new VBox(25, titleLabel, startButton);
+            menuBox.setAlignment(Pos.CENTER);
 
-        StackPane root = new StackPane(mediaView, menuBox);
-        Scene scene = new Scene(root, 1000, 400);
+            StackPane root = new StackPane(mediaView, menuBox);
+            Scene scene = new Scene(root, 1000, 400);
 
-        primaryStage.setTitle("JavaFX Video Demo");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+            primaryStage.setTitle("ARKANOID Menu");
+            primaryStage.setScene(scene);
+            primaryStage.show();
 
-        mediaPlayer.play();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
+            mediaPlayer.play();
+        } catch (Exception e) {
+            System.err.println("Lỗi: " + e.getMessage());
+        }
     }
 }

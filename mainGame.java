@@ -1,5 +1,6 @@
 /* main */
-public class mainGame {
+
+public class MainGame {
     private final int widthW = 400;
     private final int heightW = 600;
     private final int widthP = 100;
@@ -11,7 +12,10 @@ public class mainGame {
     Paddle paddle = new Paddle((widthW - widthP)/2, heightW - heightP, widthP, heightP);
     Wall wall = new Wall(0, 0, widthW, heightW);
     Bricks[] bricks;
+    
     public static void main(String[]args){
+
         GameMenu.Start();
+        //VideoDemo.launch(VideoDemo.class);
     }
 }

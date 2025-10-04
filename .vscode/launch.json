@@ -4,8 +4,13 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
-    
+        {
+            "type": "java",
+            "name": "MainGame",
+            "request": "launch",
+            "mainClass": "MainGame",
+            "projectName": "demo-repository_62c8ebd1"
+        },
         {
             "type": "java",
             "name": "Current File",

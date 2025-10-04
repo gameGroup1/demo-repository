@@ -52,7 +52,8 @@ public class GameMenu extends JFrame {
         add(panel);
 
         startBtn.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Game Start!");
+            new GameFrame().setVisible(true);
+            dispose(); // Close the menu
         });
         bestScoreBtn.addActionListener(e -> {
             JOptionPane.showMessageDialog(this, "Best Score: 0");
