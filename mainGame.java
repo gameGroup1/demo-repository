@@ -8,14 +8,12 @@ public class MainGame {
     private final int speedB = 2;
 
     Ball ball = new Ball((widthW - widthP)/2 + widthP/2, heightW - radiusB - heightP, radiusB, speedB);
-    Paddle paddle = new Paddle((widthW - widthP)/2, heightW - heightP, widthP, heightP);
+    //Paddle paddle = new Paddle((widthW - widthP)/2, heightW - heightP, widthP, heightP);
+    Paddle paddle = new Paddle(600, 500, 100, 20 );
     Wall wall = new Wall(0, 0, widthW, heightW);
     Bricks[] bricks;
-    
     public static void main(String[]args){
-
         GameMenu.Start();
-        
         //VideoDemo.launch(VideoDemo.class);
     }
 }

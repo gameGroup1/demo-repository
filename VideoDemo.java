@@ -53,8 +53,6 @@ public class VideoDemo extends Application {
                 SwingUtilities.invokeLater(() -> {
                 new GameMenu().setVisible(true);
                 });
-                // Chuyển sang game: Tạo instance MainGame và gọi start với cùng stage
-                //new MainGame().start(primaryStage);  // Đóng menu ngầm bằng cách thay scene
             });
 
             VBox menuBox = new VBox(25, titleLabel, startButton);

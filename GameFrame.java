@@ -33,7 +33,8 @@ public class GameFrame extends JFrame {
         ball = new Ball((widthW - widthP)/2 + widthP/2, heightW - radiusB - heightP, radiusB, speedB);
         ball.setDx(speedB);
         ball.setDy(-speedB);
-        paddle = new Paddle((widthW - widthP)/2, heightW - heightP, widthP, heightP);
+        //paddle = new Paddle((widthW - widthP)/2, heightW - heightP, widthP, heightP);
+        paddle = new Paddle(600, 500, 100, 20 );
         wall = new Wall(0, 0, widthW, heightW);
         bricks = createBricks();
         updater = new update();
@@ -102,7 +103,7 @@ public class GameFrame extends JFrame {
 
             // Vẽ paddle
             g.setColor(Color.BLUE);
-            g.fillRect((int)paddle.getX(), (int)paddle.getY()+100, (int)paddle.getWidth(), (int)paddle.getHeight());
+            g.fillRect((int)paddle.getX(), (int)paddle.getY(), (int)paddle.getWidth(), (int)paddle.getHeight());
 
             // Vẽ gạch
             g.setColor(Color.BLUE);
