@@ -10,7 +10,7 @@ public class GameFrame extends JFrame {
     private final int widthP = 100;
     private final int heightP = 20;
     private final int radiusB = 15;
-    private final int speedB = 2;
+    private final int speedB = 6;
 
     private Ball ball;
     private Paddle paddle;
@@ -34,7 +34,7 @@ public class GameFrame extends JFrame {
         ball.setDx(speedB);
         ball.setDy(-speedB);
         //paddle = new Paddle((widthW - widthP)/2, heightW - heightP, widthP, heightP);
-        paddle = new Paddle(600, 500, 100, 20 );
+        paddle = new Paddle(450, 700, 100, 20 );
         wall = new Wall(0, 0, widthW, heightW);
         bricks = createBricks();
         updater = new update();
