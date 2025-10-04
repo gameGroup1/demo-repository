@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameFrame extends JFrame {
-    private final int widthW = 400;
-    private final int heightW = 600;
+    private final int widthW = 1000;
+    private final int heightW = 800;
     private final int widthP = 100;
     private final int heightP = 20;
     private final int radiusB = 15;
@@ -102,10 +102,10 @@ public class GameFrame extends JFrame {
 
             // Vẽ paddle
             g.setColor(Color.BLUE);
-            g.fillRect((int)paddle.getX(), (int)paddle.getY(), (int)paddle.getWidth(), (int)paddle.getHeight());
+            g.fillRect((int)paddle.getX(), (int)paddle.getY()+100, (int)paddle.getWidth(), (int)paddle.getHeight());
 
             // Vẽ gạch
-            g.setColor(Color.RED);
+            g.setColor(Color.BLUE);
             for (Bricks brick : bricks) {
                 if (!brick.isBreak) {
                     g.fillRect((int)brick.getX(), (int)brick.getY(), (int)brick.getWidth(), (int)brick.getHeight());

@@ -1,3 +1,5 @@
+import javax.swing.SwingUtilities;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
@@ -44,8 +46,13 @@ public class VideoDemo extends Application {
             Button startButton = new Button("Start");
             startButton.setFont(Font.font("Arial", 18));
             startButton.setOnAction(event -> {
+           
                 System.out.println("Start button clicked!");
                 mediaPlayer.stop();
+                /*Test*/
+                SwingUtilities.invokeLater(() -> {
+                new GameMenu().setVisible(true);
+                });
                 // Chuyển sang game: Tạo instance MainGame và gọi start với cùng stage
                 //new MainGame().start(primaryStage);  // Đóng menu ngầm bằng cách thay scene
             });

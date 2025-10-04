@@ -1,5 +1,3 @@
-package moving;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -37,6 +35,7 @@ public class MovingRectangle extends JFrame {
                     rectY = e.getY() - RECT_HEIGHT / 2;
                     clampToBounds();
                     repaint();
+
                 }
             });
 

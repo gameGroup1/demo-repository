@@ -1,8 +1,7 @@
 /* main */
-
 public class MainGame {
-    private final int widthW = 400;
-    private final int heightW = 600;
+    private final int widthW = 1000;
+    private final int heightW = 800;
     private final int widthP = 100;
     private final int heightP = 20;
     private final int radiusB = 15;
@@ -16,6 +15,7 @@ public class MainGame {
     public static void main(String[]args){
 
         GameMenu.Start();
+        
         //VideoDemo.launch(VideoDemo.class);
     }
 }
