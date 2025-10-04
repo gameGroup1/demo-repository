@@ -1,63 +1,22 @@
 /* Lớp đại diện cho quả bóng */
-public class Ball {
-     private double x, y, radius, speed;
+public class Ball extends GameObject{
      private double dx, dy;
+     private double radius, speed;
 
-     public Ball(double x, double y, double radius, double speed) {
-          this.x = x;
-          this.y = y;
+     public Ball(double x, double y, double radius, double speed, Material material) {
+          super(x,y,material);
           this.radius = radius;
           this.speed = speed;
      }
 
-     public void setX(double x) {
-          this.x = x;
-     }
+     public double getRadius() { return radius; }
+     public double getSpeed() { return speed; }
+     public double getDx() { return dx; }
+     public double getDy() { return dy; }
 
-     public void setY(double y) {
-          this.y = y;
-     }
+     public void setDx(double dx) { this.dx = dx; }
+     public void setDy(double dy) { this.dy = dy; }
 
-     public void setRadius(double radius) {
-          this.radius = radius;
-     }
-
-     public void setSpeed(double speed) {
-          this.speed = speed;
-     }
-
-     
-     public void setDx(double dx) {
-          this.dx = dx;
-     }
-
-     public void setDy(double dy) {
-          this.dy = dy;
-     }
-
-     public double getX() {
-          return x;
-     }
-
-     public double getY() {
-          return y;
-     }
-
-     public double getRadius() {
-          return radius;
-     }
-
-     public double getSpeed() {
-          return speed;
-     }
-
-     public double getDx() {
-          return dx;
-     }
-
-     public double getDy() {
-          return dy;
-     }
-
-     
+    @Override
+    public void render() {}
 }

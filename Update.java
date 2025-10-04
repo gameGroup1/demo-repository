@@ -1,26 +1,62 @@
 /* Lớp cập nhật vị trí của các đối tượng trong trò chơi */
-public class update {
+public class Update {
     /* Cập nhật vị trí của bóng */
-    public void updateBallPosition(Ball ball) {
+    public static void position(Ball ball) {
         if (ball != null) {
             ball.setX(ball.getX() + ball.getDx());
             ball.setY(ball.getY() + ball.getDy());
         }
     }
+
+    /* Cập nhật vị trí của tấm ván */
+    public static void position(Paddle paddle, Wall wall) {
+
+        // Lấy thông tin về Paddle
+        double paddleX = paddle.getX();
+        int paddleWidth = paddle.getWidth();
+
+        // Lấy thông tin về Wall
+        double wallX = wall.getX();
+        int wallWidth = wall.getWidth();
+
+        // Tính toán giới hạn (biên) của Wall
+        double wallLeftBoundary = wallX;
+        // (Wall.x + Wall.width) - Paddle.width
+        double wallRightBoundary = wallX + wallWidth - paddleWidth;
+
+        // 2. Kiểm tra và giới hạn vị trí Paddle (Clamping)
+
+        // Nếu Paddle đi quá biên trái của Wall
+        if (paddleX < wallLeftBoundary) {
+            paddleX = wallLeftBoundary;
+        }
+        // Nếu Paddle đi quá biên phải của Wall
+        else if (paddleX> wallRightBoundary) {
+            paddleX = wallRightBoundary;
+        }
+
+        // 3. Cập nhật vị trí cuối cùng
+        // Ta sử dụng setX() thay vì move() vì newX đã là vị trí tuyệt đối cần đến.
+        paddle.setX(paddleX);
+
+        // Lưu ý: Trong trường hợp này, hàm Collision.check(paddle, wall) trở nên không cần
+        // thiết vì ta đã ngăn Paddle vượt ra ngoài Wall một cách chủ động.
+    }
+
     /* Cập nhật vị trí của quả bóng sau khi va vào tường */
-    public void updateBW(Ball ball, Wall wall, checkCollision collisionChecker) {
-        if (collisionChecker.checkBallWall(ball, wall)) {
+    public static void position(Ball ball, Wall wall) {
+        if (Collision.check(ball, wall)) {
             if (ball.getX() - ball.getRadius() <= wall.getX() || ball.getX() + ball.getRadius() >= wall.getX() + wall.getWidth()) {
-                ball.setDx(-ball.getDx()); 
+                ball.setDx(-ball.getDx());
             }
             if (ball.getY() - ball.getRadius() <= wall.getY() || ball.getY() + ball.getRadius() >= wall.getY() + wall.getHeight()) {
-                ball.setDy(-ball.getDy()); 
+                ball.setDy(-ball.getDy());
             }
         }
     }
     /* Cập nhật vị trí của quả bóng sau khi va vào tấm ván */
-    public void updateBP(Ball ball, Paddle paddle, checkCollision collisionChecker) {
-        if (collisionChecker.checkBallPaddle(ball, paddle)) {
+    public static void position(Ball ball, Paddle paddle) {
+        if (Collision.check(ball, paddle)) {
             ball.setDy(-ball.getDy());
             double ColPosition = ((ball.getX() - paddle.getX()) - (paddle.getWidth() / 2.0)) / (paddle.getWidth() / 2.0);
 
@@ -36,9 +72,9 @@ public class update {
         }
     }
     /* Cập nhật vị trí của quả bóng sau khi va vào gạch */
-    public void updateBB(Ball ball, Bricks[] bricks, checkCollision collisionChecker) {
+    public static void position(Ball ball, Bricks[] bricks) {
         for (Bricks brick : bricks) {
-            if (!brick.isBreak && collisionChecker.checkBallBricks(ball, brick)) {
+            if (!brick.isBreak && Collision.check(ball, brick)) {
                 brick.isBreak = true;
                 boolean hitVertical = false, hitHorizontal = false;
 
@@ -69,10 +105,5 @@ public class update {
                 break;
             }
         }
-    }
-    /* Cập nhật vị trí của tấm ván */
-    public void updatePaddlePosition(Paddle paddle, int newX, Wall wall, checkCollision collisionChecker) {
-        paddle.setX(newX);
-        collisionChecker.checkPaddleWall(paddle, wall);
     }
 }
