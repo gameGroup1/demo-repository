@@ -21,6 +21,9 @@ public class MovingRectangle extends JFrame {
     }
 
     private class DrawingPanel extends JPanel {
+        private boolean left, right, up, down;
+        private Timer timer;
+
         DrawingPanel() {
             setFocusable(true);
 
@@ -39,39 +42,74 @@ public class MovingRectangle extends JFrame {
             InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
             ActionMap am = getActionMap();
 
-            im.put(KeyStroke.getKeyStroke("UP"), "moveUp");
-            im.put(KeyStroke.getKeyStroke("DOWN"), "moveDown");
-            im.put(KeyStroke.getKeyStroke("LEFT"), "moveLeft");
-            im.put(KeyStroke.getKeyStroke("RIGHT"), "moveRight");
+            im.put(KeyStroke.getKeyStroke("pressed LEFT"), "leftPressed");
+            im.put(KeyStroke.getKeyStroke("released LEFT"), "leftReleased");
+            im.put(KeyStroke.getKeyStroke("pressed RIGHT"), "rightPressed");
+            im.put(KeyStroke.getKeyStroke("released RIGHT"), "rightReleased");
+            im.put(KeyStroke.getKeyStroke("pressed UP"), "upPressed");
+            im.put(KeyStroke.getKeyStroke("released UP"), "upReleased");
+            im.put(KeyStroke.getKeyStroke("pressed DOWN"), "downPressed");
+            im.put(KeyStroke.getKeyStroke("released DOWN"), "downReleased");
 
-            am.put("moveUp", new AbstractAction() {
+            am.put("leftPressed", new AbstractAction() {
                 public void actionPerformed(ActionEvent e) {
-                    rectY -= moveStep;
+                    left = true;
+                }
+            });
+
+            am.put("leftReleased", new AbstractAction() {
+                public void actionPerformed(ActionEvent e) {
+                    left = false;
+                }
+            });
+
+            am.put("rightPressed", new AbstractAction() {
+                public void actionPerformed(ActionEvent e) {
+                    right = true;
+                }
+            });
+
+            am.put("rightReleased", new AbstractAction() {
+                public void actionPerformed(ActionEvent e) {
+                    right = false;
+                }
+            });
+
+            am.put("upPressed", new AbstractAction() {
+                public void actionPerformed(ActionEvent e) {
+                    up = true; }
+            });
+
+            am.put("upReleased", new AbstractAction() {
+                public void actionPerformed(ActionEvent e) {
+                    up = false; }
+            });
+
+            am.put("downPressed", new AbstractAction() {
+                public void actionPerformed(ActionEvent e) {
+                    down = true;
+                }
+            });
+
+            am.put("downReleased", new AbstractAction() {
+                public void actionPerformed(ActionEvent e) {
+                    down = false;
+                }
+            });
+
+            // Timer: chạy đều, di chuyển khi flag true
+            timer = new Timer(15, ev -> { // ~66 FPS
+                boolean moved = false;
+                if (left)  { rectX -= moveStep; moved = true; }
+                if (right) { rectX += moveStep; moved = true; }
+                if (up)    { rectY -= moveStep; moved = true; }
+                if (down)  { rectY += moveStep; moved = true; }
+                if (moved) {
                     clampToBounds();
                     repaint();
                 }
             });
-            am.put("moveDown", new AbstractAction() {
-                public void actionPerformed(ActionEvent e) {
-                    rectY += moveStep;
-                    clampToBounds();
-                    repaint();
-                }
-            });
-            am.put("moveLeft", new AbstractAction() {
-                public void actionPerformed(ActionEvent e) {
-                    rectX -= moveStep;
-                    clampToBounds();
-                    repaint();
-                }
-            });
-            am.put("moveRight", new AbstractAction() {
-                public void actionPerformed(ActionEvent e) {
-                    rectX += moveStep;
-                    clampToBounds();
-                    repaint();
-                }
-            });
+            timer.start();
         }
 
         private void clampToBounds() {
