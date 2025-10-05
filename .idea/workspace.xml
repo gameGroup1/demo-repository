@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0f3df055-8929-45ef-8718-656683008b97" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ball.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Ball.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bricks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Bricks.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Paddle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Paddle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoBackGround.mp4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VideoDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/VideoDemo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Wall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Wall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkCollision.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/checkCollision.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo-repository.iml" beforeDir="false" afterPath="$PROJECT_DIR$/demo-repository.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gameOver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameOver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Node.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Tuong.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/update.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/update.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;DaiTaTuong&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/gameGroup1/demo-repository.git&quot;,
+    &quot;accountId&quot;: &quot;2cd69f60-9660-482d-9f0c-98a51e3fa03e&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="33NYQ2RbrMChIcKiDwdnQhWqya1" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Run_JavaFX.executor": "Run",
+    "Application.VideoDemo.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "TuongCoder",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="Run_JavaFX" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="VideoDemo" />
+      <module name="demo-repository" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;D:\Downloads\openjfx-25_windows-x64_bin-sdk\javafx-sdk-25\lib&quot; --add-modules javafx.controls,javafx.fxml " />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0f3df055-8929-45ef-8718-656683008b97" name="Changes" comment="" />
+      <created>1759158977674</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1759158977674</updated>
+      <workItem from="1759158979362" duration="654000" />
+      <workItem from="1759287991413" duration="8000" />
+      <workItem from="1759564625005" duration="1651000" />
+      <workItem from="1759636113567" duration="2810000" />
+      <workItem from="1759639176456" duration="1109000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
