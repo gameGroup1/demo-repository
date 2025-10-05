@@ -44,8 +44,7 @@ public class Bricks {
     public int getHeight() {
         return height;
     }
-
-    // THÊM GETTER CHO isBreak
+    
     public boolean isBreak() {
         return isBreak;
     }
