@@ -1,44 +1,60 @@
 /* Lớp cập nhật vị trí của các đối tượng trong trò chơi */
-public class update {
+public class Update {
     /* Cập nhật vị trí của bóng */
-    public void updateBallPosition(Ball ball) {
+    public static void position(Ball ball) {
         if (ball != null) {
             ball.setX(ball.getX() + ball.getDx());
             ball.setY(ball.getY() + ball.getDy());
         }
     }
-    /* Cập nhật vị trí của quả bóng sau khi va vào tường */
-    public void updateBW(Ball ball, Wall wall, checkCollision collisionChecker) {
-        if (collisionChecker.checkBallWall(ball, wall)) {
-            if (ball.getX() - ball.getRadius() <= wall.getX() || ball.getX() + ball.getRadius() >= wall.getX() + wall.getWidth()) {
-                ball.setDx(-ball.getDx()); 
+
+    /* Cập nhật vị trí của tấm ván (gọi sau move của Paddle) */
+    public static void position(Paddle paddle, Wall wall) {
+        if (Collision.check(paddle, wall)) { // Kiểm tra va chạm để điều chỉnh nếu cần
+            // Giới hạn vị trí paddle để không vượt ra ngoài biên wall
+            if (paddle.getX() < wall.getX()) {
+                paddle.setX(wall.getX());
             }
-            if (ball.getY() - ball.getRadius() <= wall.getY() || ball.getY() + ball.getRadius() >= wall.getY() + wall.getHeight()) {
-                ball.setDy(-ball.getDy()); 
+            if (paddle.getX() + paddle.getWidth() > wall.getX() + wall.getWidth()) {
+                paddle.setX(wall.getX() + wall.getWidth() - paddle.getWidth());
             }
         }
     }
-    /* Cập nhật vị trí của quả bóng sau khi va vào tấm ván */
-    public void updateBP(Ball ball, Paddle paddle, checkCollision collisionChecker) {
-        if (collisionChecker.checkBallPaddle(ball, paddle)) {
-            ball.setDy(-ball.getDy());
-            double ColPosition = ((ball.getX() - paddle.getX()) - (paddle.getWidth() / 2.0)) / (paddle.getWidth() / 2.0);
 
-            if (ColPosition < -1) ColPosition = -1;
-            if (ColPosition > 1) ColPosition = 1;
+    /* Cập nhật vị trí của quả bóng sau khi va vào tường */
+    public static void position(Ball ball, Wall wall) {
+        if (Collision.check(ball, wall)) { // Sử dụng Collision để kiểm tra
+            if (ball.getX() - ball.getRadius() <= wall.getX() || ball.getX() + ball.getRadius() >= wall.getX() + wall.getWidth()) {
+                ball.setDx(-ball.getDx());
+            }
+            if (ball.getY() - ball.getRadius() <= wall.getY() || ball.getY() + ball.getRadius() >= wall.getY() + wall.getHeight()) {
+                ball.setDy(-ball.getDy());
+            }
+        }
+    }
+
+    /* Cập nhật vị trí của quả bóng sau khi va vào tấm ván */
+    public static void position(Ball ball, Paddle paddle) {
+        if (Collision.check(ball, paddle)) { // Sử dụng Collision để kiểm tra
+            ball.setDy(-ball.getDy());
+            double colPosition = ((ball.getX() - paddle.getX()) - (paddle.getWidth() / 2.0)) / (paddle.getWidth() / 2.0);
+
+            if (colPosition < -1) colPosition = -1;
+            if (colPosition > 1) colPosition = 1;
             // Góc lệch tối đa 60 độ (PI/3)
             double maxAngle = Math.PI / 3;
-            double angle = ColPosition * maxAngle;
+            double angle = colPosition * maxAngle;
             double speed = ball.getSpeed();
 
             ball.setDx(speed * Math.sin(angle));
             ball.setDy(-speed * Math.cos(angle));
         }
     }
+
     /* Cập nhật vị trí của quả bóng sau khi va vào gạch */
-    public void updateBB(Ball ball, Bricks[] bricks, checkCollision collisionChecker) {
+    public static void position(Ball ball, Bricks[] bricks) {
         for (Bricks brick : bricks) {
-            if (!brick.isBreak && collisionChecker.checkBallBricks(ball, brick)) {
+            if (!brick.isBreak && Collision.check(ball, brick)) { // Sử dụng Collision để kiểm tra
                 brick.isBreak = true;
                 boolean hitVertical = false, hitHorizontal = false;
 
@@ -66,13 +82,8 @@ public class update {
                     ball.setDx(ball.getDx() / vectorSpeed * ball.getSpeed());
                     ball.setDy(ball.getDy() / vectorSpeed * ball.getSpeed());
                 }
-                break;
+                break; // Chỉ xử lý một va chạm mỗi lần
             }
         }
-    }
-    /* Cập nhật vị trí của tấm ván */
-    public void updatePaddlePosition(Paddle paddle, int newX, Wall wall, checkCollision collisionChecker) {
-        paddle.setX(newX);
-        collisionChecker.checkPaddleWall(paddle, wall);
     }
 }
