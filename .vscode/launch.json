@@ -1,7 +1,4 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
@@ -9,22 +6,22 @@
             "name": "MainGame",
             "request": "launch",
             "mainClass": "MainGame",
-            "projectName": "demo-repository_62c8ebd1",
-            "vmArgs": "--module-path E:\\javafx-sdk-21.0.2\\lib --add-modules javafx.controls,javafx.graphics,javafx.base"
+            "projectName": "gameg1_a60f91f",
+             "vmArgs": "--module-path \"C:\\game\\javafx-sdk-21.0.8\\lib\" --add-modules javafx.controls,javafx.fxml,javafx.media,javafx.graphics,javafx.base --enable-native-access=javafx.graphics"
         },
         {
             "type": "java",
-            "name": "Current File",
+            "name": "Run MainGame (JavaFX 21.0.8)",
             "request": "launch",
-            "mainClass": "${file}"
+            "mainClass": "MainGame",
+            "vmArgs": "--module-path \"C:\\game\\javafx-sdk-21.0.8\\lib\" --add-modules javafx.controls,javafx.fxml,javafx.media,javafx.graphics,javafx.base --enable-native-access=javafx.graphics"
         },
         {
             "type": "java",
-            "name": "VideoDemo",
+            "name": "Run VideoDemo (JavaFX 21.0.8)",
             "request": "launch",
             "mainClass": "VideoDemo",
-            "projectName": "demo-repository_62c8ebd1",
-            "vmArgs": "--module-path E:\\javafx-sdk-21.0.2\\lib --add-modules javafx.controls,javafx.fxml,javafx.media"
-        },
+            "vmArgs": "--module-path \"C:\\game\\javafx-sdk-21.0.8\\lib\" --add-modules javafx.controls,javafx.fxml,javafx.media,javafx.graphics,javafx.base --enable-native-access=javafx.graphics"
+        }
     ]
 }

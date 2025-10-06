@@ -10,7 +10,7 @@ import javafx.util.Duration; // Import Duration cho PauseTransition
 import javafx.scene.input.MouseEvent;
 import java.util.Random;
 
-public class mainGame extends Application {
+public class MainGame extends Application {
     // Hằng số kích thước game (đóng gói để dễ bảo trì)
     private final int widthW = 400;
     private final int heightW = 600;
@@ -31,7 +31,7 @@ public class mainGame extends Application {
     private AnimationTimer gameLoop; // Game loop (private để kiểm soát start/stop - phần 4.2.3)
 
     // Constructor: Khởi tạo tất cả đối tượng game (áp dụng đóng gói và trừu tượng hóa)
-    public mainGame() {
+    public MainGame() {
         // Tạo mảng 4 phần tử chứa các Material ngẫu nhiên cho Bricks
         Material[] materials = {Material.rock, Material.metal, Material.wood, Material.jewel};
         Random random = new Random();
