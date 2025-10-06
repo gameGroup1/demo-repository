@@ -1,70 +1,32 @@
-/* Lớp kiểm tra các đối tượng trong trò chơi */
 public class Collision {
-    public static boolean check(Ball ball, Wall wall) {
-        if (ball == null || wall == null) {
+
+    public static boolean check(Ball ball, GameObject object) {
+        if (ball == null || object == null) {
             return false;
         }
 
-        double ballX = ball.getX();
-        double ballY = ball.getY();
-        double ballRadius = ball.getRadius();
+        double closestX = Math.max(object.getX(), Math.min(ball.getX(), object.getX() + object.getWidth()));
+        double closestY = Math.max(object.getY(), Math.min(ball.getY(), object.getY() + object.getHeight()));
 
-        return ballX + ballRadius > wall.getX() &&
-                ballX - ballRadius < wall.getX() + wall.getWidth() &&
-                ballY + ballRadius > wall.getY() &&
-                ballY - ballRadius < wall.getY() + wall.getHeight();
-    }
+        double distanceX = ball.getX() - closestX;
+        double distanceY = ball.getY() - closestY;
+        double distanceSquared = distanceX * distanceX + distanceY * distanceY;
 
-    public static boolean check(Ball ball, Bricks brick) {
-        if (ball != null && brick != null && !brick.isBreak) {
-            double ballX = ball.getX();
-            double ballY = ball.getY();
-            double ballRadius = ball.getRadius();
-
-            if (ballX + ballRadius > brick.getX() && ballX - ballRadius < brick.getX() + brick.getWidth() &&
-                    ballY + ballRadius > brick.getY() && ballY - ballRadius < brick.getY() + brick.getHeight()) {
-                return true;
-            }
+        if (distanceSquared <= (ball.getRadius() * ball.getRadius())){
+            Material.playSound(ball.getMaterial(), object.getMaterial());
+            return true;
         }
         return false;
     }
 
-    public static boolean check(Ball ball, Paddle paddle) {
-        // Lấy thông tin của Ball (Hình tròn)
-        double ballX = ball.getX();
-        double ballY = ball.getY();
-        double ballRadius = ball.getRadius();
-
-        // Lấy thông tin của Paddle (Hình chữ nhật)
-        double paddleX = paddle.getX();
-        double paddleY = paddle.getY();
-        int paddleWidth = paddle.getWidth();
-        int paddleHeight = paddle.getHeight();
-
-        // 1. Tìm điểm gần nhất trên hình chữ nhật (Paddle) với tâm hình tròn (Ball)
-
-        // Điểm gần nhất theo trục X (Clamping)
-        double closestX = ballX;
-        if (ballX < paddleX) {
-            closestX = paddleX;
-        } else if (ballX > paddleX + paddleWidth) {
-            closestX = paddleX + paddleWidth;
+    public static boolean check(Paddle paddle, Wall wall) {
+        if (paddle == null || wall == null) {
+            return false; // Xử lý lỗi
         }
 
-        // Điểm gần nhất theo trục Y (Clamping)
-        double closestY = ballY;
-        if (ballY < paddleY) {
-            closestY = paddleY;
-        } else if (ballY > paddleY + paddleHeight) {
-            closestY = paddleY + paddleHeight;
-        }
-
-        // 2. Tính khoảng cách bình phương từ tâm Ball đến điểm gần nhất
-        double distanceX = ballX - closestX;
-        double distanceY = ballY - closestY;
-
-        // Khoảng cách bình phương (tránh dùng Math.sqrt() để tăng hiệu suất)
-        double distanceSq = (distanceX * distanceX) + (distanceY * distanceY);
-        return distanceSq <= (ballRadius * ballRadius);
+        return paddle.getX() < wall.getX() + wall.getWidth() &&
+                paddle.getX() + paddle.getWidth() > wall.getX() &&
+                paddle.getY() < wall.getY() + wall.getHeight() &&
+                paddle.getY() + paddle.getHeight() > wall.getY();
     }
 }
