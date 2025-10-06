@@ -1,0 +1,28 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "type": "java",
+            "name": "MainGame",
+            "request": "launch",
+            "mainClass": "MainGame",
+            "projectName": "gameg1_a60f91f",
+             "vmArgs": "--module-path \"C:\\game\\javafx-sdk-21.0.8\\lib\" --add-modules javafx.controls,javafx.fxml,javafx.media,javafx.graphics,javafx.base --enable-native-access=javafx.graphics"
+        },
+        {
+            "type": "java",
+            "name": "Run MainGame (JavaFX 21.0.8)",
+            "request": "launch",
+            "mainClass": "MainGame",
+            "vmArgs": "--module-path \"C:\\game\\javafx-sdk-21.0.8\\lib\" --add-modules javafx.controls,javafx.fxml,javafx.media,javafx.graphics,javafx.base --enable-native-access=javafx.graphics"
+        },
+        {
+            "type": "java",
+            "name": "Run VideoDemo (JavaFX 21.0.8)",
+            "request": "launch",
+            "mainClass": "VideoDemo",
+            "vmArgs": "--module-path \"C:\\game\\javafx-sdk-21.0.8\\lib\" --add-modules javafx.controls,javafx.fxml,javafx.media,javafx.graphics,javafx.base --enable-native-access=javafx.graphics"
+        }
+    ]
+}
