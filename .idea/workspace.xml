@@ -5,19 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0fac5e75-a1dc-4ca7-8bf4-9fe60e2ad829" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/algs4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/javafx_base.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/stdlib.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/arkanoid#.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Update.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/mainGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/arkanoid#/.vscode/launch.json" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/arkanoid#/.vscode/launch.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/arkanoid#/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/arkanoid#/.vscode/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/arkanoid#/Ball.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/arkanoid#/Ball.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/arkanoid#/Bricks.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/arkanoid#/Bricks.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/arkanoid#/Paddle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/arkanoid#/Paddle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/arkanoid#/Wall.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/arkanoid#/Wall.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/arkanoid#/checkCollision.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/arkanoid#/mainGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/arkanoid#/mainGame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/arkanoid#/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/arkanoid#/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/arkanoid#/update.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/arkanoid#/update.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/update.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -57,7 +70,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
+    "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "preferences.lookFeel",
@@ -70,7 +83,7 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="mainGame" />
       <module name="arkanoid#" />
-      <option name="PROGRAM_PARAMETERS" value="--module-path &quot;E:\javafx-sdk-21.0.2&quot; --add-modules javafx.controls,javafx.fxml " />
+      <option name="VM_PARAMETERS" value="--module-path &quot;E:\javafx-sdk-21.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml " />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
