@@ -1,63 +1,59 @@
 /* Lớp đại diện cho quả bóng */
-public class Ball {
-     private double x, y, radius, speed;
+import javafx.scene.shape.Circle;
+import javafx.scene.Node;
+
+public class Ball extends GameObject{
      private double dx, dy;
+     private double radius;
+     private double speed;
+     private Circle circle;
 
-     public Ball(double x, double y, double radius, double speed) {
-          this.x = x;
-          this.y = y;
+     public Ball(double x, double y, double radius, double speed, Material material) {
+          super(x,y,material);
           this.radius = radius;
           this.speed = speed;
+          this.circle = new Circle(x, y, radius, material.getColor());
      }
 
-     public void setX(double x) {
-          this.x = x;
-     }
+     public double getRadius() { return radius; }
+     public double getSpeed() { return speed; }
+     public double getDx() { return dx; }
+     public double getDy() { return dy; }
 
-     public void setY(double y) {
-          this.y = y;
-     }
+     public void setSpeed(double speed) { this.speed = speed; }
+     public void setDx(double dx) { this.dx = dx; }
+     public void setDy(double dy) { this.dy = dy; }
 
-     public void setRadius(double radius) {
-          this.radius = radius;
-     }
+    public void move() {
+        // Cập nhật vị trí từ GameObject (kế thừa)
+        setX(getX() + dx);
+        setY(getY() + dy);
 
-     public void setSpeed(double speed) {
-          this.speed = speed;
-     }
+        // Đồng bộ với Circle trong JavaFX scene graph (tích hợp GUI - phần 4.2.1)
+        if (circle != null) {
+            circle.setCenterX(getX() + radius); // Căn giữa tâm Circle với vị trí bóng
+            circle.setCenterY(getY() + radius);
+        }
+    }
 
-     
-     public void setDx(double dx) {
-          this.dx = dx;
-     }
+    /**
+     * Hàm render: Đồng bộ thuộc tính để hiển thị (gọi trong game loop sau move/Update).
+     * Áp dụng đa hình: Override từ GameObject để vẽ Circle riêng.
+     */
+    @Override
+    public void render() {
+        if (circle != null) {
+            circle.setCenterX(getX() + radius);
+            circle.setCenterY(getY() + radius);
+            circle.setRadius(radius);
+            if (getMaterial() != null) {
+                circle.setFill(getMaterial().getColor()); // Cập nhật màu từ Material (hiệu ứng hình ảnh - phần 4.2.2)
+            }
+        }
+    }
 
-     public void setDy(double dy) {
-          this.dy = dy;
-     }
-
-     public double getX() {
-          return x;
-     }
-
-     public double getY() {
-          return y;
-     }
-
-     public double getRadius() {
-          return radius;
-     }
-
-     public double getSpeed() {
-          return speed;
-     }
-
-     public double getDx() {
-          return dx;
-     }
-
-     public double getDy() {
-          return dy;
-     }
-
-     
+    // Phương thức hỗ trợ: Trả về Node để thêm vào scene graph (Group hoặc Pane - phần 4.2.1)
+    public Node getNode() {
+        return circle;
+    }
 }
