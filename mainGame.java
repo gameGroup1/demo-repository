@@ -1,4 +1,5 @@
 /* main - Lớp chính cho game Arkanoid, kế thừa Application để quản lý JavaFX */
+/* hàm main càng ngắn càng tốt */
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.Group;
