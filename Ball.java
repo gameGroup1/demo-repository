@@ -6,12 +6,14 @@ public class Ball extends GameObject{
      private double dx, dy;
      private double radius;
      private double speed;
+     private int power;
      private Circle circle;
 
      public Ball(double x, double y, double radius, double speed, Material material) {
           super(x,y,material);
           this.radius = radius;
           this.speed = speed;
+          this.power = 1;
           this.circle = new Circle(x, y, radius, material.getColor());
      }
 
@@ -19,12 +21,14 @@ public class Ball extends GameObject{
      public double getSpeed() { return speed; }
      public double getDx() { return dx; }
      public double getDy() { return dy; }
+     public int getPower() { return power; }
 
      public void setSpeed(double speed) { this.speed = speed; }
      public void setDx(double dx) { this.dx = dx; }
      public void setDy(double dy) { this.dy = dy; }
+     public void setPower(int power) { this.power = power; }
 
-    public void move() {
+     public void move() {
         // Cập nhật vị trí từ GameObject (kế thừa)
         setX(getX() + dx);
         setY(getY() + dy);
@@ -36,10 +40,6 @@ public class Ball extends GameObject{
         }
     }
 
-    /**
-     * Hàm render: Đồng bộ thuộc tính để hiển thị (gọi trong game loop sau move/Update).
-     * Áp dụng đa hình: Override từ GameObject để vẽ Circle riêng.
-     */
     @Override
     public void render() {
         if (circle != null) {
@@ -52,7 +52,6 @@ public class Ball extends GameObject{
         }
     }
 
-    // Phương thức hỗ trợ: Trả về Node để thêm vào scene graph (Group hoặc Pane - phần 4.2.1)
     public Node getNode() {
         return circle;
     }

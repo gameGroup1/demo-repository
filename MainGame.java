@@ -131,10 +131,6 @@ public class MainGame extends Application {
         }
     }
 
-    /**
-     * Phương thức riêng: Thiết lập xử lý input (đóng gói logic mouse event - phần 5.2).
-     * @param scene Scene để set event (phần 4.1.1: điều khiển Paddle)
-     */
     private void setupInput(Scene scene) {
         scene.setOnMouseMoved(event -> {
             if (paddle != null && leftWall != null && rightWall != null) {
@@ -143,10 +139,6 @@ public class MainGame extends Application {
         });
     }
 
-    /**
-     * Phương thức riêng: Khởi động game loop (áp dụng đa luồng AnimationTimer - phần 4.2.3).
-     * Gọi sau delay để bắt đầu game sau màn hình đen.
-     */
     private void startGameLoop() {
         gameLoop = new AnimationTimer() {
             @Override
