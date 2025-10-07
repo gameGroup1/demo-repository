@@ -1,17 +1,16 @@
 import javax.swing.*;
-
 import javafx.embed.swing.JFXPanel;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 
 public class GameMenu extends JFrame {
     private boolean checkStart = false;
-    private MainGame mainGame; // Tham chiếu đến game chính
+    private MainGame mainGame;
     private JLabel title;
     private JButton startBtn;
     private JButton bestScoreBtn;
@@ -27,22 +26,27 @@ public class GameMenu extends JFrame {
 
     public GameMenu() {
         setTitle("Arkanoid - Start Menu");
-        setSize(400, 300); // Giảm kích thước cho phù hợp
+        setSize(1000, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
 
-        // Khởi tạo JavaFX để hỗ trợ launch game
         JFXPanel jfxPanel = new JFXPanel();
 
-        JPanel panel = new JPanel();
+        // Load background
+        Image backgroundImage = loadBackgroundImage();
+        System.out.println("Background loaded: " + (backgroundImage != null ? "Success" : "Failed"));
+
+        BackgroundPanel panel = new BackgroundPanel(backgroundImage);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(Color.BLACK);
+        // XÓA dòng setBackground để image có thể hiển thị
 
         title = new JLabel("ARKANOID");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        title.setFont(new Font("Arial", Font.BOLD, 32));
+        title.setFont(new Font("Arial", Font.BOLD, 36));
         title.setForeground(Color.CYAN);
+        title.setOpaque(false); // Làm title trong suốt
+        
         panel.add(Box.createVerticalStrut(30));
         panel.add(title);
         panel.add(Box.createVerticalStrut(30));
@@ -52,6 +56,8 @@ public class GameMenu extends JFrame {
         exitBtn = new JButton("Exit");
 
         startBtn.setFocusPainted(false);
+        bestScoreBtn.setFocusPainted(false);
+        exitBtn.setFocusPainted(false);
 
         Dimension btnSize = new Dimension(200, 40);
         startBtn.setPreferredSize(btnSize);
@@ -66,6 +72,11 @@ public class GameMenu extends JFrame {
         bestScoreBtn.setFont(new Font("Arial", Font.PLAIN, 18));
         exitBtn.setFont(new Font("Arial", Font.PLAIN, 18));
 
+        // Làm buttons bán trong suốt (optional - để nhìn thấy background)
+        makeButtonTransparent(startBtn);
+        makeButtonTransparent(bestScoreBtn);
+        makeButtonTransparent(exitBtn);
+
         panel.add(startBtn);
         panel.add(Box.createVerticalStrut(15));
         panel.add(bestScoreBtn);
@@ -74,19 +85,16 @@ public class GameMenu extends JFrame {
 
         add(panel);
 
-        // Áp dụng hiệu ứng co giãn liên tục cho title
-      //  startTitleAnimation();
-
-        // Áp dụng hiệu ứng scale khi hover và focus cho các button
+        // Effects
+        // startTitleAnimation();
         addButtonEffects(startBtn);
         addButtonEffects(bestScoreBtn);
         addButtonEffects(exitBtn);
 
-        // Sửa ActionListener cho nút Start
         startBtn.addActionListener(e -> {
             checkStart = true;
-            setVisible(false); // Ẩn menu
-            startGame(); // Khởi động game
+            setVisible(false);
+            startGame();
         });
         
         bestScoreBtn.addActionListener(e -> {
@@ -94,6 +102,86 @@ public class GameMenu extends JFrame {
         });
         
         exitBtn.addActionListener(e -> System.exit(0));
+    }
+
+    // Method để làm button bán trong suốt
+   private void makeButtonTransparent(JButton button) {
+    button.setOpaque(false);
+    button.setContentAreaFilled(false);
+    button.setFocusPainted(false);
+    
+    // Nền tối bán trong suốt
+    button.setBackground(new Color(20, 40, 30, 10)); // Xanh đen trong suốt
+    button.setForeground(new Color(200, 255, 150)); // Chữ xanh lá vàng sáng
+    
+    // Viền xanh ngọc sáng
+    button.setBorder(BorderFactory.createCompoundBorder(
+    BorderFactory.createLineBorder(new Color(100, 255, 200, 150), 2), // Viền cyan TRONG SUỐT (alpha 150)
+    BorderFactory.createEmptyBorder(5, 15, 5, 15)
+));
+}
+
+    // Method load image
+    private Image loadBackgroundImage() {
+        Image backgroundImage = null;
+        try {
+            // Cách 1: Dùng ClassLoader (tốt nhất)
+            java.net.URL imageURL = getClass().getClassLoader().getResource("background.gif");
+            if (imageURL != null) {
+                backgroundImage = new ImageIcon(imageURL).getImage();
+                System.out.println("✓ Loaded from classpath");
+                return backgroundImage;
+            }
+            
+            // Cách 2: Đường dẫn tương đối từ thư mục chạy
+            String[] paths = {
+                "resources/background.gif",
+                "./resources/background.gif",
+                "../resources/background.gif"
+            };
+            
+            for (String path : paths) {
+                java.io.File file = new java.io.File(path);
+                System.out.println("Trying: " + file.getAbsolutePath());
+                if (file.exists()) {
+                    backgroundImage = new ImageIcon(path).getImage();
+                    System.out.println("✓ Loaded from: " + path);
+                    return backgroundImage;
+                }
+            }
+            
+            System.err.println("✗ Cannot find background.gif");
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return backgroundImage;
+    }
+
+    // BackgroundPanel - FIXED VERSION
+    private static class BackgroundPanel extends JPanel {
+        private Image image;
+
+        public BackgroundPanel(Image image) {
+            this.image = image;
+            setOpaque(true); // Quan trọng
+            System.out.println("Panel created with image: " + (image != null));
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            
+            if (image != null) {
+                // Vẽ image trực tiếp (không dùng getScaledInstance vì nó chậm)
+                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+                System.out.println("Image drawn at " + getWidth() + "x" + getHeight());
+            } else {
+                // Nếu không có image, vẽ nền đen
+                g.setColor(Color.BLACK);
+                g.fillRect(0, 0, getWidth(), getHeight());
+            }
+        }
     }
 
     private void startTitleAnimation() {
@@ -123,7 +211,6 @@ public class GameMenu extends JFrame {
     }
 
     private void addButtonEffects(JButton button) {
-        // Hiệu ứng scale khi hover (chuột)
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -138,7 +225,6 @@ public class GameMenu extends JFrame {
             }
         });
 
-        // Hiệu ứng scale khi focus (bàn phím)
         button.addFocusListener(new java.awt.event.FocusAdapter() {
             @Override
             public void focusGained(java.awt.event.FocusEvent e) {
@@ -155,7 +241,6 @@ public class GameMenu extends JFrame {
     }
 
     private void startGame() {
-        // Sử dụng createAndShowGame thay vì launchGame
         MainGame.createAndShowGame();
     }
 
@@ -164,5 +249,4 @@ public class GameMenu extends JFrame {
             new GameMenu().setVisible(true);
         });
     }
-
 }
