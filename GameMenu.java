@@ -1,11 +1,21 @@
 import javax.swing.*;
-import java.awt.*;
 
 import javafx.embed.swing.JFXPanel;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
 
 public class GameMenu extends JFrame {
     private boolean checkStart = false;
     private MainGame mainGame; // Tham chiếu đến game chính
+    private JLabel title;
+    private JButton startBtn;
+    private JButton bestScoreBtn;
+    private JButton exitBtn;
 
     public void setCheckStart(boolean checkStart) {
         this.checkStart = checkStart;
@@ -29,7 +39,7 @@ public class GameMenu extends JFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(Color.BLACK);
 
-        JLabel title = new JLabel("ARKANOID");
+        title = new JLabel("ARKANOID");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setFont(new Font("Arial", Font.BOLD, 32));
         title.setForeground(Color.CYAN);
@@ -37,9 +47,9 @@ public class GameMenu extends JFrame {
         panel.add(title);
         panel.add(Box.createVerticalStrut(30));
 
-        JButton startBtn = new JButton("Start");
-        JButton bestScoreBtn = new JButton("BestScore");
-        JButton exitBtn = new JButton("Exit");
+        startBtn = new JButton("Start");
+        bestScoreBtn = new JButton("BestScore");
+        exitBtn = new JButton("Exit");
 
         startBtn.setFocusPainted(false);
 
@@ -64,6 +74,14 @@ public class GameMenu extends JFrame {
 
         add(panel);
 
+        // Áp dụng hiệu ứng co giãn liên tục cho title
+      //  startTitleAnimation();
+
+        // Áp dụng hiệu ứng scale khi hover và focus cho các button
+        addButtonEffects(startBtn);
+        addButtonEffects(bestScoreBtn);
+        addButtonEffects(exitBtn);
+
         // Sửa ActionListener cho nút Start
         startBtn.addActionListener(e -> {
             checkStart = true;
@@ -76,6 +94,64 @@ public class GameMenu extends JFrame {
         });
         
         exitBtn.addActionListener(e -> System.exit(0));
+    }
+
+    private void startTitleAnimation() {
+        Timer timer = new Timer(100, new ActionListener() {
+            private float scale = 1.0f;
+            private boolean increasing = true;
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (increasing) {
+                    scale += 0.02f;
+                    if (scale >= 1.2f) {
+                        increasing = false;
+                    }
+                } else {
+                    scale -= 0.02f;
+                    if (scale <= 0.8f) {
+                        increasing = true;
+                    }
+                }
+                AffineTransform at = new AffineTransform();
+                at.scale(scale, scale);
+                title.setFont(title.getFont().deriveFont(at));
+                title.repaint();
+            }
+        });
+        timer.start();
+    }
+
+    private void addButtonEffects(JButton button) {
+        // Hiệu ứng scale khi hover (chuột)
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                button.setFont(button.getFont().deriveFont(AffineTransform.getScaleInstance(1.1, 1.1)));
+                button.repaint();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                button.setFont(button.getFont().deriveFont(AffineTransform.getScaleInstance(1.0, 1.0)));
+                button.repaint();
+            }
+        });
+
+        // Hiệu ứng scale khi focus (bàn phím)
+        button.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+                button.setFont(button.getFont().deriveFont(AffineTransform.getScaleInstance(1.1, 1.1)));
+                button.repaint();
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                button.setFont(button.getFont().deriveFont(AffineTransform.getScaleInstance(1.0, 1.0)));
+                button.repaint();
+            }
+        });
     }
 
     private void startGame() {

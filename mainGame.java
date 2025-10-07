@@ -26,7 +26,7 @@ public class MainGame {
     private Group root;
     private AnimationTimer gameLoop;
     private Stage primaryStage;
-    private gameOver gameOver;
+    private GameOver gameOver;
 
     public MainGame() {
         Material[] materials = {Material.rock, Material.metal, Material.wood, Material.jewel};
@@ -64,7 +64,7 @@ public class MainGame {
 
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        gameOver = new gameOver();
+        gameOver = new GameOver();
         
         root = new Group();
         Scene scene = new Scene(root, widthW, heightW, Color.BLACK);
