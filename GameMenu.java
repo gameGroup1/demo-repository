@@ -1,15 +1,29 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+
+import javafx.embed.swing.JFXPanel;
 
 public class GameMenu extends JFrame {
+    private boolean checkStart = false;
+    private MainGame mainGame; // Tham chiếu đến game chính
+
+    public void setCheckStart(boolean checkStart) {
+        this.checkStart = checkStart;
+    }
+
+    public boolean isCheckStart() {
+        return checkStart;
+    }
+
     public GameMenu() {
-        // Loại bỏ khung ngoài của nút Start
         setTitle("Arkanoid - Start Menu");
-        setSize(1400, 1300);
+        setSize(400, 300); // Giảm kích thước cho phù hợp
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        // Khởi tạo JavaFX để hỗ trợ launch game
+        JFXPanel jfxPanel = new JFXPanel();
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -27,7 +41,6 @@ public class GameMenu extends JFrame {
         JButton bestScoreBtn = new JButton("BestScore");
         JButton exitBtn = new JButton("Exit");
 
-        // Loại bỏ focus rectangle cho nút Start
         startBtn.setFocusPainted(false);
 
         Dimension btnSize = new Dimension(200, 40);
@@ -51,18 +64,29 @@ public class GameMenu extends JFrame {
 
         add(panel);
 
+        // Sửa ActionListener cho nút Start
         startBtn.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Game Start!");
+            checkStart = true;
+            setVisible(false); // Ẩn menu
+            startGame(); // Khởi động game
         });
+        
         bestScoreBtn.addActionListener(e -> {
             JOptionPane.showMessageDialog(this, "Best Score: 0");
         });
+        
         exitBtn.addActionListener(e -> System.exit(0));
     }
 
-    public static void Start() {
+    private void startGame() {
+        // Sử dụng createAndShowGame thay vì launchGame
+        MainGame.createAndShowGame();
+    }
+
+    public static void showMenu() {
         SwingUtilities.invokeLater(() -> {
             new GameMenu().setVisible(true);
         });
     }
+
 }
