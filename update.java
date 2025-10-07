@@ -54,8 +54,12 @@ public class Update {
     /* Cập nhật vị trí của quả bóng sau khi va vào gạch */
     public static void position(Ball ball, Bricks[] bricks) {
         for (Bricks brick : bricks) {
-            if (!brick.isBreak && Collision.check(ball, brick)) { // Sử dụng Collision để kiểm tra
-                brick.isBreak = true;
+            if (!brick.isBreak() && Collision.check(ball, brick)) {
+                double ballHardness = ball.getMaterial().getHardness();
+                double brickHardness = brick.getMaterial().getHardness();
+                if(ballHardness > brickHardness) {
+                    brick.takeHit(ball.getPower());
+                }
                 boolean hitVertical = false, hitHorizontal = false;
 
                 if (ball.getY() < brick.getY() || ball.getY() > brick.getY() + brick.getHeight()) {
