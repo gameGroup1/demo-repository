@@ -1,5 +1,8 @@
+import javafx.application.Platform;
 /* main - Lớp chính cho game Arkanoid, kế thừa Application để quản lý JavaFX */
+/* hàm main càng ngắn càng tốt */
 import javafx.application.Application;
+
 import javafx.scene.Scene;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -7,54 +10,47 @@ import javafx.stage.Stage;
 import javafx.animation.AnimationTimer;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
-import javafx.scene.input.MouseEvent;
 import java.util.Random;
+import javafx.scene.input.KeyCode;
 
-public class MainGame extends Application {
-    // Hằng số kích thước game (đóng gói để dễ bảo trì)
+public class MainGame {
     private final int widthW = 400;
     private final int heightW = 600;
     private final int widthP = 100;
     private final int heightP = 20;
     private final int radiusB = 7;
-    private final int speedB = 8;
-    private final int wallThickness = 10; // Độ dày tường (đóng gói)
+    private final int speedB = 5;
+    private final int wallThickness = 10;
 
-    // Các đối tượng game (private để đóng gói)
     private Ball ball;
     private Paddle paddle;
-    private Wall leftWall; // Tường trái
-    private Wall rightWall; // Tường phải
-    private Wall topWall; // Tường trên
+    private Wall leftWall;
+    private Wall rightWall;
+    private Wall topWall;
     private Bricks[] bricks;
-    private Group root; // Root cho scene graph
+    private Group root;
     private AnimationTimer gameLoop;
+    private Stage primaryStage;
+    private GameOver gameOver;
 
-    // Constructor: Khởi tạo tất cả đối tượng game (áp dụng đóng gói và trừu tượng hóa)
     public MainGame() {
-        // Tạo mảng 4 phần tử chứa các Material ngẫu nhiên cho Bricks
-        Material.preloadSounds();
-
         Material[] materials = {Material.rock, Material.metal, Material.wood, Material.jewel};
         Random random = new Random();
 
         double ballX = (widthW / 2.0) - radiusB;
         double ballY = heightW - heightP - (radiusB * 2);
         ball = new Ball(ballX, ballY, radiusB, speedB, Material.metal);
-        ball.setDx(speedB); // Vận tốc X ban đầu (phải)
-        ball.setDy(-speedB); // Vận tốc Y ban đầu (lên)
+        ball.setDx(speedB);
+        ball.setDy(-speedB);
 
         double paddleX = (widthW - widthP) / 2.0;
-        double paddleY = heightW - heightP;
-        paddle = new Paddle(paddleX, paddleY, widthP, heightP, Material.wood);
+        paddle = new Paddle(paddleX, heightW - heightP, widthP, heightP, Material.wood);
 
-        // Khởi tạo ba bức tường (left, right, top - kế thừa GameObject, phần 5.1)
-        leftWall = new Wall(0, 0, wallThickness, heightW, Material.wood); // Tường trái: mỏng, cao toàn màn
-        rightWall = new Wall(widthW - wallThickness, 0, wallThickness, heightW, Material.wood); // Tường phải
-        topWall = new Wall(0, 0, widthW, wallThickness, Material.wood); // Tường trên: rộng toàn màn, mỏng
+        leftWall = new Wall(0, 0, wallThickness, heightW, Material.wood);
+        rightWall = new Wall(widthW - wallThickness, 0, wallThickness, heightW, Material.wood);
+        topWall = new Wall(0, 0, widthW, wallThickness, Material.wood);
 
-        // Khởi tạo mảng Bricks (lưới 5 hàng x 10 cột, phần 4.3.1: hệ thống cấp độ đơn giản)
-        bricks = new Bricks[50]; // 5x10 = 50 gạch
+        bricks = new Bricks[50];
         int brickWidth = 30;
         int brickHeight = 15;
         int spacing = 5;
@@ -62,44 +58,46 @@ public class MainGame extends Application {
         int colCount = 10;
         for (int row = 0; row < rowCount; row++) {
             for (int col = 0; col < colCount; col++) {
-                // Tính vị trí Brick (bắt đầu từ x=wallThickness + 10, y=wallThickness + 50 để tránh biên tường)
                 double brickX = col * (brickWidth + spacing) + wallThickness + 20;
                 double brickY = row * (brickHeight + spacing) + wallThickness + 100;
                 int index = row * colCount + col;
-                // Chọn Material ngẫu nhiên từ mảng materials
                 Material randomMaterial = materials[random.nextInt(materials.length)];
                 bricks[index] = new Bricks(brickX, brickY, brickWidth, brickHeight, randomMaterial);
             }
         }
     }
 
-    @Override
     public void start(Stage primaryStage) {
-        // Tạo root Group cho scene graph (phần 4.2.1: xây dựng GUI - trừu tượng hóa scene graph)
+        this.primaryStage = primaryStage;
+        gameOver = new GameOver();
+        
         root = new Group();
-
-        // Tạo Scene với kích thước canvas và nền đen (màn hình đen ban đầu - phần 4.2.1: giao diện thẩm mỹ)
         Scene scene = new Scene(root, widthW, heightW, Color.BLACK);
 
-        // Thiết lập Stage ban đầu (hiển thị màn hình đen)
         primaryStage.setTitle("Arkanoid Game");
         primaryStage.setScene(scene);
-        primaryStage.setResizable(false); // Không cho thay đổi kích thước (giữ tỷ lệ)
+        primaryStage.setResizable(false);
+        
+        // Thêm sự kiện đóng cửa sổ
+        primaryStage.setOnCloseRequest(e -> {
+            if (gameLoop != null) {
+                gameLoop.stop();
+            }
+            // Không exit, chỉ đóng stage
+        });
+        
         primaryStage.show();
 
-        // Delay 3 giây trước khi load game (sử dụng PauseTransition - phần 4.2.3: đa luồng với delay)
-        PauseTransition delay = new PauseTransition(Duration.seconds(3));
+        PauseTransition delay = new PauseTransition(Duration.seconds(1));
         delay.setOnFinished(event -> {
-            // Sau delay, thêm các đối tượng game vào root và khởi động game loop
-            addGameElementsToRoot(); // Phương thức riêng để thêm elements (trừu tượng hóa phần 5.2)
-            setupInput(scene); // Phương thức riêng để set input (đóng gói phần 5.2)
-            startGameLoop(); // Khởi động AnimationTimer (phần 4.2.3)
+            addGameElementsToRoot();
+            setupInput(scene);
+            startGameLoop();
         });
-        delay.play(); // Bắt đầu delay
+        delay.play();
     }
 
     private void addGameElementsToRoot() {
-        // Kiểm tra null và thêm Paddle, Ball vào root
         if (paddle != null && paddle.getNode() != null) {
             root.getChildren().add(paddle.getNode());
         }
@@ -129,7 +127,13 @@ public class MainGame extends Application {
     private void setupInput(Scene scene) {
         scene.setOnMouseMoved(event -> {
             if (paddle != null && leftWall != null && rightWall != null) {
-                paddle.move(event, leftWall, rightWall); // Truyền left/right wall để giới hạn
+                paddle.move(event, leftWall, rightWall);
+            }
+        });
+        
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                Pause.show(primaryStage, gameLoop);
             }
         });
     }
@@ -139,13 +143,24 @@ public class MainGame extends Application {
             @Override
             public void handle(long now) {
                 if (ball == null) return;
+
                 Update.position(ball);
 
-                if (leftWall != null) Update.position(ball, leftWall);
-                if (rightWall != null) Update.position(ball, rightWall);
-                if (topWall != null) Update.position(ball, topWall);
-                if (paddle != null) Update.position(ball, paddle);
-                if (bricks != null) Update.position(ball, bricks);
+                if (leftWall != null) {
+                    Update.position(ball, leftWall);
+                }
+                if (rightWall != null) {
+                    Update.position(ball, rightWall);
+                }
+                if (topWall != null) {
+                    Update.position(ball, topWall);
+                }
+                if (paddle != null) {
+                    Update.position(ball, paddle);
+                }
+                if (bricks != null) {
+                    Update.position(ball, bricks);
+                }
 
                 if (paddle != null && leftWall != null && rightWall != null) {
                     double leftBound = leftWall.getX() + leftWall.getWidth();
@@ -158,8 +173,10 @@ public class MainGame extends Application {
                     }
                 }
 
-                if (paddle != null) paddle.render();
-                if (ball != null) ball.render();
+                if (paddle != null) {
+                    paddle.render();
+                }
+                ball.render();
                 if (leftWall != null) leftWall.render();
                 if (rightWall != null) rightWall.render();
                 if (topWall != null) topWall.render();
@@ -171,17 +188,38 @@ public class MainGame extends Application {
                     }
                 }
 
-                // Xử lý lỗi: Nếu Ball rơi dưới màn hình (mất mạng, thoát game - phần 4.1.1)
-                if (ball.getY() > heightW + radiusB) { // + radiusB để Ball hoàn toàn rơi
-                    System.exit(0);
+                if (gameOver.isGameOver(ball, heightW)) {
+                    // Khi game over, hiển thị EndMenu
+                    gameLoop.stop();
+                    // Tính score dựa trên số bricks bị phá hủy (giả sử Bricks có method isDestroyed())
+                    int destroyedCount = 0;
+                    for (Bricks brick : bricks) {
+                        if (brick != null && brick.isBreak()) {  // Giả sử có method isDestroyed() trong Bricks
+                            destroyedCount++;
+                        }
+                    }
+                    int score = destroyedCount * 10;  // Mỗi brick 10 điểm
+                    Platform.runLater(() -> {
+                        primaryStage.close();
+                        EndMenu.show(score, 0);  // Best score tạm thời là 0
+                    });
                 }
             }
         };
-        gameLoop.start(); // Bắt đầu game loop sau delay
+        gameLoop.start();
     }
 
-    // Main method: Khởi chạy Application (phần 4.1.2: cài đặt)
+    // Phương thức tĩnh để tạo và hiển thị game mới (thay thế cho launch())
+    public static void createAndShowGame() {
+        Platform.runLater(() -> {
+            Stage stage = new Stage();
+            MainGame game = new MainGame();
+            game.start(stage);
+        });
+    }
+
     public static void main(String[] args) {
-        launch(args);
+        // Hiển thị menu trước, game sẽ được khởi chạy từ menu
+        GameMenu.showMenu();
     }
 }

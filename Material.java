@@ -32,6 +32,13 @@ public enum Material {
         jewel.sound.play(0.0);
     }
 
+    public boolean equals(Material other) {
+        if(!color.equals(other.color)) return false;
+        if(hardness != other.hardness) return false;
+        if(!sound.equals(other.sound)) return false;
+        return true;
+    }
+
     public double getHardness() {
         return hardness;
     }
@@ -41,12 +48,10 @@ public enum Material {
     }
 
     public int priority() {
-        return switch (this) {
-            case jewel -> 4;
-            case wood -> 3;
-            case rock -> 2;
-            default -> 1;
-        };
+        if(this.equals(jewel)) return 3;
+        if(this.equals(wood)) return 2;
+        if(this.equals(rock)) return 1;
+        return 0;
     }
 
     public void play() {

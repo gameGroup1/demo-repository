@@ -39,7 +39,6 @@ public class Ball extends GameObject{
         if (imageView != null) {
             imageView.setX(getX() - radius);
             imageView.setY(getY() - radius);
-            imageView.setVisible(true);
         }
     }
 

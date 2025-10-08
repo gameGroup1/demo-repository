@@ -24,23 +24,18 @@ public class Bricks extends GameObject {
     }
 
     private void loadFrameAndSheet(){
-        switch (getMaterial()){
-            case metal:
-                spriteSheet = Frames.jewelSprite;
-                frameViewport = Frames.metalBrick;
-                break;
-            case rock:
-                spriteSheet = Frames.rockSprite;
-                frameViewport = Frames.rockBrick;
-                break;
-            case wood:
-                spriteSheet = Frames.woodSprite;
-                frameViewport = Frames.woodBrick;
-                break;
-            default:
-                spriteSheet = Frames.jewelSprite;
-                frameViewport = Frames.jewelBrick;
-                break;
+        if(getMaterial().equals(Material.metal)){
+            spriteSheet = Frames.metalSprite;
+            frameViewport = Frames.metalBrick;
+        } else if(getMaterial().equals(Material.rock)){
+            spriteSheet = Frames.rockSprite;
+            frameViewport = Frames.rockBrick;
+        } else if(getMaterial().equals(Material.wood)){
+            spriteSheet = Frames.woodSprite;
+            frameViewport = Frames.woodBrick;
+        } else if(getMaterial().equals(Material.jewel)){
+            spriteSheet = Frames.jewelSprite;
+            frameViewport = Frames.jewelBrick;
         }
     }
 
