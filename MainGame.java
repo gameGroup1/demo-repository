@@ -33,6 +33,8 @@ public class MainGame extends Application {
     // Constructor: Khởi tạo tất cả đối tượng game (áp dụng đóng gói và trừu tượng hóa)
     public MainGame() {
         // Tạo mảng 4 phần tử chứa các Material ngẫu nhiên cho Bricks
+        Material.preloadSounds();
+
         Material[] materials = {Material.rock, Material.metal, Material.wood, Material.jewel};
         Random random = new Random();
 
