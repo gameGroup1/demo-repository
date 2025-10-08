@@ -17,7 +17,7 @@ public class MainGame extends Application {
     private final int widthP = 100;
     private final int heightP = 20;
     private final int radiusB = 7;
-    private final int speedB = 5;
+    private final int speedB = 8;
     private final int wallThickness = 10; // Độ dày tường (đóng gói)
 
     // Các đối tượng game (private để đóng gói)
@@ -49,9 +49,9 @@ public class MainGame extends Application {
         paddle = new Paddle(paddleX, paddleY, widthP, heightP, Material.wood);
 
         // Khởi tạo ba bức tường (left, right, top - kế thừa GameObject, phần 5.1)
-        leftWall = new Wall(0, 0, wallThickness, heightW, Material.metal); // Tường trái: mỏng, cao toàn màn
-        rightWall = new Wall(widthW - wallThickness, 0, wallThickness, heightW, Material.metal); // Tường phải
-        topWall = new Wall(0, 0, widthW, wallThickness, Material.metal); // Tường trên: rộng toàn màn, mỏng
+        leftWall = new Wall(0, 0, wallThickness, heightW, Material.wood); // Tường trái: mỏng, cao toàn màn
+        rightWall = new Wall(widthW - wallThickness, 0, wallThickness, heightW, Material.wood); // Tường phải
+        topWall = new Wall(0, 0, widthW, wallThickness, Material.wood); // Tường trên: rộng toàn màn, mỏng
 
         // Khởi tạo mảng Bricks (lưới 5 hàng x 10 cột, phần 4.3.1: hệ thống cấp độ đơn giản)
         bricks = new Bricks[50]; // 5x10 = 50 gạch
@@ -159,7 +159,7 @@ public class MainGame extends Application {
                 }
 
                 if (paddle != null) paddle.render();
-                ball.render();
+                if (ball != null) ball.render();
                 if (leftWall != null) leftWall.render();
                 if (rightWall != null) rightWall.render();
                 if (topWall != null) topWall.render();

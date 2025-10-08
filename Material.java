@@ -17,7 +17,7 @@ public enum Material {
         this.hardness = hardness;
         AudioClip tempSound = null;
         try {
-            tempSound = new AudioClip(getFileURL(soundPath));
+            tempSound = new AudioClip(Frames.getFileURL(soundPath));
             tempSound.play(0.0); // Preload với volume 0
         } catch (Exception e) {
             System.err.println("Failed to load sound for " + this.name() + ": " + e.getMessage());
@@ -59,9 +59,5 @@ public enum Material {
     public static void playSound(Material mat1, Material mat2) {
         if (mat1 == null || mat2 == null) return;
         (mat1.priority() > mat2.priority() ? mat1 : mat2).play();
-    }
-
-    private static String getFileURL(String relativePath) {
-        return "file:///" + System.getProperty("user.dir").replace("\\", "/") + relativePath;
     }
 }
