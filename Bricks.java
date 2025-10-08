@@ -36,7 +36,8 @@ public class Bricks extends GameObject {
     }
 
     public void takeHit(int power) {
-        health = health - power;
+       // health = health - power;
+       health = 0;
     }
 
     public Node getNode() {

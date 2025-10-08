@@ -77,12 +77,10 @@ public class MainGame {
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         
-        // Thêm sự kiện đóng cửa sổ
         primaryStage.setOnCloseRequest(e -> {
             if (gameLoop != null) {
                 gameLoop.stop();
             }
-            // Không exit, chỉ đóng stage
         });
         
         primaryStage.show();
