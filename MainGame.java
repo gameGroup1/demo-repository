@@ -11,6 +11,7 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 import java.util.Random;
+import javafx.scene.input.KeyCode;
 
 public class MainGame {
     private final int widthW = 400;
@@ -77,10 +78,12 @@ public class MainGame {
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         
+        // Thêm sự kiện đóng cửa sổ
         primaryStage.setOnCloseRequest(e -> {
             if (gameLoop != null) {
                 gameLoop.stop();
             }
+            // Không exit, chỉ đóng stage
         });
         
         primaryStage.show();
@@ -125,6 +128,12 @@ public class MainGame {
         scene.setOnMouseMoved(event -> {
             if (paddle != null && leftWall != null && rightWall != null) {
                 paddle.move(event, leftWall, rightWall);
+            }
+        });
+        
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                Pause.show(primaryStage, gameLoop);
             }
         });
     }
