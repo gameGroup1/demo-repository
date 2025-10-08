@@ -8,20 +8,6 @@ public class Update {
         }
     }
 
-    /* Cập nhật vị trí của tấm ván (gọi sau move của Paddle) */
-    public static void position(Paddle paddle, Wall wall) {
-        if (Collision.check(paddle, wall)) { // Kiểm tra va chạm để điều chỉnh nếu cần
-            // Giới hạn vị trí paddle để không vượt ra ngoài biên wall
-            if (paddle.getX() < wall.getX()) {
-                paddle.setX(wall.getX());
-            }
-            if (paddle.getX() + paddle.getWidth() > wall.getX() + wall.getWidth()) {
-                paddle.setX(wall.getX() + wall.getWidth() - paddle.getWidth());
-            }
-        }
-    }
-
-    /* Cập nhật vị trí của quả bóng sau khi va vào tường */
     public static void position(Ball ball, Wall wall) {
         if (Collision.check(ball, wall)) { // Sử dụng Collision để kiểm tra
             if (ball.getX() - ball.getRadius() <= wall.getX() || ball.getX() + ball.getRadius() >= wall.getX() + wall.getWidth()) {

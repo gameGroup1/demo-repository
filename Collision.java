@@ -18,15 +18,4 @@ public class Collision {
         }
         return false;
     }
-
-    public static boolean check(Paddle paddle, Wall wall) {
-        if (paddle == null || wall == null) {
-            return false; // Xử lý lỗi
-        }
-
-        return paddle.getX() < wall.getX() + wall.getWidth() &&
-                paddle.getX() + paddle.getWidth() > wall.getX() &&
-                paddle.getY() < wall.getY() + wall.getHeight() &&
-                paddle.getY() + paddle.getHeight() > wall.getY();
-    }
 }

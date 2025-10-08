@@ -5,8 +5,8 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.animation.AnimationTimer;
-import javafx.animation.PauseTransition; // Import cho delay (phần 4.2.3: đa luồng với delay)
-import javafx.util.Duration; // Import Duration cho PauseTransition
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
 import javafx.scene.input.MouseEvent;
 import java.util.Random;
 
@@ -28,7 +28,7 @@ public class MainGame extends Application {
     private Wall topWall; // Tường trên
     private Bricks[] bricks;
     private Group root; // Root cho scene graph
-    private AnimationTimer gameLoop; // Game loop (private để kiểm soát start/stop - phần 4.2.3)
+    private AnimationTimer gameLoop;
 
     // Constructor: Khởi tạo tất cả đối tượng game (áp dụng đóng gói và trừu tượng hóa)
     public MainGame() {
@@ -36,16 +36,15 @@ public class MainGame extends Application {
         Material[] materials = {Material.rock, Material.metal, Material.wood, Material.jewel};
         Random random = new Random();
 
-        // Khởi tạo Ball (vị trí giữa dưới, vận tốc ban đầu: phải-lên)
         double ballX = (widthW / 2.0) - radiusB;
         double ballY = heightW - heightP - (radiusB * 2);
         ball = new Ball(ballX, ballY, radiusB, speedB, Material.metal);
         ball.setDx(speedB); // Vận tốc X ban đầu (phải)
         ball.setDy(-speedB); // Vận tốc Y ban đầu (lên)
 
-        // Khởi tạo Paddle (vị trí giữa dưới màn hình)
         double paddleX = (widthW - widthP) / 2.0;
-        paddle = new Paddle(paddleX, heightW - heightP, widthP, heightP, Material.wood);
+        double paddleY = heightW - heightP;
+        paddle = new Paddle(paddleX, paddleY, widthP, heightP, Material.wood);
 
         // Khởi tạo ba bức tường (left, right, top - kế thừa GameObject, phần 5.1)
         leftWall = new Wall(0, 0, wallThickness, heightW, Material.metal); // Tường trái: mỏng, cao toàn màn
@@ -97,10 +96,6 @@ public class MainGame extends Application {
         delay.play(); // Bắt đầu delay
     }
 
-    /**
-     * Phương thức riêng: Thêm tất cả đối tượng game vào root (áp dụng đa hình: getNode() từ GameObject - phần 5.2).
-     * Gọi sau delay để màn hình đen trước khi hiển thị game (phần 4.2.1).
-     */
     private void addGameElementsToRoot() {
         // Kiểm tra null và thêm Paddle, Ball vào root
         if (paddle != null && paddle.getNode() != null) {
@@ -110,7 +105,6 @@ public class MainGame extends Application {
             root.getChildren().add(ball.getNode());
         }
 
-        // Thêm ba bức tường vào root để hiển thị (phần 4.2.1: giao diện biên giới)
         if (leftWall != null && leftWall.getNode() != null) {
             root.getChildren().add(leftWall.getNode());
         }
@@ -121,7 +115,6 @@ public class MainGame extends Application {
             root.getChildren().add(topWall.getNode());
         }
 
-        // Thêm tất cả Bricks vào root (nếu null, bỏ qua - xử lý lỗi phần 4.1.1)
         if (bricks != null) {
             for (Bricks brick : bricks) {
                 if (brick != null && brick.getNode() != null) {
@@ -143,34 +136,18 @@ public class MainGame extends Application {
         gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                // Kiểm tra null trước update (xử lý lỗi phần 4.1.1)
                 if (ball == null) return;
-
-                // Cập nhật vị trí Ball (phần 4.1.1: di chuyển Ball theo dx, dy)
                 Update.position(ball);
 
-                // Kiểm tra va chạm và phản xạ với ba bức tường riêng (sử dụng Collision.check với GameObject chung - đa hình phần 5.2)
-                if (leftWall != null) {
-                    Update.position(ball, leftWall); // Va chạm tường trái (phản xạ ngang)
-                }
-                if (rightWall != null) {
-                    Update.position(ball, rightWall); // Va chạm tường phải (phản xạ ngang)
-                }
-                if (topWall != null) {
-                    Update.position(ball, topWall); // Va chạm tường trên (phản xạ dọc)
-                }
-                if (paddle != null) {
-                    Update.position(ball, paddle); // Va chạm với Paddle (góc lệch dựa trên vị trí chạm)
-                }
-                if (bricks != null) {
-                    Update.position(ball, bricks); // Va chạm với Bricks (phá gạch, chuẩn hóa speed)
-                }
+                if (leftWall != null) Update.position(ball, leftWall);
+                if (rightWall != null) Update.position(ball, rightWall);
+                if (topWall != null) Update.position(ball, topWall);
+                if (paddle != null) Update.position(ball, paddle);
+                if (bricks != null) Update.position(ball, bricks);
 
-                // Giới hạn Paddle sử dụng left/right wall (sau mouse move - phần 4.1.1: Paddle không vượt biên)
                 if (paddle != null && leftWall != null && rightWall != null) {
-                    // Tùy chỉnh logic giới hạn (vì Update.position(paddle, wall) cần wall tổng, sử dụng left/right)
-                    double leftBound = leftWall.getX() + leftWall.getWidth(); // Biên trái sau tường
-                    double rightBound = rightWall.getX(); // Biên phải trước tường
+                    double leftBound = leftWall.getX() + leftWall.getWidth();
+                    double rightBound = rightWall.getX();
                     if (paddle.getX() < leftBound) {
                         paddle.setX(leftBound);
                     }
@@ -179,25 +156,21 @@ public class MainGame extends Application {
                     }
                 }
 
-                // Render tất cả đối tượng (đa hình: mỗi lớp override render - phần 5.2)
-                if (paddle != null) {
-                    paddle.render(); // Đồng bộ Rectangle của Paddle
-                }
-                ball.render(); // Đồng bộ Circle của Ball
-                if (leftWall != null) leftWall.render(); // Render tường trái
-                if (rightWall != null) rightWall.render(); // Render tường phải
-                if (topWall != null) topWall.render(); // Render tường trên
+                if (paddle != null) paddle.render();
+                ball.render();
+                if (leftWall != null) leftWall.render();
+                if (rightWall != null) rightWall.render();
+                if (topWall != null) topWall.render();
                 if (bricks != null) {
                     for (Bricks brick : bricks) {
                         if (brick != null) {
-                            brick.render(); // Ẩn nếu isBreak = true (hiệu ứng phá gạch - phần 4.2.2)
+                            brick.render();
                         }
                     }
                 }
 
                 // Xử lý lỗi: Nếu Ball rơi dưới màn hình (mất mạng, thoát game - phần 4.1.1)
                 if (ball.getY() > heightW + radiusB) { // + radiusB để Ball hoàn toàn rơi
-                    // Thoát game khi bóng rơi vào khoảng trống bên dưới (tùy chọn: trừ mạng hoặc game over - phần 4.3.1)
                     System.exit(0);
                 }
             }
@@ -207,6 +180,6 @@ public class MainGame extends Application {
 
     // Main method: Khởi chạy Application (phần 4.1.2: cài đặt)
     public static void main(String[] args) {
-        launch(args); // Chạy JavaFX Application
+        launch(args);
     }
 }
