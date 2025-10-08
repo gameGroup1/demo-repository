@@ -1,21 +1,34 @@
 {
     "version": "0.2.0",
     "configurations": [
-        
+        {
+            "type": "java",
+            "name": "EndMenu",
+            "request": "launch",
+            "mainClass": "EndMenu",
+            "projectName": "gameg1_a60f91f"
+        },
+        {
+            "type": "java",
+            "name": "GameMenu",
+            "request": "launch",
+            "mainClass": "GameMenu",
+            "projectName": "gameg1_a60f91f"
+        },
         {
             "type": "java",
             "name": "MainGame",
             "request": "launch",
             "mainClass": "MainGame",
             "projectName": "gameg1_a60f91f",
-             "vmArgs": "--module-path \"C:\\game\\javafx-sdk-21.0.8\\lib\" --add-modules javafx.controls,javafx.fxml,javafx.media,javafx.graphics,javafx.base --enable-native-access=javafx.graphics"
+            "vmArgs": "--module-path \"C:\\game\\javafx-sdk-21.0.8\\lib\" --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web,javafx.base --enable-native-access=javafx.graphics"
         },
         {
             "type": "java",
             "name": "Run MainGame (JavaFX 21.0.8)",
             "request": "launch",
             "mainClass": "MainGame",
-            "vmArgs": "--module-path \"C:\\game\\javafx-sdk-21.0.8\\lib\" --add-modules javafx.controls,javafx.fxml,javafx.media,javafx.graphics,javafx.base --enable-native-access=javafx.graphics"
+            "vmArgs": "--module-path \"C:\\game\\javafx-sdk-21.0.8\\lib\" --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web,javafx.base --enable-native-access=javafx.graphics"
         },
         {
             "type": "java",
