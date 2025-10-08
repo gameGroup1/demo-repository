@@ -37,5 +37,8 @@
             "e:\\java\\javafx-sdk-21.0.8\\lib\\javafx.swing.jar",
             "e:\\java\\javafx-sdk-21.0.8\\lib\\javafx.media.jar"
         ]
-    }
+    },
+    "java.project.sourcePaths": [
+        ""
+    ]
 }

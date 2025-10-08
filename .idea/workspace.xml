@@ -34,9 +34,9 @@
 }</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 5
+  &quot;associatedIndex&quot;: 6
 }</component>
-  <component name="ProjectId" id="33NYQ2RbrMChIcKiDwdnQhWqya1" />
+  <component name="ProjectId" id="33kGsG0wvAv5gexlJDXHDfrNQPQ" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -80,12 +80,8 @@
       <created>1759158977674</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1759158977674</updated>
-      <workItem from="1759158979362" duration="654000" />
-      <workItem from="1759287991413" duration="8000" />
-      <workItem from="1759564625005" duration="1651000" />
-      <workItem from="1759636113567" duration="2810000" />
-      <workItem from="1759639176456" duration="1109000" />
+      <updated>1759853876409</updated>
+      <workItem from="1759853887559" duration="2749000" />
     </task>
     <servers />
   </component>
