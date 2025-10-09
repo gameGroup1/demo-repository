@@ -2,10 +2,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.media.AudioClip;
 
 public enum Material {
-    wood(Color.BURLYWOOD, 2.0, "/sound_and_music/wood_break.mp3"),
-    rock(Color.BROWN, 3.0, "/sound_and_music/rock_break.mp3"),
-    metal(Color.STEELBLUE, 4.0, "/sound_and_music/metal_break.mp3"),
-    jewel(Color.CRIMSON, 1.0, "/sound_and_music/jewel_break.mp3");
+    wood(Color.BURLYWOOD, 2.0, Path.woodSound),
+    rock(Color.BROWN, 3.0, Path.rockSound),
+    metal(Color.STEELBLUE, 4.0, Path.metalSound),
+    jewel(Color.CRIMSON, 1.0, Path.jewelSound);
 
     private final Color color;
     private final double hardness;
@@ -17,8 +17,7 @@ public enum Material {
         this.hardness = hardness;
         AudioClip tempSound = null;
         try {
-            tempSound = new AudioClip(Frames.getFileURL(soundPath));
-            tempSound.play(0.0); // Preload với volume 0
+            tempSound = new AudioClip(Path.getFileURL(soundPath));
         } catch (Exception e) {
             System.err.println("Failed to load sound for " + this.name() + ": " + e.getMessage());
         }

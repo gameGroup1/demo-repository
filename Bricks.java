@@ -25,17 +25,17 @@ public class Bricks extends GameObject {
 
     private void loadFrameAndSheet(){
         if(getMaterial().equals(Material.metal)){
-            spriteSheet = Frames.metalSprite;
-            frameViewport = Frames.metalBrick;
+            spriteSheet = BrickImage.metalSprite;
+            frameViewport = BrickImage.metalFrame;
         } else if(getMaterial().equals(Material.rock)){
-            spriteSheet = Frames.rockSprite;
-            frameViewport = Frames.rockBrick;
+            spriteSheet = BrickImage.rockSprite;
+            frameViewport = BrickImage.rockFrame;
         } else if(getMaterial().equals(Material.wood)){
-            spriteSheet = Frames.woodSprite;
-            frameViewport = Frames.woodBrick;
+            spriteSheet = BrickImage.woodSprite;
+            frameViewport = BrickImage.woodFrame;
         } else if(getMaterial().equals(Material.jewel)){
-            spriteSheet = Frames.jewelSprite;
-            frameViewport = Frames.jewelBrick;
+            spriteSheet = BrickImage.jewelSprite;
+            frameViewport = BrickImage.jewelFrame;
         }
     }
 

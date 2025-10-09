@@ -5,19 +5,6 @@ public abstract class GameObject {
     private int height;
     private Material material;
 
-    public GameObject(double x, double y, Material material){
-        this.x = x;
-        this.y = y;
-        this.material = material;
-    }
-
-    public GameObject(double x, double y, int width, int height){
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-    }
-
     public GameObject(double x, double y, int width, int height, Material material) {
         this.x = x;
         this.y = y;
@@ -28,6 +15,9 @@ public abstract class GameObject {
 
     public void setX(double x) { this.x = x; }
     public void setY(double y) { this.y = y; }
+    public void setWidth(int width) { this.width = width; }
+    public void setHeight(int height) { this.height = height; }
+    public void setMaterial(Material material) { this.material = material; }
 
     public double getX() { return x; }
     public double getY() { return y; }
