@@ -1,29 +1,51 @@
-import javafx.scene.shape.Rectangle;
+import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
 
 public class Wall extends GameObject {
-    private Rectangle rect;
-    private Color color;
+    private Block[] blocks;
+    private String direction;
+    private Group blockGroup; // Group để chứa tất cả ImageView của các block
 
-    public Wall(double x, double y, int width, int height, Color color) {
+    public Wall(String direction, double x, double y, int width, int height, int blockSize) {
         super(x, y, width, height);
-        this.color = color; // Màu xám cho tường
-        rect = new Rectangle(x, y, width, height);
+        this.direction = direction;
+        int blockLength = direction.equals("top") ? width / blockSize : height / blockSize;
+        blocks = new Block[blockLength];
+        blockGroup = new Group(); // Tạo Group để ghép các block
+        makeBlocks(blockSize);
     }
 
-    // Hàm render: Đồng bộ thuộc tính từ GameObject sang Rectangle (nếu cần cập nhật động)
+    private void makeBlocks(int blockSize){
+        if (direction.equals("left")) {
+            for(int i = 1; i < blocks.length; i++) {
+                blocks[i] = new Block(getX(), i * blockSize, blockSize, blockSize);
+                blockGroup.getChildren().add(blocks[i].getNode()); // Thêm ImageView vào Group
+            }
+        } else if (direction.equals("right")) {
+            for(int i = 1; i < blocks.length; i++) {
+                blocks[i] = new Block(getX(), i * blockSize, blockSize, blockSize);
+                blockGroup.getChildren().add(blocks[i].getNode()); // Thêm ImageView vào Group
+            }
+        } else { // top wall
+            for(int i = 0; i < blocks.length; i++) {
+                blocks[i] = new Block(i * blockSize, 0, blockSize, blockSize);
+                blockGroup.getChildren().add(blocks[i].getNode()); // Thêm ImageView vào Group
+            }
+        }
+    }
+
     @Override
     public void render() {
-        rect.setX(getX());
-        rect.setY(getY());
-        rect.setWidth(getWidth());
-        rect.setHeight(getHeight());
-        rect.setFill(color);
+        // Vì wall tĩnh, không cần cập nhật, nhưng có thể gọi render cho từng block nếu cần
+        /*for (Block block : blocks) {
+            if (block != null) {
+                block.render();
+            }
+        }*/
     }
 
-    // Phương thức hỗ trợ: Trả về Node để thêm vào scene graph (Group hoặc Pane)
+    // Phương thức hỗ trợ: Trả về Node (Group chứa tất cả ImageView của blocks) để thêm vào scene graph
     public Node getNode() {
-        return rect;
+        return blockGroup;
     }
 }

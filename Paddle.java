@@ -12,8 +12,6 @@ public class Paddle extends GameObject {
         super(x, y, width, height);
         this.color = color;
         rect = new Rectangle(x, y, width, height);
-        rect.setWidth(width);
-        rect.setHeight(height);
         rect.setFill(color);
     }
 
@@ -35,6 +33,7 @@ public class Paddle extends GameObject {
     public void render() {
         rect.setX(getX());
         rect.setY(getY());
+        rect.setWidth(getWidth());
     }
 
     public Node getNode() {

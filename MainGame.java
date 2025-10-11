@@ -53,9 +53,10 @@ public class MainGame {
         double paddleX = (widthW - widthP) / 2.0;
         paddle = new Paddle(paddleX, heightW - heightP, widthP, heightP, Color.BROWN);
 
-        leftWall = new Wall(0, 0, wallThickness, heightW, Color.WHITE);
-        rightWall = new Wall(widthW - wallThickness, 0, wallThickness, heightW, Color.WHITE);
-        topWall = new Wall(0, 0, widthW, wallThickness, Color.WHITE);
+        // Tạo walls với direction và blockSize mới
+        leftWall = new Wall("left", 0, 0, wallThickness, heightW, wallThickness);
+        rightWall = new Wall("right", widthW - wallThickness, 0, wallThickness, heightW, wallThickness);
+        topWall = new Wall("top", 0, 0, widthW, wallThickness, wallThickness);
 
         bricks = new Bricks[50];
         capsules = new Capsule[50];
@@ -140,7 +141,7 @@ public class MainGame {
                 }
             }
         }
-        
+
     }
 
     private void setupInput(Scene scene) {
@@ -214,9 +215,6 @@ public class MainGame {
 
                 if (ball != null) ball.render();
                 if (paddle != null) paddle.render();
-                if (leftWall != null) leftWall.render();
-                if (rightWall != null) rightWall.render();
-                if (topWall != null) topWall.render();
                 for (Bricks brick : bricks) {
                     if (brick != null && !brick.isBreak()) brick.render();
                 }
@@ -256,7 +254,7 @@ public class MainGame {
             EffectManager.updatePower(ball, 3.0);
         }
         else if (type.equals("expandPaddle")) {
-            EffectManager.changeWidth(paddle, 1.5);
+            EffectManager.changeWidth(paddle, 2.0);
         }
         else if (type.equals("shrinkPaddle")) {
             EffectManager.changeWidth(paddle, 0.5);
