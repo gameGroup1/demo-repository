@@ -1,49 +1,71 @@
-public class Bricks {
-    private int x, y, width, height;
-    boolean isBreak = false;
+/* Lớp đại diện cho khối gạch trong game Arkanoid (kế thừa từ GameObject) */
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.Node;
+import javafx.geometry.Rectangle2D; // Import để sử dụng viewport cho sprite sheet
+import java.util.List;
+import java.util.ArrayList;
 
-    public Bricks(int x, int y, int width, int height) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+public class Bricks extends GameObject {
+    private ImageView imageView; // Đối tượng JavaFX để hiển thị hình ảnh
+    private Image spriteSheet; // Ảnh sprite sheet duy nhất chứa tất cả frames
+    private List<Rectangle2D> frameViewport; // Danh sách viewport (tọa độ và kích thước) của từng frame, tương ứng với các mức health
+    private int frameIndex = 0; // Chỉ số frame hiện tại dựa trên health
+
+    public Bricks(double x, double y, int width, int height, Material material) {
+        super(x, y, width, height, material); // Kế thừa từ GameObject
+        loadFrameAndSheet(); // Khởi tạo sprite sheet và frame viewport dựa trên vật liệu
+        imageView = new ImageView(spriteSheet);
+        updateFrame(); // Cập nhật frame ban đầu dựa trên health
+        imageView.setX(x);
+        imageView.setY(y);
+        imageView.setFitWidth(width);
+        imageView.setFitHeight(height);
     }
 
-    public void setX(int x) {
-        this.x = x;
+    private void loadFrameAndSheet(){
+        if(getMaterial().equals(Material.metal)){
+            spriteSheet = BrickImage.metalSprite;
+            frameViewport = BrickImage.metalFrame;
+        } else if(getMaterial().equals(Material.rock)){
+            spriteSheet = BrickImage.rockSprite;
+            frameViewport = BrickImage.rockFrame;
+        } else if(getMaterial().equals(Material.wood)){
+            spriteSheet = BrickImage.woodSprite;
+            frameViewport = BrickImage.woodFrame;
+        } else if(getMaterial().equals(Material.jewel)){
+            spriteSheet = BrickImage.jewelSprite;
+            frameViewport = BrickImage.jewelFrame;
+        }
     }
 
-    public void setY(int y) {
-        this.y = y;
+    private void updateFrame() {
+        if (!isBreak()) {
+            imageView.setViewport(frameViewport.get(frameIndex)); // Cập nhật viewport
+        }
     }
 
-    public void setWidth(int width) {
-        this.width = width;
+    @Override
+    public void render() {
+        if (imageView != null) {
+            if (!isBreak()) {
+                imageView.setVisible(true); // Hiển thị nếu chưa phá
+            } else {
+                imageView.setVisible(false); // Ẩn gạch nếu đã phá (phần 4.1.1: phá hủy Brick)
+            }
+        }
     }
 
-    public void setHeight(int height) {
-        this.height = height;
+    public boolean isBreak() {
+        return frameIndex >= frameViewport.size();
     }
 
-    public void setBreak(boolean isBreak) {
-        this.isBreak = isBreak;
+    public void takeHit(int power) {
+        frameIndex += power;
+        updateFrame();
     }
 
-    public int getX() {
-        return x;
+    public Node getNode() {
+        return imageView;
     }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    
 }

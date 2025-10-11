@@ -1,50 +1,43 @@
 /* Lớp đại diện cho tấm ván */
-public class Paddle {
-    private int x, y, width, height;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 
-    public Paddle(int x, int y, int width, int height) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+public class Paddle extends GameObject {
+    private Rectangle rect;
+
+    public Paddle(double x, double y, int width, int height, Material material) {
+        super(x, y, width, height, material);
+        rect = new Rectangle(x, y, width, height);
+        rect.setFill(material.getColor());
     }
 
-    public void move(int dx) {
-        x += dx;
-   }
+    public void move(MouseEvent event, Wall leftWall, Wall rightWall) {
+        if (event == null || leftWall == null || rightWall == null) return;
 
-    public void setX(int x) {
-        this.x = x;
+        double newX = event.getX();
+        double leftBound = leftWall.getX() + leftWall.getWidth();
+        double rightBound = rightWall.getX();
+
+        if (newX < leftBound) newX = leftBound;
+        else if (newX + getWidth() > rightBound) newX = rightBound - getWidth();
+
+        super.setX(newX);
+        rect.setX(newX);
     }
 
-    public void setY(int y) {
-        this.y = y;
+    @Override
+    public void render() {
+        rect.setX(getX());
+        rect.setY(getY());
+        rect.setWidth(getWidth());
+        rect.setHeight(getHeight());
+        if (getMaterial() != null) {
+            rect.setFill(getMaterial().getColor());
+        }
     }
 
-    public void setWidth(int width) {
-        this.width = width;
+    public Node getNode() {
+        return rect;
     }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-  
 }
-
-
