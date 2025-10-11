@@ -13,8 +13,8 @@ public class Ball extends GameObject{
      private Image image;
      private boolean visible;// Ảnh sprite sheet duy nhất chứa tất cả frames
 
-     public Ball(double x, double y, double radius, double speed, Material material) {
-          super(x,y,(int) radius * 2, (int) radius * 2, material);
+     public Ball(double x, double y, double radius, double speed) {
+          super(x,y,(int) radius * 2, (int) radius * 2);
           this.radius = radius;
           this.speed = speed;
           this.power = 1;

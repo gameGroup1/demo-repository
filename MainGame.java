@@ -22,17 +22,18 @@ public class MainGame {
     private final int widthP = 150;
     private final int heightP = 30;
     private final int radiusB = 10;
-    private final int speedB = 7;
+    private final int speedB = 10;
     private final int speedC = 5;
     private final int wallThickness = 30;
 
     private Ball ball; // Main ball reference for convenience
-    private List<Capsule> capsules = new ArrayList<>();
     private Paddle paddle;
     private Wall leftWall;
     private Wall rightWall;
     private Wall topWall;
     private Bricks[] bricks;
+    private Capsule[] capsules;
+    private List<Integer> capsuleIndex = new ArrayList<>();
     private Group root;
     private AnimationTimer gameLoop;
     private Stage primaryStage;
@@ -40,23 +41,24 @@ public class MainGame {
     private static int highestScore;
 
     public MainGame() {
-        Material[] materials = {Material.rock, Material.metal, Material.wood, Material.jewel};
+        int[] hardnessArray = {1, 2, 3, 4};
         Random random = new Random();
 
         double ballX = (widthW / 2.0) - radiusB;
         double ballY = heightW - heightP - (radiusB * 2);
-        ball = new Ball(ballX, ballY, radiusB, speedB, Material.metal);
+        ball = new Ball(ballX, ballY, radiusB, speedB);
         ball.setDx(speedB);
         ball.setDy(-speedB);
 
         double paddleX = (widthW - widthP) / 2.0;
-        paddle = new Paddle(paddleX, heightW - heightP, widthP, heightP, Material.wood);
+        paddle = new Paddle(paddleX, heightW - heightP, widthP, heightP, Color.BROWN);
 
-        leftWall = new Wall(0, 0, wallThickness, heightW, Material.wood);
-        rightWall = new Wall(widthW - wallThickness, 0, wallThickness, heightW, Material.wood);
-        topWall = new Wall(0, 0, widthW, wallThickness, Material.wood);
+        leftWall = new Wall(0, 0, wallThickness, heightW, Color.WHITE);
+        rightWall = new Wall(widthW - wallThickness, 0, wallThickness, heightW, Color.WHITE);
+        topWall = new Wall(0, 0, widthW, wallThickness, Color.WHITE);
 
         bricks = new Bricks[50];
+        capsules = new Capsule[50];
         int brickWidth = 90;
         int brickHeight = 30;
         int spacing = 5;
@@ -67,10 +69,20 @@ public class MainGame {
                 double brickX = col * (brickWidth + spacing) + wallThickness + 30;
                 double brickY = row * (brickHeight + spacing) + wallThickness + 100;
                 int index = row * colCount + col;
-                Material randomMaterial = materials[random.nextInt(materials.length)];
-                bricks[index] = new Bricks(brickX, brickY, brickWidth, brickHeight, randomMaterial);
+                int randomHardness = hardnessArray[random.nextInt(hardnessArray.length)];
+                double chance = random.nextDouble();
+                bricks[index] = new Bricks(brickX, brickY, brickWidth, brickHeight, randomHardness);
+                if (chance < 0.3) { // 30% chance to have a capsule
+                    capsules[index] = EffectManager.getCapsule(brickX, brickY, brickWidth, brickHeight, speedC);
+                    capsules[index].setVisible(false); // Initially invisible
+                    capsuleIndex.add(index);
+                } else {
+                    capsules[index] = null; // No capsule for this brick
+                }
             }
         }
+
+        preloadSounds();
     }
 
     public void start(Stage primaryStage) {
@@ -92,9 +104,8 @@ public class MainGame {
         });
 
         primaryStage.show();
-        Material.preloadSounds();
 
-        PauseTransition delay = new PauseTransition(Duration.seconds(1));
+        PauseTransition delay = new PauseTransition(Duration.seconds(3));
         delay.setOnFinished(event -> {
             addGameElementsToRoot();
             setupInput(scene);
@@ -109,7 +120,7 @@ public class MainGame {
         }
 
         if (ball != null && ball.getNode() != null) {
-                root.getChildren().add(ball.getNode());
+            root.getChildren().add(ball.getNode());
         }
 
         if (leftWall != null && leftWall.getNode() != null) {
@@ -129,6 +140,7 @@ public class MainGame {
                 }
             }
         }
+        
     }
 
     private void setupInput(Scene scene) {
@@ -149,42 +161,54 @@ public class MainGame {
         gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                // Update capsules
-                for (Capsule cap : new ArrayList<>(capsules)) {
-                    if (!cap.isVisible()) continue;
-
+                // Update capsules first
+                for (int index : capsuleIndex) {
+                    Capsule cap = capsules[index];
+                    if (cap == null || !cap.isVisible()) continue;
                     Update.position(cap);
                     if (cap.getY() + cap.getHeight() > heightW) {
                         cap.setVisible(false);
                         root.getChildren().remove(cap.getNode());
-                        capsules.remove(cap);
                     }
                     if (Collision.check(paddle, cap)) {
                         applyEffect(cap);
                         cap.setVisible(false);
                         root.getChildren().remove(cap.getNode());
-                        capsules.remove(cap);
                     }
                     cap.render();
                 }
 
-                Update.position(ball);
-                Update.position(ball, leftWall);
-                Update.position(ball, rightWall);
-                Update.position(ball, topWall);
-                Update.position(ball, paddle);
+                // Update ball with sub-stepping to prevent tunneling
+                double ballSpeed = ball.getSpeed();
+                int subSteps = (int) Math.ceil(ballSpeed / 5.0); // Adjust step size as needed, e.g., 5 pixels per sub-step
+                if (subSteps < 1) subSteps = 1;
 
-                Bricks hitBrick = Update.position(ball, bricks);
-                if (hitBrick != null && hitBrick.isBreak()) {
-                    score += 10;
-                    highestScore = Math.max(score, highestScore);
-                    root.getChildren().remove(hitBrick.getNode());
-                    Random rand = new Random();
-                    if (rand.nextDouble() < 0.3) {
-                        Capsule cap = EffectManager.getCapsule(hitBrick.getX(), hitBrick.getY(), hitBrick.getWidth(), hitBrick.getHeight(), speedC);
-                        cap.setVisible(true);
-                        root.getChildren().add(cap.getNode());
-                        capsules.add(cap);
+                for (int s = 0; s < subSteps; s++) {
+                    double stepDx = ball.getDx() / subSteps;
+                    double stepDy = ball.getDy() / subSteps;
+
+                    ball.setX(ball.getX() + stepDx);
+                    ball.setY(ball.getY() + stepDy);
+
+                    // Check collisions in each sub-step
+                    Update.position(ball, leftWall);
+                    Update.position(ball, rightWall);
+                    Update.position(ball, topWall);
+                    Update.position(ball, paddle);
+
+                    int breakIndex = Update.position(ball, bricks);
+                    if (breakIndex != -1 && bricks[breakIndex].isBreak()) {
+                        score += 10;
+                        highestScore = Math.max(score, highestScore);
+                        root.getChildren().remove(bricks[breakIndex].getNode());
+                        bricks[breakIndex] = null; // Remove reference to broken brick
+                        if (capsules[breakIndex] != null && !capsules[breakIndex].isVisible()) {
+                            Capsule cap = capsules[breakIndex];
+                            if (!root.getChildren().contains(cap.getNode())) {
+                                root.getChildren().add(cap.getNode());
+                            }
+                            cap.setVisible(true);
+                        }
                     }
                 }
 
@@ -198,6 +222,7 @@ public class MainGame {
                 }
 
                 if (ball.getY() > heightW) {
+                    Update.loseLifeSound.play();
                     gameLoop.stop();
                     saveHighestScore(); // Lưu highestScore khi game over
                     Platform.runLater(() -> {
@@ -211,31 +236,29 @@ public class MainGame {
     }
 
     private void applyEffect(Capsule capsule) {
-        if (capsule.equals(EffectManager.inc10PointCapsule)) score += 10;
-        else if (capsule.equals(EffectManager.dec10PointCapsule)) score -= 10;
-        else if (capsule.equals(EffectManager.inc50PointCapsule)) score += 50;
-        else if (capsule.equals(EffectManager.dec50PointCapsule)) score -= 50;
-        else if (capsule.equals(EffectManager.inc100PointCapsule)) score += 100;
-        else if (capsule.equals(EffectManager.dec100PointCapsule)) score -= 100;
-        else if (capsule.equals(EffectManager.fastBallCapsule)) {
+        String type = capsule.getEffectType();  // Sử dụng type thay vì equals object
+        if (type.equals("inc10Point")) score += 10;
+        else if (type.equals("dec10Point")) score -= 10;
+        else if (type.equals("inc50Point")) score += 50;
+        else if (type.equals("dec50Point")) score -= 50;
+        else if (type.equals("inc100Point")) score += 100;
+        else if (type.equals("dec100Point")) score -= 100;
+        else if (type.equals("fastBall")) {
             EffectManager.updateSpeed(ball, 1.5);
         }
-        else if (capsule.equals(EffectManager.slowBallCapsule)) {
+        else if (type.equals("slowBall")) {
             EffectManager.updateSpeed(ball, 0.5);
         }
-       /* else if (capsule) {
-            for (Ball b : activeBalls) EffectManager.updatePower(ball, 2.0);
-        }
-        else if (capsule == toxicBallCapsule) {
+        /* else if (type.equals("toxicBall")) {  // Nếu có từ comment
             for (Ball b : activeBalls) EffectManager.updatePower(b, 0.5);
         } */
-        else if (capsule.equals(EffectManager.powerBallCapsule)) {
+        else if (type.equals("powerBall")) {
             EffectManager.updatePower(ball, 3.0);
         }
-        else if (capsule.equals(EffectManager.expandPaddleCapsule)) {
+        else if (type.equals("expandPaddle")) {
             EffectManager.changeWidth(paddle, 1.5);
         }
-        else if (capsule.equals(EffectManager.shrinkPaddleCapsule)) {
+        else if (type.equals("shrinkPaddle")) {
             EffectManager.changeWidth(paddle, 0.5);
         }
 
@@ -250,6 +273,19 @@ public class MainGame {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void preloadSounds() {
+        for(Capsule cap : capsules) {
+            if (cap != null) {
+                cap.playSound(0.0);
+            }
+        }
+        Update.loseLifeSound.play(0.0);
+        Update.brickBreakSound.play(0.0);
+        Collision.ballBrickSound.play(0.0);
+        Collision.ballPaddleSound.play(0.0);
+        Collision.ballWallSound.play(0.0);
     }
 
     // Phương thức tĩnh để tạo và hiển thị game mới (thay thế cho launch())

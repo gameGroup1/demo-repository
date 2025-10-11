@@ -10,10 +10,13 @@ public class Bricks extends GameObject {
     private ImageView imageView; // Đối tượng JavaFX để hiển thị hình ảnh
     private Image spriteSheet; // Ảnh sprite sheet duy nhất chứa tất cả frames
     private List<Rectangle2D> frameViewport; // Danh sách viewport (tọa độ và kích thước) của từng frame, tương ứng với các mức health
-    private int frameIndex = 0; // Chỉ số frame hiện tại dựa trên health
+    private int frameIndex = 0;
+    private int hardness;
+    // Chỉ số frame hiện tại dựa trên health
 
-    public Bricks(double x, double y, int width, int height, Material material) {
-        super(x, y, width, height, material); // Kế thừa từ GameObject
+    public Bricks(double x, double y, int width, int height, int hardness) {
+        super(x, y, width, height); // Kế thừa từ GameObject
+        this.hardness = hardness;
         loadFrameAndSheet(); // Khởi tạo sprite sheet và frame viewport dựa trên vật liệu
         imageView = new ImageView(spriteSheet);
         updateFrame(); // Cập nhật frame ban đầu dựa trên health
@@ -24,16 +27,16 @@ public class Bricks extends GameObject {
     }
 
     private void loadFrameAndSheet(){
-        if(getMaterial().equals(Material.metal)){
+        if(hardness == 4){
             spriteSheet = BrickImage.metalSprite;
             frameViewport = BrickImage.metalFrame;
-        } else if(getMaterial().equals(Material.rock)){
+        } else if(hardness == 3){
             spriteSheet = BrickImage.rockSprite;
             frameViewport = BrickImage.rockFrame;
-        } else if(getMaterial().equals(Material.wood)){
+        } else if(hardness == 2){
             spriteSheet = BrickImage.woodSprite;
             frameViewport = BrickImage.woodFrame;
-        } else if(getMaterial().equals(Material.jewel)){
+        } else if(hardness == 1){
             spriteSheet = BrickImage.jewelSprite;
             frameViewport = BrickImage.jewelFrame;
         }

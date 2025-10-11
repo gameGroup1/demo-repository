@@ -172,7 +172,6 @@ public class EndMenu {
     }
 
     private static void startNewGame() {
-        Material.preloadSounds();
         // Không cần sleep nữa, trực tiếp khởi chạy game mới
         MainGame.createAndShowGame();
     }

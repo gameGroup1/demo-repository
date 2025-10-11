@@ -6,44 +6,76 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 public class EffectManager {
-    private static final List<Capsule> capsules = new ArrayList<>();// Static list để quản lý multi-balls tạm thời
-
-    public static final Capsule inc10PointCapsule = new Capsule(Path.inc10PointCapsule, Path.getPointSound);
-    public static final Capsule dec10PointCapsule = new Capsule(Path.dec10PointCapsule, Path.losePointSound);
-    public static final Capsule inc50PointCapsule = new Capsule(Path.inc50PointCapsule, Path.getPointSound);
-    public static final Capsule dec50PointCapsule = new Capsule(Path.dec50PointCapsule, Path.losePointSound);
-    public static final Capsule inc100PointCapsule = new Capsule(Path.inc100PointCapsule, Path.getPointSound);
-    public static final Capsule dec100PointCapsule = new Capsule(Path.dec100PointCapsule, Path.losePointSound);
-    public static final Capsule fastBallCapsule = new Capsule(Path.fastBallCapsule, Path.fastSound);
-    public static final Capsule slowBallCapsule = new Capsule(Path.slowBallCapsule, Path.slowSound);
-    public static final Capsule fireBallCapsule = new Capsule(Path.fireBallCapsule, Path.fireSound);
-    public static final Capsule toxicBallCapsule = new Capsule(Path.toxicBallCapsule, Path.toxicSound);
-    public static final Capsule powerBallCapsule = new Capsule(Path.powerBallCapsule, Path.powerUpSound);
-    public static final Capsule expandPaddleCapsule = new Capsule(Path.expandPaddleCapsule, Path.transformSound);
-    public static final Capsule shrinkPaddleCapsule = new Capsule(Path.shrinkPaddleCapsule, Path.transformSound);
-
-    static {
-        capsules.add(inc10PointCapsule);
-        capsules.add(dec10PointCapsule);
-        capsules.add(inc50PointCapsule);
-        capsules.add(dec50PointCapsule);
-        capsules.add(inc100PointCapsule);
-        capsules.add(dec100PointCapsule);
-        capsules.add(fastBallCapsule);
-        capsules.add(slowBallCapsule);
-        capsules.add(fireBallCapsule);
-        capsules.add(toxicBallCapsule);
-        capsules.add(powerBallCapsule);
-        capsules.add(expandPaddleCapsule);
-        capsules.add(shrinkPaddleCapsule);
-    }
+    private static final List<String> effectTypes = new ArrayList<>(List.of(
+            "inc10Point", "dec10Point", "inc50Point", "dec50Point", "inc100Point", "dec100Point",
+            "fastBall", "slowBall", "fireBall", "toxicBall", "powerBall", "expandPaddle", "shrinkPaddle"
+    ));
 
     public static Capsule getCapsule(double x, double y, int width, int height, double speed) {
         Random random = new Random();
-        int randomIndex = random.nextInt(capsules.size());
-        Capsule capsule = capsules.get(randomIndex);
-        capsule.init(x, y, width, height, speed);
+        String type = effectTypes.get(random.nextInt(effectTypes.size()));
+
+        // Tạo instance Capsule mới cho mỗi gạch
+        String imagePath = getImagePathForType(type);
+        String soundPath = getSoundPathForType(type);
+        Capsule capsule = new Capsule(imagePath, soundPath);
+        capsule.init(x, y, width, height, speed, type); // Vị trí và kích thước phù hợp
+        capsule.setVisible(false);
         return capsule;
+    }
+
+    private static String getImagePathForType(String type) {
+        if (type.equals("inc10Point")) {
+            return Path.inc10PointCapsule;
+        } else if (type.equals("dec10Point")) {
+            return Path.dec10PointCapsule;
+        } else if (type.equals("inc50Point")) {
+            return Path.inc50PointCapsule;
+        } else if (type.equals("dec50Point")) {
+            return Path.dec50PointCapsule;
+        } else if (type.equals("inc100Point")) {
+            return Path.inc100PointCapsule;
+        } else if (type.equals("dec100Point")) {
+            return Path.dec100PointCapsule;
+        } else if (type.equals("fastBall")) {
+            return Path.fastBallCapsule;
+        } else if (type.equals("slowBall")) {
+            return Path.slowBallCapsule;
+        } else if (type.equals("fireBall")) {
+            return Path.fireBallCapsule;
+        } else if (type.equals("toxicBall")) {
+            return Path.toxicBallCapsule;
+        } else if (type.equals("powerBall")) {
+            return Path.powerBallCapsule;
+        } else if (type.equals("expandPaddle")) {
+            return Path.expandPaddleCapsule;
+        } else if (type.equals("shrinkPaddle")) {
+            return Path.shrinkPaddleCapsule;
+        } else {
+            return Path.inc10PointCapsule; // Fallback (giá trị mặc định)
+        }
+    }
+
+    private static String getSoundPathForType(String type) {
+        if (type.equals("inc10Point") || type.equals("inc50Point") || type.equals("inc100Point")) {
+            return Path.getPointSound;
+        } else if (type.equals("dec10Point") || type.equals("dec50Point") || type.equals("dec100Point")) {
+            return Path.losePointSound;
+        } else if (type.equals("fastBall")) {
+            return Path.fastSound;
+        } else if (type.equals("slowBall")) {
+            return Path.slowSound;
+        } else if (type.equals("fireBall")) {
+            return Path.fireSound;
+        } else if (type.equals("toxicBall")) {
+            return Path.toxicSound;
+        } else if (type.equals("powerBall")) {
+            return Path.powerUpSound;
+        } else if (type.equals("expandPaddle") || type.equals("shrinkPaddle")) {
+            return Path.transformSound;
+        } else {
+            return Path.getPointSound; // Fallback (giá trị mặc định)
+        }
     }
 
     public static void updatePower(Ball ball, double factor) {
