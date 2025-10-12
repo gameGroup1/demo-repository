@@ -1,38 +1,41 @@
-import javafx.scene.paint.Color;
+/*import javafx.scene.paint.Color;
 import javafx.scene.media.AudioClip;
 
-public class Material {
-    private static AudioClip woodSound;
-    private static AudioClip rockSound;
-    private static AudioClip metalSound;
-    private static AudioClip jewelSound;
+public enum Material {
+    wood(Color.BURLYWOOD, 2.0, Path.woodSound),
+    rock(Color.BROWN, 3.0, Path.rockSound),
+    metal(Color.STEELBLUE, 4.0, Path.metalSound),
+    jewel(Color.CRIMSON, 1.0, Path.jewelSound);
 
-    // Các hằng số static final (singleton-like)
-    public static final Material wood = new Material(Color.BURLYWOOD, 2.0);
-    public static final Material rock = new Material(Color.BROWN, 3.0);
-    public static final Material metal = new Material(Color.STEELBLUE, 4.0);
-    public static final Material jewel = new Material(Color.CRIMSON, 1.0);
+    private final Color color;
+    private final double hardness;
+    private final AudioClip sound;
 
-    private Color color;
-    private double hardness;
-
-    // Constructor
-    public Material(Color color, double hardness) {
+    // Khởi tạo với xử lý lỗi (phần 4.1.1)
+    Material(Color color, double hardness, String soundPath) {
         this.color = color;
         this.hardness = hardness;
+        AudioClip tempSound = null;
+        try {
+            tempSound = new AudioClip(Path.getFileURL(soundPath));
+        } catch (Exception e) {
+            System.err.println("Failed to load sound for " + this.name() + ": " + e.getMessage());
+        }
+        this.sound = tempSound;
     }
 
-    // ✅ Hàm khởi tạo âm thanh — gọi sau khi JavaFX Application đã khởi động
-    public static void initSounds() {
-        try {
-            woodSound = new AudioClip(getFileURL("/sound_and_music/wood_break.mp3"));
-            rockSound = new AudioClip(getFileURL("/sound_and_music/rock_break.mp3"));
-            metalSound = new AudioClip(getFileURL("/sound_and_music/metal_break.mp3"));
-            jewelSound = new AudioClip(getFileURL("/sound_and_music/jewel_break.mp3"));
-            System.out.println("All sounds loaded successfully.");
-        } catch (Exception e) {
-            System.err.println("Error loading sounds: " + e.getMessage());
-        }
+    public static void preloadSounds() {
+        wood.sound.play(0.0);
+        rock.sound.play(0.0);
+        metal.sound.play(0.0);
+        jewel.sound.play(0.0);
+    }
+
+    public boolean equals(Material other) {
+        if(!color.equals(other.color)) return false;
+        if(hardness != other.hardness) return false;
+        if(!sound.equals(other.sound)) return false;
+        return true;
     }
 
     public double getHardness() {
@@ -43,37 +46,22 @@ public class Material {
         return color;
     }
 
-    public boolean isEqual(Material other) {
-        if (other == null) return false;
-        return color.equals(other.getColor()) && hardness == other.getHardness();
-    }
-
     public int priority() {
-        if (this.isEqual(jewel)) return 4;
-        if (this.isEqual(wood)) return 3;
-        if (this.isEqual(rock)) return 2;
-        return 1;
+        if(this.equals(jewel)) return 3;
+        if(this.equals(wood)) return 2;
+        if(this.equals(rock)) return 1;
+        return 0;
     }
 
     public void play() {
-        try {
-            if (this.isEqual(jewel) && jewelSound != null) jewelSound.play();
-            else if (this.isEqual(wood) && woodSound != null) woodSound.play();
-            else if (this.isEqual(rock) && rockSound != null) rockSound.play();
-            else if (this.isEqual(metal) && metalSound != null) metalSound.play();
-        } catch (Exception e) {
-            System.err.println("Error playing sound: " + e.getMessage());
+        if (sound != null) sound.play();
+        else {
+            System.err.println(this.name() + " sound not loaded.");
         }
     }
 
-    public static void playSound(Material m1, Material m2) {
-        if (m1 == null || m2 == null) return;
-        if (m1.priority() > m2.priority()) m1.play();
-        else m2.play();
+    public static void playSound(Material mat1, Material mat2) {
+        if (mat1 == null || mat2 == null) return;
+        (mat1.priority() > mat2.priority() ? mat1 : mat2).play();
     }
-
-    private static String getFileURL(String relativePath) {
-        String basePath = System.getProperty("user.dir").replace("\\", "/");
-        return "file:///" + basePath + relativePath;
-    }
-}
+}*/

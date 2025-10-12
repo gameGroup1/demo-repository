@@ -46,7 +46,6 @@ public class GameMenu extends JFrame {
         title.setFont(new Font("Arial", Font.BOLD, 36));
         title.setForeground(Color.CYAN);
         title.setOpaque(false); // Làm title trong suốt
-        
         panel.add(Box.createVerticalStrut(30));
         panel.add(title);
         panel.add(Box.createVerticalStrut(30));
@@ -96,30 +95,30 @@ public class GameMenu extends JFrame {
             setVisible(false);
             startGame();
         });
-        
+
         bestScoreBtn.addActionListener(e -> {
             JOptionPane.showMessageDialog(this, "Best Score: 0");
         });
-        
+
         exitBtn.addActionListener(e -> System.exit(0));
     }
 
     // Method để làm button bán trong suốt
-   private void makeButtonTransparent(JButton button) {
-    button.setOpaque(false);
-    button.setContentAreaFilled(false);
-    button.setFocusPainted(false);
-    
-    // Nền tối bán trong suốt
-    button.setBackground(new Color(20, 40, 30, 10)); // Xanh đen trong suốt
-    button.setForeground(new Color(200, 255, 150)); // Chữ xanh lá vàng sáng
-    
-    // Viền xanh ngọc sáng
-    button.setBorder(BorderFactory.createCompoundBorder(
-    BorderFactory.createLineBorder(new Color(100, 255, 200, 150), 2), // Viền cyan TRONG SUỐT (alpha 150)
-    BorderFactory.createEmptyBorder(5, 15, 5, 15)
-));
-}
+    private void makeButtonTransparent(JButton button) {
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setFocusPainted(false);
+
+        // Nền tối bán trong suốt
+        button.setBackground(new Color(20, 40, 30, 10)); // Xanh đen trong suốt
+        button.setForeground(new Color(200, 255, 150)); // Chữ xanh lá vàng sáng
+
+        // Viền xanh ngọc sáng
+        button.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(100, 255, 200, 150), 2), // Viền cyan TRONG SUỐT (alpha 150)
+                BorderFactory.createEmptyBorder(5, 15, 5, 15)
+        ));
+    }
 
     // Method load image
     private Image loadBackgroundImage() {
@@ -132,14 +131,14 @@ public class GameMenu extends JFrame {
                 System.out.println("✓ Loaded from classpath");
                 return backgroundImage;
             }
-            
+
             // Cách 2: Đường dẫn tương đối từ thư mục chạy
             String[] paths = {
-                "resources/background.gif",
-                "./resources/background.gif",
-                "../resources/background.gif"
+                    "resources/background.gif",
+                    "./resources/background.gif",
+                    "../resources/background.gif"
             };
-            
+
             for (String path : paths) {
                 java.io.File file = new java.io.File(path);
                 System.out.println("Trying: " + file.getAbsolutePath());
@@ -149,9 +148,9 @@ public class GameMenu extends JFrame {
                     return backgroundImage;
                 }
             }
-            
+
             System.err.println("✗ Cannot find background.gif");
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -171,7 +170,6 @@ public class GameMenu extends JFrame {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            
             if (image != null) {
                 // Vẽ image trực tiếp (không dùng getScaledInstance vì nó chậm)
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
