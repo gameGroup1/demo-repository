@@ -19,6 +19,7 @@ public class Capsule extends GameObject {
         imageView.setViewport(new Rectangle2D(0, 0, 485, 128));
         try {
             sound = new AudioClip(Path.getFileURL(soundPath));
+            SoundManager.registerAudioClip(sound);
         } catch (Exception e) {
             System.err.println("Failed to load capsule sound: " + e.getMessage());
         }
@@ -43,9 +44,12 @@ public class Capsule extends GameObject {
     public boolean isVisible() { return visible; }
     public void setVisible(boolean visible) { this.visible = visible; }
 
-    public void playSound(double multiSpeed) {
-        if (sound != null) sound.play(multiSpeed);
-        else System.err.println("Capsule sound not loaded.");
+    public void playSound(double volume) {
+        if (sound != null) {
+            sound.play(volume);
+        } else {
+            System.err.println("Capsule sound not loaded.");
+        }
     }
 
     @Override

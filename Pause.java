@@ -72,7 +72,7 @@ public class Pause {
         });
         exitBtn.setOnMouseExited(e -> {
             exitBtn.setScaleX(1.0);
-            exitBtn.setScaleY(1.0);
+            continueBtn.setScaleY(1.0);
         });
 
         // Hiệu ứng scale khi focus (bàn phím) cho continueBtn
@@ -105,18 +105,23 @@ public class Pause {
             pauseStage.close();
         });
 
-        // Action cho Exit: Thoát game
+        // Action cho Exit: Dừng toàn bộ chương trình
         exitBtn.setOnAction(e -> {
+            // Đóng pause stage và parent stage (primary stage của game)
             pauseStage.close();
-            parentStage.close();
+            if (parentStage != null) {
+                parentStage.close();  // Sẽ trigger onCloseRequest trong MainGame để stop gameLoop, mediaPlayer, save score
+            }
+            // Dừng tất cả âm thanh qua SoundManager để đảm bảo không còn nhạc chạy ngầm
+            SoundManager.stopAllSounds();
+            // Dừng JavaFX application thread một cách sạch sẽ
             Platform.exit();
-            System.exit(0);
         });
 
         HBox buttonBox = new HBox(20);
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.getChildren().addAll(continueBtn, exitBtn);
-        
+
         bottomBox.getChildren().add(buttonBox);
         root.setBottom(bottomBox);
         BorderPane.setMargin(bottomBox, new Insets(20, 0, 0, 0));

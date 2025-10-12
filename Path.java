@@ -1,6 +1,7 @@
 public class Path {
     public static final String highestScore = "highest_score.txt";
-    public static final String block = "/resources/block.png";
+    public static final String blockImage = "block.png";
+    public static final String heartImage = "heart.png";
     public static final String ballPaddleSound = "/sound_and_music/ball_paddle_collision.wav";
     public static final String ballWallSound = "/sound_and_music/ball_wall_collision.wav";
     public static final String ballBrickSound = "/sound_and_music/ball_brick_collision.wav";
@@ -14,6 +15,9 @@ public class Path {
     public static final String slowSound = "/sound_and_music/slow_effect.wav";
     public static final String powerUpSound = "/sound_and_music/power_up_effect.wav";
     public static final String transformSound = "/sound_and_music/transform_effect.wav";
+    public static final String menuMusic = "/sound_and_music/MenuMusic.wav";
+    public static final String theEndMusic = "/sound_and_music/TheEnd.wav";
+    public static final String backgroundMusic = "/sound_and_music/BackgroundMusic.wav";
     public static final String woodSprite = "/Sprite_Bricks/Wood/sprite.png";
     public static final String rockSprite = "/Sprite_Bricks/Rock/sprite.png";
     public static final String metalSprite = "/Sprite_Bricks/Metal/sprite.png";
@@ -27,7 +31,6 @@ public class Path {
     public static final String fastBallCapsule = "/Image_Capsules/fast_ball_capsule.png";
     public static final String slowBallCapsule = "/Image_Capsules/slow_ball_capsule.png";
     public static final String fireBallCapsule = "/Image_Capsules/fire_ball_capsule.png";
-    public static final String toxicBallCapsule = "/Image_Capsules/toxic_ball_capsule.png";
     public static final String powerBallCapsule = "/Image_Capsules/power_ball_capsule.png";
     public static final String expandPaddleCapsule = "/Image_Capsules/expand_paddle_capsule.png";
     public static final String shrinkPaddleCapsule = "/Image_Capsules/shrink_paddle_capsule.png";

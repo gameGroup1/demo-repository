@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="com.obiscr.chatgpt.settings.EasyCodeState">
+    <option name="projectFiles" value="$PROJECT_DIR$/out/production/demo-repository/.vscode/settings.json;D:/GAME/demo-repository/out/production/demo-repository/index.html;D:/GAME/demo-repository/out/production/demo-repository/package.json;D:/GAME/demo-repository/out/production/demo-repository/README.md;D:/GAME/demo-repository/Ball.java;D:/GAME/demo-repository/Block.java;D:/GAME/demo-repository/BrickImage.java;D:/GAME/demo-repository/Bricks.java;D:/GAME/demo-repository/Capsule.java;D:/GAME/demo-repository/Collision.java;D:/GAME/demo-repository/EffectManager.java;D:/GAME/demo-repository/EndMenu.java;D:/GAME/demo-repository/GameMenu.java;D:/GAME/demo-repository/GameObject.java;D:/GAME/demo-repository/GameOver.java;D:/GAME/demo-repository/index.html;D:/GAME/demo-repository/MainGame.java;D:/GAME/demo-repository/Material.java;D:/GAME/demo-repository/package.json;D:/GAME/demo-repository/Paddle.java;D:/GAME/demo-repository/Path.java;D:/GAME/demo-repository/Pause.java;D:/GAME/demo-repository/README.md;D:/GAME/demo-repository/Update.java;D:/GAME/demo-repository/Wall.java" />
+  </component>
+</project>

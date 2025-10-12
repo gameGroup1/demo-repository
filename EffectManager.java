@@ -8,7 +8,7 @@ import javafx.util.Duration;
 public class EffectManager {
     private static final List<String> effectTypes = new ArrayList<>(List.of(
             "inc10Point", "dec10Point", "inc50Point", "dec50Point", "inc100Point", "dec100Point",
-            "fastBall", "slowBall", "fireBall", "toxicBall", "powerBall", "expandPaddle", "shrinkPaddle"
+            "fastBall", "slowBall", "fireBall", "powerBall", "expandPaddle", "shrinkPaddle"
     ));
 
     public static Capsule getCapsule(double x, double y, int width, int height, double speed) {
@@ -43,8 +43,6 @@ public class EffectManager {
             return Path.slowBallCapsule;
         } else if (type.equals("fireBall")) {
             return Path.fireBallCapsule;
-        } else if (type.equals("toxicBall")) {
-            return Path.toxicBallCapsule;
         } else if (type.equals("powerBall")) {
             return Path.powerBallCapsule;
         } else if (type.equals("expandPaddle")) {
@@ -135,6 +133,27 @@ public class EffectManager {
                 Duration.millis(5000),
                 event -> {
                     paddle.setWidth(originalWidth);
+                }
+        ));
+        timeline.setCycleCount(1);  // Chạy một lần
+        timeline.play();  // Bắt đầu timer
+    }
+
+    public static void activateFireBall(Ball ball) {
+        if (ball == null) {
+            return;  // Xử lý edge case: ball null
+        }
+
+        int originalPower = ball.getPower();
+        ball.setPower(10);  // Giả sử fireball làm bóng phá gạch ngay lập tức bằng cách tăng power cao
+        ball.setFireBall(true);
+
+        // Sử dụng Timeline để khôi phục sau 5 giây (5000ms)
+        Timeline timeline = new Timeline(new KeyFrame(
+                Duration.millis(5000),
+                event -> {
+                    ball.setPower(originalPower);
+                    ball.setFireBall(false);
                 }
         ));
         timeline.setCycleCount(1);  // Chạy một lần
