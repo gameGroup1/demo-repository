@@ -85,8 +85,6 @@ public class MainGame {
                 }
             }
         }
-
-        preloadSounds();
     }
 
     public void start(Stage primaryStage) {
@@ -103,6 +101,7 @@ public class MainGame {
             }
             if (mediaPlayer != null) {
                 mediaPlayer.stop();
+                SoundManager.unregisterMediaPlayer(mediaPlayer);
             }
             saveHighestScore();
         });
@@ -122,21 +121,18 @@ public class MainGame {
     private void playBackgroundMusic() {
         try {
             URL soundURL = getClass().getClassLoader().getResource(Path.backgroundMusic.substring(1));
+            Media media;
             if (soundURL != null) {
-                Media media = new Media(soundURL.toString());
-                mediaPlayer = new MediaPlayer(media);
-                mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-                mediaPlayer.setVolume(0.5);
-                mediaPlayer.play();
+                media = new Media(soundURL.toString());
                 System.out.println("✓ Playing BackgroundMusic.wav from classpath");
             } else {
-                Media media = new Media(Path.getFileURL(Path.backgroundMusic));
-                mediaPlayer = new MediaPlayer(media);
-                mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-                mediaPlayer.setVolume(0.5);
-                mediaPlayer.play();
+                media = new Media(Path.getFileURL(Path.backgroundMusic));
                 System.out.println("✓ Playing BackgroundMusic.wav from: " + Path.backgroundMusic);
             }
+            mediaPlayer = new MediaPlayer(media);
+            SoundManager.registerMediaPlayer(mediaPlayer);
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            mediaPlayer.play();
         } catch (Exception e) {
             System.err.println("✗ Cannot find BackgroundMusic.wav at " + Path.backgroundMusic);
             e.printStackTrace();
@@ -242,10 +238,11 @@ public class MainGame {
                 }
 
                 if (ball.getY() > heightW) {
-                    Update.loseLifeSound.play();
+                    Update.loseLifeSound.play(SoundManager.getGlobalVolume());
                     gameLoop.stop();
                     if (mediaPlayer != null) {
                         mediaPlayer.stop();
+                        SoundManager.unregisterMediaPlayer(mediaPlayer);
                     }
                     saveHighestScore();
                     Platform.runLater(() -> {
@@ -283,6 +280,9 @@ public class MainGame {
         }
 
         highestScore = Math.max(score, highestScore);
+        if (capsule != null) {
+            capsule.playSound();
+        }
     }
 
     private static void saveHighestScore() {
@@ -292,19 +292,6 @@ public class MainGame {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void preloadSounds() {
-        for(Capsule cap : capsules) {
-            if (cap != null) {
-                cap.playSound(0.0);
-            }
-        }
-        Update.loseLifeSound.play(0.0);
-        Update.brickBreakSound.play(0.0);
-        Collision.ballBrickSound.play(0.0);
-        Collision.ballPaddleSound.play(0.0);
-        Collision.ballWallSound.play(0.0);
     }
 
     public static void createAndShowGame() {

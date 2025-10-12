@@ -10,7 +10,6 @@ import java.awt.image.BufferedImage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import java.net.URL;
-import java.io.File;
 
 public class GameMenu extends JFrame {
     private boolean checkStart = false;
@@ -19,6 +18,8 @@ public class GameMenu extends JFrame {
     private JButton startBtn;
     private JButton bestScoreBtn;
     private JButton exitBtn;
+    private JSlider volumeSlider;
+    private JLabel volumeLabel;
     private MediaPlayer mediaPlayer;
 
     public void setCheckStart(boolean checkStart) {
@@ -82,11 +83,39 @@ public class GameMenu extends JFrame {
         makeButtonTransparent(bestScoreBtn);
         makeButtonTransparent(exitBtn);
 
+        // Add volume slider
+        volumeLabel = new JLabel("Volume: " + (int)(SoundManager.getGlobalVolume() * 100) + "%");
+        volumeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        volumeLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        volumeLabel.setForeground(Color.WHITE);
+        volumeLabel.setOpaque(false);
+
+        volumeSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, (int)(SoundManager.getGlobalVolume() * 100));
+        volumeSlider.setPreferredSize(new Dimension(200, 40));
+        volumeSlider.setAlignmentX(Component.CENTER_ALIGNMENT);
+        volumeSlider.setOpaque(false);
+        volumeSlider.setForeground(Color.WHITE);
+        volumeSlider.setMajorTickSpacing(25);
+        volumeSlider.setPaintTicks(true);
+        volumeSlider.addChangeListener(e -> {
+            double volume = volumeSlider.getValue() / 100.0;
+            SoundManager.setGlobalVolume(volume);
+            volumeLabel.setText("Volume: " + volumeSlider.getValue() + "%");
+            if (mediaPlayer != null) {
+                mediaPlayer.setVolume(SoundManager.getGlobalVolume());
+            }
+        });
+
         panel.add(startBtn);
         panel.add(Box.createVerticalStrut(15));
         panel.add(bestScoreBtn);
         panel.add(Box.createVerticalStrut(15));
         panel.add(exitBtn);
+        panel.add(Box.createVerticalGlue()); // Đẩy volumeLabel và volumeSlider xuống dưới cùng
+        panel.add(volumeLabel);
+        panel.add(Box.createVerticalStrut(5));
+        panel.add(volumeSlider);
+        panel.add(Box.createVerticalStrut(20)); // Khoảng cách dưới cùng để tránh sát mép
 
         add(panel);
 
@@ -118,21 +147,18 @@ public class GameMenu extends JFrame {
     private void playBackgroundMusic() {
         try {
             URL soundURL = getClass().getClassLoader().getResource(Path.menuMusic.substring(1));
+            Media media;
             if (soundURL != null) {
-                Media media = new Media(soundURL.toString());
-                mediaPlayer = new MediaPlayer(media);
-                mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-                mediaPlayer.setVolume(0.5);
-                mediaPlayer.play();
+                media = new Media(soundURL.toString());
                 System.out.println("✓ Playing MenuMusic.wav from classpath");
             } else {
-                Media media = new Media(Path.getFileURL(Path.menuMusic));
-                mediaPlayer = new MediaPlayer(media);
-                mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-                mediaPlayer.setVolume(0.5);
-                mediaPlayer.play();
+                media = new Media(Path.getFileURL(Path.menuMusic));
                 System.out.println("✓ Playing MenuMusic.wav from: " + Path.menuMusic);
             }
+            mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setVolume(SoundManager.getGlobalVolume());
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            mediaPlayer.play();
         } catch (Exception e) {
             System.err.println("✗ Cannot find MenuMusic.wav at " + Path.menuMusic);
             e.printStackTrace();

@@ -1,9 +1,16 @@
 import javafx.scene.media.AudioClip;
 
 public class Update {
-    public static final AudioClip loseLifeSound = new AudioClip(Path.getFileURL(Path.loseLifeSound));
-    public static final AudioClip brickBreakSound = new AudioClip(Path.getFileURL(Path.brickBreakSound));
-    /* Cập nhật vị trí của bóng */
+    public static final AudioClip loseLifeSound;
+    public static final AudioClip brickBreakSound;
+
+    static {
+        loseLifeSound = new AudioClip(Path.getFileURL(Path.loseLifeSound));
+        SoundManager.registerAudioClip(loseLifeSound);
+        brickBreakSound = new AudioClip(Path.getFileURL(Path.brickBreakSound));
+        SoundManager.registerAudioClip(brickBreakSound);
+    }
+
     public static void position(Ball ball) {
         if (ball == null) return;
         ball.setX(ball.getX() + ball.getDx());
@@ -32,7 +39,6 @@ public class Update {
         ball.setDy(-speed * Math.cos(angle));
     }
 
-    /* Cập nhật vị trí của quả bóng sau khi va vào vật thể */
     public static void position(Ball ball, GameObject object) {
         if (!Collision.check(ball, object)) {
             return;
@@ -48,8 +54,7 @@ public class Update {
             hitHorizontal = true;
         }
 
-        // Thêm điều kiện chặn để đẩy bóng ra khỏi vùng lún (penetration resolve)
-        double epsilon = 0.01; // Khoảng cách an toàn để tránh va chạm lặp
+        double epsilon = 0.01;
         double radius = ball.getRadius();
 
         if (hitVertical) {
@@ -68,7 +73,6 @@ public class Update {
             }
         }
 
-        // Giữ nguyên logic đảo chiều
         if (hitVertical && hitHorizontal) {
             ball.setDx(-ball.getDx());
             ball.setDy(-ball.getDy());
@@ -80,7 +84,6 @@ public class Update {
             ball.setDy(-ball.getDy());
         }
 
-        // Giữ nguyên normalize speed
         double vectorSpeed = Math.sqrt(ball.getDx() * ball.getDx() + ball.getDy() * ball.getDy());
         if (vectorSpeed != 0) {
             ball.setDx(ball.getDx() / vectorSpeed * ball.getSpeed());
@@ -88,18 +91,17 @@ public class Update {
         }
     }
 
-    /* Cập nhật vị trí của quả bóng sau khi va vào gạch */
     public static int position(Ball ball, Bricks[] bricks) {
         int i = 0;
         for (Bricks brick : bricks) {
             if (Collision.check(ball, brick) && !brick.isBreak()) {
                 position(ball, brick);
                 brick.takeHit((int) ball.getPower());
-                if (brick.isBreak()) brickBreakSound.play();
-                else Collision.ballBrickSound.play();
+                if (brick.isBreak()) brickBreakSound.play(SoundManager.getGlobalVolume());
+                else Collision.ballBrickSound.play(SoundManager.getGlobalVolume());
                 return i;
             }
-            i ++;
+            i++;
         }
         return -1;
     }

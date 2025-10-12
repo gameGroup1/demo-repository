@@ -1,9 +1,18 @@
 import javafx.scene.media.AudioClip;
 
 public class Collision {
-    public static final AudioClip ballWallSound = new AudioClip(Path.getFileURL(Path.ballWallSound));
-    public static final AudioClip ballPaddleSound = new AudioClip(Path.getFileURL(Path.ballPaddleSound));
-    public static final AudioClip ballBrickSound = new AudioClip(Path.getFileURL(Path.ballBrickSound));
+    public static final AudioClip ballWallSound;
+    public static final AudioClip ballPaddleSound;
+    public static final AudioClip ballBrickSound;
+
+    static {
+        ballWallSound = new AudioClip(Path.getFileURL(Path.ballWallSound));
+        SoundManager.registerAudioClip(ballWallSound);
+        ballPaddleSound = new AudioClip(Path.getFileURL(Path.ballPaddleSound));
+        SoundManager.registerAudioClip(ballPaddleSound);
+        ballBrickSound = new AudioClip(Path.getFileURL(Path.ballBrickSound));
+        SoundManager.registerAudioClip(ballBrickSound);
+    }
 
     public static boolean check(Ball ball, GameObject object) {
         if (ball == null || object == null) {
@@ -19,16 +28,16 @@ public class Collision {
 
         if (distanceSquared <= ball.getRadius() * ball.getRadius()) {
             if (object instanceof Paddle) {
-                ballPaddleSound.play(2.0);
+                ballPaddleSound.play(SoundManager.getGlobalVolume());
             } else if (object instanceof Wall) {
-                ballWallSound.play(2.0);
+                ballWallSound.play(SoundManager.getGlobalVolume());
             }
             return true;
         }
         return false;
     }
 
-    public  static boolean check(Paddle paddle, Capsule capsule) {
+    public static boolean check(Paddle paddle, Capsule capsule) {
         if (paddle == null || capsule == null) {
             return false;
         }
@@ -42,7 +51,7 @@ public class Collision {
         if (paddle.getX() > right2) return false;
         if (bottom1 < capsule.getY()) return false;
         if (paddle.getY() > bottom2) return false;
-        capsule.playSound(1.0);
+        capsule.playSound();
         return true;
     }
 }

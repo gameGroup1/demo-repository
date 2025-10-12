@@ -17,8 +17,6 @@ import javafx.animation.ScaleTransition;
 import javafx.util.Duration;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
-import java.io.File;
 import java.net.URL;
 
 public class EndMenu {
@@ -172,21 +170,18 @@ public class EndMenu {
     private static void playBackgroundMusic() {
         try {
             URL soundURL = EndMenu.class.getClassLoader().getResource(Path.theEndMusic.substring(1));
+            Media media;
             if (soundURL != null) {
-                Media media = new Media(soundURL.toString());
-                mediaPlayer = new MediaPlayer(media);
-                mediaPlayer.setCycleCount(1);
-                mediaPlayer.setVolume(0.5);
-                mediaPlayer.play();
+                media = new Media(soundURL.toString());
                 System.out.println("✓ Playing TheEnd.wav from classpath");
             } else {
-                Media media = new Media(Path.getFileURL(Path.theEndMusic));
-                mediaPlayer = new MediaPlayer(media);
-                mediaPlayer.setCycleCount(1);
-                mediaPlayer.setVolume(0.5);
-                mediaPlayer.play();
+                media = new Media(Path.getFileURL(Path.theEndMusic));
                 System.out.println("✓ Playing TheEnd.wav from: " + Path.theEndMusic);
             }
+            mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setVolume(SoundManager.getGlobalVolume());
+            mediaPlayer.setCycleCount(1);
+            mediaPlayer.play();
         } catch (Exception e) {
             System.err.println("✗ Cannot find TheEnd.wav at " + Path.theEndMusic);
             e.printStackTrace();
@@ -212,7 +207,7 @@ public class EndMenu {
                 "../resources/end.gif"
             };
             for (String path : paths) {
-                File file = new File(path);
+                java.io.File file = new java.io.File(path);
                 System.out.println("Trying: " + file.getAbsolutePath());
                 if (file.exists()) {
                     backgroundImage = new Image(file.toURI().toString(), true);
