@@ -14,6 +14,9 @@ public class Path {
     public static final String slowSound = "/sound_and_music/slow_effect.wav";
     public static final String powerUpSound = "/sound_and_music/power_up_effect.wav";
     public static final String transformSound = "/sound_and_music/transform_effect.wav";
+    public static final String menuMusic = "/sound_and_music/MenuMusic.wav";
+    public static final String theEndMusic = "/sound_and_music/TheEnd.wav";
+    public static final String backgroundMusic = "/sound_and_music/BackgroundMusic.wav";
     public static final String woodSprite = "/Sprite_Bricks/Wood/sprite.png";
     public static final String rockSprite = "/Sprite_Bricks/Rock/sprite.png";
     public static final String metalSprite = "/Sprite_Bricks/Metal/sprite.png";

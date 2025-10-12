@@ -15,6 +15,9 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import java.net.URL;
 
 public class MainGame {
     private final int widthW = 1080;
@@ -26,7 +29,7 @@ public class MainGame {
     private final int speedC = 5;
     private final int wallThickness = 30;
 
-    private Ball ball; // Main ball reference for convenience
+    private Ball ball;
     private Paddle paddle;
     private Wall leftWall;
     private Wall rightWall;
@@ -39,6 +42,7 @@ public class MainGame {
     private Stage primaryStage;
     private int score = 0;
     private static int highestScore;
+    private MediaPlayer mediaPlayer;
 
     public MainGame() {
         int[] hardnessArray = {1, 2, 3, 4};
@@ -53,7 +57,6 @@ public class MainGame {
         double paddleX = (widthW - widthP) / 2.0;
         paddle = new Paddle(paddleX, heightW - heightP, widthP, heightP, Color.BROWN);
 
-        // Tạo walls với direction và blockSize mới
         leftWall = new Wall("left", 0, 0, wallThickness, heightW, wallThickness);
         rightWall = new Wall("right", widthW - wallThickness, 0, wallThickness, heightW, wallThickness);
         topWall = new Wall("top", 0, 0, widthW, wallThickness, wallThickness);
@@ -73,12 +76,12 @@ public class MainGame {
                 int randomHardness = hardnessArray[random.nextInt(hardnessArray.length)];
                 double chance = random.nextDouble();
                 bricks[index] = new Bricks(brickX, brickY, brickWidth, brickHeight, randomHardness);
-                if (chance < 0.3) { // 30% chance to have a capsule
+                if (chance < 0.3) {
                     capsules[index] = EffectManager.getCapsule(brickX, brickY, brickWidth, brickHeight, speedC);
-                    capsules[index].setVisible(false); // Initially invisible
+                    capsules[index].setVisible(false);
                     capsuleIndex.add(index);
                 } else {
-                    capsules[index] = null; // No capsule for this brick
+                    capsules[index] = null;
                 }
             }
         }
@@ -94,12 +97,14 @@ public class MainGame {
         primaryStage.setTitle("Arkanoid Game");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
-        // Thêm sự kiện đóng cửa sổ
         primaryStage.setOnCloseRequest(e -> {
             if (gameLoop != null) {
                 gameLoop.stop();
             }
-            saveHighestScore(); // Lưu highestScore khi đóng cửa sổ
+            if (mediaPlayer != null) {
+                mediaPlayer.stop();
+            }
+            saveHighestScore();
         });
 
         primaryStage.show();
@@ -109,8 +114,33 @@ public class MainGame {
             addGameElementsToRoot();
             setupInput(scene);
             startGameLoop();
+            playBackgroundMusic();
         });
         delay.play();
+    }
+
+    private void playBackgroundMusic() {
+        try {
+            URL soundURL = getClass().getClassLoader().getResource(Path.backgroundMusic.substring(1));
+            if (soundURL != null) {
+                Media media = new Media(soundURL.toString());
+                mediaPlayer = new MediaPlayer(media);
+                mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+                mediaPlayer.setVolume(0.5);
+                mediaPlayer.play();
+                System.out.println("✓ Playing BackgroundMusic.wav from classpath");
+            } else {
+                Media media = new Media(Path.getFileURL(Path.backgroundMusic));
+                mediaPlayer = new MediaPlayer(media);
+                mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+                mediaPlayer.setVolume(0.5);
+                mediaPlayer.play();
+                System.out.println("✓ Playing BackgroundMusic.wav from: " + Path.backgroundMusic);
+            }
+        } catch (Exception e) {
+            System.err.println("✗ Cannot find BackgroundMusic.wav at " + Path.backgroundMusic);
+            e.printStackTrace();
+        }
     }
 
     private void addGameElementsToRoot() {
@@ -157,7 +187,6 @@ public class MainGame {
         gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                // Update capsules first
                 for (int index : capsuleIndex) {
                     Capsule cap = capsules[index];
                     if (cap == null || !cap.isVisible()) continue;
@@ -174,9 +203,8 @@ public class MainGame {
                     cap.render();
                 }
 
-                // Update ball with sub-stepping to prevent tunneling
                 double ballSpeed = ball.getSpeed();
-                int subSteps = (int) Math.ceil(ballSpeed / 5.0); // Adjust step size as needed, e.g., 5 pixels per sub-step
+                int subSteps = (int) Math.ceil(ballSpeed / 5.0);
                 if (subSteps < 1) subSteps = 1;
 
                 for (int s = 0; s < subSteps; s++) {
@@ -186,7 +214,6 @@ public class MainGame {
                     ball.setX(ball.getX() + stepDx);
                     ball.setY(ball.getY() + stepDy);
 
-                    // Check collisions in each sub-step
                     Update.position(ball, leftWall);
                     Update.position(ball, rightWall);
                     Update.position(ball, topWall);
@@ -197,7 +224,7 @@ public class MainGame {
                         score += 10;
                         highestScore = Math.max(score, highestScore);
                         root.getChildren().remove(bricks[breakIndex].getNode());
-                        bricks[breakIndex] = null; // Remove reference to broken brick
+                        bricks[breakIndex] = null;
                         if (capsules[breakIndex] != null && !capsules[breakIndex].isVisible()) {
                             Capsule cap = capsules[breakIndex];
                             if (!root.getChildren().contains(cap.getNode())) {
@@ -217,10 +244,13 @@ public class MainGame {
                 if (ball.getY() > heightW) {
                     Update.loseLifeSound.play();
                     gameLoop.stop();
-                    saveHighestScore(); // Lưu highestScore khi game over
+                    if (mediaPlayer != null) {
+                        mediaPlayer.stop();
+                    }
+                    saveHighestScore();
                     Platform.runLater(() -> {
                         primaryStage.close();
-                        EndMenu.show(score, highestScore);  // Truyền highestScore thực tế
+                        EndMenu.show(score, highestScore);
                     });
                 }
             }
@@ -229,7 +259,7 @@ public class MainGame {
     }
 
     private void applyEffect(Capsule capsule) {
-        String type = capsule.getEffectType();  // Sử dụng type thay vì equals object
+        String type = capsule.getEffectType();
         if (type.equals("inc10Point")) score += 10;
         else if (type.equals("dec10Point")) score -= 10;
         else if (type.equals("inc50Point")) score += 50;
@@ -242,9 +272,6 @@ public class MainGame {
         else if (type.equals("slowBall")) {
             EffectManager.updateSpeed(ball, 0.5);
         }
-        /* else if (type.equals("toxicBall")) {  // Nếu có từ comment
-            for (Ball b : activeBalls) EffectManager.updatePower(b, 0.5);
-        } */
         else if (type.equals("powerBall")) {
             EffectManager.updatePower(ball, 3.0);
         }
@@ -258,11 +285,10 @@ public class MainGame {
         highestScore = Math.max(score, highestScore);
     }
 
-    // Phương thức lưu highestScore vào file
     private static void saveHighestScore() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(Path.highestScore))) {
             writer.write(String.valueOf(highestScore));
-            System.out.println("Đã lưu highestScore: " + highestScore); // Optional: Log để debug
+            System.out.println("Đã lưu highestScore: " + highestScore);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -281,7 +307,6 @@ public class MainGame {
         Collision.ballWallSound.play(0.0);
     }
 
-    // Phương thức tĩnh để tạo và hiển thị game mới (thay thế cho launch())
     public static void createAndShowGame() {
         Platform.runLater(() -> {
             Stage stage = new Stage();
@@ -293,7 +318,7 @@ public class MainGame {
     public static void main(String[] args) {
         try (BufferedReader reader = new BufferedReader(new FileReader(Path.highestScore))) {
             String line = reader.readLine();
-            if (line != null) highestScore = Integer.parseInt(line.trim()); // Chuyển chuỗi thành số nguyên
+            if (line != null) highestScore = Integer.parseInt(line.trim());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NumberFormatException e) {

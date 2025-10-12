@@ -7,6 +7,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import java.net.URL;
+import java.io.File;
 
 public class GameMenu extends JFrame {
     private boolean checkStart = false;
@@ -15,6 +19,7 @@ public class GameMenu extends JFrame {
     private JButton startBtn;
     private JButton bestScoreBtn;
     private JButton exitBtn;
+    private MediaPlayer mediaPlayer;
 
     public void setCheckStart(boolean checkStart) {
         this.checkStart = checkStart;
@@ -33,19 +38,21 @@ public class GameMenu extends JFrame {
 
         JFXPanel jfxPanel = new JFXPanel();
 
+        // Load and play background music
+        playBackgroundMusic();
+
         // Load background
         Image backgroundImage = loadBackgroundImage();
         System.out.println("Background loaded: " + (backgroundImage != null ? "Success" : "Failed"));
 
         BackgroundPanel panel = new BackgroundPanel(backgroundImage);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        // XÓA dòng setBackground để image có thể hiển thị
 
         title = new JLabel("ARKANOID");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setFont(new Font("Arial", Font.BOLD, 36));
         title.setForeground(Color.CYAN);
-        title.setOpaque(false); // Làm title trong suốt
+        title.setOpaque(false);
         panel.add(Box.createVerticalStrut(30));
         panel.add(title);
         panel.add(Box.createVerticalStrut(30));
@@ -71,7 +78,6 @@ public class GameMenu extends JFrame {
         bestScoreBtn.setFont(new Font("Arial", Font.PLAIN, 18));
         exitBtn.setFont(new Font("Arial", Font.PLAIN, 18));
 
-        // Làm buttons bán trong suốt (optional - để nhìn thấy background)
         makeButtonTransparent(startBtn);
         makeButtonTransparent(bestScoreBtn);
         makeButtonTransparent(exitBtn);
@@ -84,14 +90,15 @@ public class GameMenu extends JFrame {
 
         add(panel);
 
-        // Effects
-        // startTitleAnimation();
         addButtonEffects(startBtn);
         addButtonEffects(bestScoreBtn);
         addButtonEffects(exitBtn);
 
         startBtn.addActionListener(e -> {
             checkStart = true;
+            if (mediaPlayer != null) {
+                mediaPlayer.stop();
+            }
             setVisible(false);
             startGame();
         });
@@ -100,45 +107,64 @@ public class GameMenu extends JFrame {
             JOptionPane.showMessageDialog(this, "Best Score: 0");
         });
 
-        exitBtn.addActionListener(e -> System.exit(0));
+        exitBtn.addActionListener(e -> {
+            if (mediaPlayer != null) {
+                mediaPlayer.stop();
+            }
+            System.exit(0);
+        });
     }
 
-    // Method để làm button bán trong suốt
+    private void playBackgroundMusic() {
+        try {
+            URL soundURL = getClass().getClassLoader().getResource(Path.menuMusic.substring(1));
+            if (soundURL != null) {
+                Media media = new Media(soundURL.toString());
+                mediaPlayer = new MediaPlayer(media);
+                mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+                mediaPlayer.setVolume(0.5);
+                mediaPlayer.play();
+                System.out.println("✓ Playing MenuMusic.wav from classpath");
+            } else {
+                Media media = new Media(Path.getFileURL(Path.menuMusic));
+                mediaPlayer = new MediaPlayer(media);
+                mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+                mediaPlayer.setVolume(0.5);
+                mediaPlayer.play();
+                System.out.println("✓ Playing MenuMusic.wav from: " + Path.menuMusic);
+            }
+        } catch (Exception e) {
+            System.err.println("✗ Cannot find MenuMusic.wav at " + Path.menuMusic);
+            e.printStackTrace();
+        }
+    }
+
     private void makeButtonTransparent(JButton button) {
         button.setOpaque(false);
         button.setContentAreaFilled(false);
         button.setFocusPainted(false);
-
-        // Nền tối bán trong suốt
-        button.setBackground(new Color(20, 40, 30, 10)); // Xanh đen trong suốt
-        button.setForeground(new Color(200, 255, 150)); // Chữ xanh lá vàng sáng
-
-        // Viền xanh ngọc sáng
+        button.setBackground(new Color(20, 40, 30, 10));
+        button.setForeground(new Color(200, 255, 150));
         button.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(100, 255, 200, 150), 2), // Viền cyan TRONG SUỐT (alpha 150)
+                BorderFactory.createLineBorder(new Color(100, 255, 200, 150), 2),
                 BorderFactory.createEmptyBorder(5, 15, 5, 15)
         ));
     }
 
-    // Method load image
     private Image loadBackgroundImage() {
         Image backgroundImage = null;
         try {
-            // Cách 1: Dùng ClassLoader (tốt nhất)
             java.net.URL imageURL = getClass().getClassLoader().getResource("background.gif");
             if (imageURL != null) {
                 backgroundImage = new ImageIcon(imageURL).getImage();
                 System.out.println("✓ Loaded from classpath");
                 return backgroundImage;
             }
-
-            // Cách 2: Đường dẫn tương đối từ thư mục chạy
             String[] paths = {
-                    "resources/background.gif",
-                    "./resources/background.gif",
-                    "../resources/background.gif"
+                "resources/background.gif",
+                "./resources/background.gif",
+                "../resources/background.gif"
             };
-
             for (String path : paths) {
                 java.io.File file = new java.io.File(path);
                 System.out.println("Trying: " + file.getAbsolutePath());
@@ -148,22 +174,19 @@ public class GameMenu extends JFrame {
                     return backgroundImage;
                 }
             }
-
             System.err.println("✗ Cannot find background.gif");
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return backgroundImage;
     }
 
-    // BackgroundPanel - FIXED VERSION
     private static class BackgroundPanel extends JPanel {
         private Image image;
 
         public BackgroundPanel(Image image) {
             this.image = image;
-            setOpaque(true); // Quan trọng
+            setOpaque(true);
             System.out.println("Panel created with image: " + (image != null));
         }
 
@@ -171,11 +194,9 @@ public class GameMenu extends JFrame {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             if (image != null) {
-                // Vẽ image trực tiếp (không dùng getScaledInstance vì nó chậm)
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
                 System.out.println("Image drawn at " + getWidth() + "x" + getHeight());
             } else {
-                // Nếu không có image, vẽ nền đen
                 g.setColor(Color.BLACK);
                 g.fillRect(0, 0, getWidth(), getHeight());
             }
