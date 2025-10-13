@@ -4,34 +4,47 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SoundManager {
-    private static double globalVolume = 0.5; // Giá trị âm lượng mặc định (0.0 đến 1.0)
+    private static double backgroundVolume = 0.5; // Âm lượng mặc định cho nhạc nền (0.0 đến 1.0)
+    private static double effectVolume = 0.5; // Âm lượng mặc định cho hiệu ứng (0.0 đến 1.0)
     private static final List<MediaPlayer> mediaPlayers = new ArrayList<>();
     private static final List<AudioClip> audioClips = new ArrayList<>();
 
-    public static double getGlobalVolume() {
-        return globalVolume;
+    public static double getBackgroundVolume() {
+        return backgroundVolume;
     }
 
-    public static void setGlobalVolume(double volume) {
+    public static void setBackgroundVolume(double volume) {
         if (volume < 0.0) {
             volume = 0.0;
         } else if (volume > 1.0) {
             volume = 1.0;
         }
-        globalVolume = volume;
+        backgroundVolume = volume;
         // Cập nhật âm lượng cho tất cả MediaPlayer
         for (MediaPlayer player : mediaPlayers) {
             if (player != null) {
-                player.setVolume(globalVolume);
+                player.setVolume(backgroundVolume);
             }
         }
-        // AudioClip không cần cập nhật ở đây vì âm lượng được đặt khi play()
+    }
+
+    public static double getEffectVolume() {
+        return effectVolume;
+    }
+
+    public static void setEffectVolume(double volume) {
+        if (volume < 0.0) {
+            volume = 0.0;
+        } else if (volume > 1.0) {
+            volume = 1.0;
+        }
+        effectVolume = volume;
     }
 
     public static void registerMediaPlayer(MediaPlayer player) {
         if (player != null && !mediaPlayers.contains(player)) {
             mediaPlayers.add(player);
-            player.setVolume(globalVolume);
+            player.setVolume(backgroundVolume);
         }
     }
 

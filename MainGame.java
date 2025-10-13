@@ -1,4 +1,3 @@
-import com.sun.javafx.scene.layout.PaneHelper;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.Group;
@@ -92,7 +91,14 @@ public class MainGame {
                     capsules[index].setVisible(false);
                     capsuleIndex.add(index);
                 } else {
-                    capsules[index] = null;
+                    chance = random.nextDouble();
+                    if(chance < 0.3) {
+                        capsules[index] = new Capsule(Path.explosionCapsule, Path.explosionSound);
+                        capsules[index].init(brickX, brickY, brickWidth, brickHeight, 2 * speedC, "explosion");
+                        capsules[index].setVisible(false);
+                        capsuleIndex.add(index);
+                    }
+                    else capsules[index] = null;
                 }
             }
         }
@@ -240,8 +246,12 @@ public class MainGame {
                 }
 
                 if (isAttached) {
-                    setPaddleDefault();
-                    setBallDefault();
+                    double centerX = paddle.getX() + widthP / 2;
+                    double centerY = paddle.getY() - radiusB;
+                    ball.setX(centerX);
+                    ball.setY(centerY);
+                    ball.setDx(0);
+                    ball.setDy(0);
                 } else {
                     double ballSpeed = ball.getSpeed();
                     int subSteps = (int) Math.ceil(ballSpeed / 5.0);
@@ -286,28 +296,8 @@ public class MainGame {
                 scoreText.setText("Score: " + score);
 
                 if (ball.getY() > heightW) {
-                    Update.loseLifeSound.play(SoundManager.getGlobalVolume());
-                    lives--;
-                    if (lives > 0) {
-                        // Remove one heart
-                        if (!heartImages.isEmpty()) {
-                            ImageView lastHeart = heartImages.remove(heartImages.size() - 1);
-                            root.getChildren().remove(lastHeart);
-                        }
-                        // Reset ball and paddle
-                        isAttached = true;
-                    } else {
-                        gameLoop.stop();
-                        if (mediaPlayer != null) {
-                            mediaPlayer.stop();
-                            SoundManager.unregisterMediaPlayer(mediaPlayer);
-                        }
-                        saveHighestScore();
-                        Platform.runLater(() -> {
-                            primaryStage.close();
-                            EndMenu.show(score, highestScore);
-                        });
-                    }
+                    Update.loseLifeSound.play(SoundManager.getEffectVolume());
+                    loseLife();
                 }
             }
         };
@@ -315,6 +305,9 @@ public class MainGame {
     }
 
     private void applyEffect(Capsule capsule) {
+        if (capsule != null) {
+            capsule.playSound();
+        }
         String type = capsule.getEffectType();
         if (type.equals("inc10Point")) score += 10;
         else if (type.equals("dec10Point")) score -= 10;
@@ -340,8 +333,28 @@ public class MainGame {
         else if (type.equals("shrinkPaddle")) {
             EffectManager.changeWidth(paddle, 0.5);
         }
+        else if (type.equals("explosion")) {
+            showExplosion(capsule.getX(), capsule.getY());
+            loseLife();
+        }
 
         highestScore = Math.max(score, highestScore);
+    }
+
+    private void showExplosion(double x, double y) {
+        Image explosionImage = new Image(Path.explosionGIF);
+        ImageView explosionView = new ImageView(explosionImage);
+
+        explosionView.setFitWidth(100);
+        explosionView.setFitHeight(100);
+        explosionView.setX(x);
+        explosionView.setY(y);
+        root.getChildren().add(explosionView);
+
+        // Remove after animation duration, assume 2 seconds for the GIF
+        PauseTransition removeDelay = new PauseTransition(Duration.seconds(2));
+        removeDelay.setOnFinished(event -> root.getChildren().remove(explosionView));
+        removeDelay.play();
     }
 
     private void setPaddleDefault() {
@@ -359,6 +372,32 @@ public class MainGame {
         ball.setSpeed(speedB);
         ball.setPower(1);
         ball.setFireBall(false);
+    }
+
+    private void loseLife() {
+        lives--;
+        if (lives > 0) {
+            // Remove one heart
+            if (!heartImages.isEmpty()) {
+                ImageView lastHeart = heartImages.remove(heartImages.size() - 1);
+                root.getChildren().remove(lastHeart);
+            }
+            // Reset ball and paddle
+            setPaddleDefault();
+            setBallDefault();
+            isAttached = true;
+        } else {
+            gameLoop.stop();
+            if (mediaPlayer != null) {
+                mediaPlayer.stop();
+                SoundManager.unregisterMediaPlayer(mediaPlayer);
+            }
+            saveHighestScore();
+            Platform.runLater(() -> {
+                primaryStage.close();
+                EndMenu.show(score, highestScore);
+            });
+        }
     }
 
     private static void saveHighestScore() {

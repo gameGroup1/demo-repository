@@ -50,7 +50,7 @@ public class EffectManager {
         } else if (type.equals("shrinkPaddle")) {
             return Path.shrinkPaddleCapsule;
         } else {
-            return Path.inc10PointCapsule; // Fallback (giá trị mặc định)
+            return null; // Or a default path
         }
     }
 
@@ -65,14 +65,12 @@ public class EffectManager {
             return Path.slowSound;
         } else if (type.equals("fireBall")) {
             return Path.fireSound;
-        } else if (type.equals("toxicBall")) {
-            return Path.toxicSound;
         } else if (type.equals("powerBall")) {
             return Path.powerUpSound;
         } else if (type.equals("expandPaddle") || type.equals("shrinkPaddle")) {
             return Path.transformSound;
         } else {
-            return Path.getPointSound; // Fallback (giá trị mặc định)
+            return null; // Or a default sound
         }
     }
 

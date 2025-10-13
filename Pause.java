@@ -4,6 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -12,8 +13,15 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.animation.AnimationTimer;
+import javafx.scene.media.AudioClip;
 
 public class Pause {
+    private static AudioClip mouseClickSound;
+
+    static {
+        mouseClickSound = new AudioClip(Path.getFileURL(Path.MouseClick));
+        SoundManager.registerAudioClip(mouseClickSound);
+    }
 
     public static void show(Stage parentStage, AnimationTimer gameLoop) {
         // Kiểm tra xem JavaFX đã được khởi tạo chưa
@@ -44,6 +52,37 @@ public class Pause {
         BorderPane.setAlignment(titleLabel, Pos.CENTER);
         root.setTop(titleLabel);
 
+        // Phần giữa - Điều chỉnh âm thanh
+        VBox centerBox = new VBox(10);
+        centerBox.setAlignment(Pos.CENTER);
+
+        Label backgroundLabel = new Label("Background Volume: " + (int)(SoundManager.getBackgroundVolume() * 100) + "%");
+        backgroundLabel.setFont(Font.font("Arial", 16));
+        backgroundLabel.setTextFill(Color.WHITE);
+
+        Slider backgroundSlider = new Slider(0, 100, (int)(SoundManager.getBackgroundVolume() * 100));
+        backgroundSlider.setPrefWidth(200);
+        backgroundSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            double volume = newVal.doubleValue() / 100.0;
+            SoundManager.setBackgroundVolume(volume);
+            backgroundLabel.setText("Background Volume: " + newVal.intValue() + "%");
+        });
+
+        Label effectLabel = new Label("Effect Volume: " + (int)(SoundManager.getEffectVolume() * 100) + "%");
+        effectLabel.setFont(Font.font("Arial", 16));
+        effectLabel.setTextFill(Color.WHITE);
+
+        Slider effectSlider = new Slider(0, 100, (int)(SoundManager.getEffectVolume() * 100));
+        effectSlider.setPrefWidth(200);
+        effectSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            double volume = newVal.doubleValue() / 100.0;
+            SoundManager.setEffectVolume(volume);
+            effectLabel.setText("Effect Volume: " + newVal.intValue() + "%");
+        });
+
+        centerBox.getChildren().addAll(backgroundLabel, backgroundSlider, effectLabel, effectSlider);
+        root.setCenter(centerBox);
+
         // Phần dưới - Các nút
         VBox bottomBox = new VBox(10);
         bottomBox.setAlignment(Pos.CENTER);
@@ -55,24 +94,34 @@ public class Pause {
         continueBtn.setStyle("-fx-font-size: 16; -fx-pref-width: 120; -fx-pref-height: 35; -fx-background-color: #4CAF50; -fx-text-fill: white;");
         exitBtn.setStyle("-fx-font-size: 16; -fx-pref-width: 120; -fx-pref-height: 35; -fx-background-color: #f44336; -fx-text-fill: white;");
 
-        // Hiệu ứng scale khi hover cho continueBtn
+        // Hiệu ứng scale và âm thanh khi hover cho continueBtn
         continueBtn.setOnMouseEntered(e -> {
             continueBtn.setScaleX(1.1);
             continueBtn.setScaleY(1.1);
+            if (mouseClickSound != null) {
+                mouseClickSound.play(SoundManager.getEffectVolume());
+            } else {
+                System.err.println("Mouse_Click.wav not loaded.");
+            }
         });
         continueBtn.setOnMouseExited(e -> {
             continueBtn.setScaleX(1.0);
             continueBtn.setScaleY(1.0);
         });
 
-        // Hiệu ứng scale khi hover cho exitBtn
+        // Hiệu ứng scale và âm thanh khi hover cho exitBtn
         exitBtn.setOnMouseEntered(e -> {
             exitBtn.setScaleX(1.1);
             exitBtn.setScaleY(1.1);
+            if (mouseClickSound != null) {
+                mouseClickSound.play(SoundManager.getEffectVolume());
+            } else {
+                System.err.println("Mouse_Click.wav not loaded.");
+            }
         });
         exitBtn.setOnMouseExited(e -> {
             exitBtn.setScaleX(1.0);
-            continueBtn.setScaleY(1.0);
+            exitBtn.setScaleY(1.0);
         });
 
         // Hiệu ứng scale khi focus (bàn phím) cho continueBtn
@@ -126,7 +175,7 @@ public class Pause {
         root.setBottom(bottomBox);
         BorderPane.setMargin(bottomBox, new Insets(20, 0, 0, 0));
 
-        Scene scene = new Scene(root, 300, 200); // Kích thước nhỏ hơn cho menu pause
+        Scene scene = new Scene(root, 300, 300); // Kích thước nhỏ hơn cho menu pause
         pauseStage.setScene(scene);
         pauseStage.showAndWait(); // Chờ đến khi close mới tiếp tục
     }

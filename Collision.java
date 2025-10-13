@@ -28,9 +28,9 @@ public class Collision {
 
         if (distanceSquared <= ball.getRadius() * ball.getRadius()) {
             if (object instanceof Paddle) {
-                ballPaddleSound.play(SoundManager.getGlobalVolume());
+                ballPaddleSound.play(SoundManager.getEffectVolume());
             } else if (object instanceof Wall) {
-                ballWallSound.play(SoundManager.getGlobalVolume());
+                ballWallSound.play(SoundManager.getEffectVolume());
             }
             return true;
         }
@@ -51,7 +51,7 @@ public class Collision {
         if (paddle.getX() > right2) return false;
         if (bottom1 < capsule.getY()) return false;
         if (paddle.getY() > bottom2) return false;
-        capsule.playSound(SoundManager.getGlobalVolume());
+        capsule.playSound();
         return true;
     }
 }

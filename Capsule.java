@@ -44,9 +44,9 @@ public class Capsule extends GameObject {
     public boolean isVisible() { return visible; }
     public void setVisible(boolean visible) { this.visible = visible; }
 
-    public void playSound(double volume) {
+    public void playSound() {
         if (sound != null) {
-            sound.play(volume);
+            sound.play(SoundManager.getEffectVolume());
         } else {
             System.err.println("Capsule sound not loaded.");
         }

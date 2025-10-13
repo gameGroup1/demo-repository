@@ -17,6 +17,7 @@ import javafx.animation.ScaleTransition;
 import javafx.util.Duration;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.AudioClip;
 import java.net.URL;
 
 public class EndMenu {
@@ -24,6 +25,12 @@ public class EndMenu {
     private static int score;
     private static int bestScore;
     private static MediaPlayer mediaPlayer;
+    private static AudioClip mouseClickSound;
+
+    static {
+        mouseClickSound = new AudioClip(Path.getFileURL(Path.MouseClick));
+        SoundManager.registerAudioClip(mouseClickSound);
+    }
 
     public static void show(int score, int bestScore) {
         EndMenu.score = score;
@@ -60,14 +67,14 @@ public class EndMenu {
         BorderPane.setAlignment(titleLabel, Pos.CENTER);
         contentPane.setTop(titleLabel);
 
-        /*ScaleTransition titleScale = new ScaleTransition(Duration.seconds(1.5), titleLabel);
+        ScaleTransition titleScale = new ScaleTransition(Duration.seconds(1.5), titleLabel);
         titleScale.setFromX(0.8);
         titleScale.setFromY(0.8);
         titleScale.setToX(1.2);
         titleScale.setToY(1.2);
         titleScale.setCycleCount(ScaleTransition.INDEFINITE);
         titleScale.setAutoReverse(true);
-        titleScale.play();*/
+        titleScale.play();
 
         VBox centerBox = new VBox(15);
         centerBox.setAlignment(Pos.CENTER);
@@ -96,6 +103,11 @@ public class EndMenu {
         playAgainBtn.setOnMouseEntered(e -> {
             playAgainBtn.setScaleX(1.1);
             playAgainBtn.setScaleY(1.1);
+            if (mouseClickSound != null) {
+                mouseClickSound.play(SoundManager.getEffectVolume());
+            } else {
+                System.err.println("Mouse_Click.wav not loaded.");
+            }
         });
         playAgainBtn.setOnMouseExited(e -> {
             playAgainBtn.setScaleX(1.0);
@@ -105,6 +117,11 @@ public class EndMenu {
         exitBtn.setOnMouseEntered(e -> {
             exitBtn.setScaleX(1.1);
             exitBtn.setScaleY(1.1);
+            if (mouseClickSound != null) {
+                mouseClickSound.play(SoundManager.getEffectVolume());
+            } else {
+                System.err.println("Mouse_Click.wav not loaded.");
+            }
         });
         exitBtn.setOnMouseExited(e -> {
             exitBtn.setScaleX(1.0);
@@ -134,6 +151,7 @@ public class EndMenu {
         playAgainBtn.setOnAction(e -> {
             if (mediaPlayer != null) {
                 mediaPlayer.stop();
+                SoundManager.unregisterMediaPlayer(mediaPlayer);
             }
             stage.close();
             startNewGame();
@@ -142,6 +160,7 @@ public class EndMenu {
         exitBtn.setOnAction(e -> {
             if (mediaPlayer != null) {
                 mediaPlayer.stop();
+                SoundManager.unregisterMediaPlayer(mediaPlayer);
             }
             stage.close();
             Platform.exit();
@@ -179,7 +198,7 @@ public class EndMenu {
                 System.out.println("✓ Playing TheEnd.wav from: " + Path.theEndMusic);
             }
             mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.setVolume(SoundManager.getGlobalVolume());
+            SoundManager.registerMediaPlayer(mediaPlayer);
             mediaPlayer.setCycleCount(1);
             mediaPlayer.play();
         } catch (Exception e) {
