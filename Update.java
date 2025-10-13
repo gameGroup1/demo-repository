@@ -30,7 +30,6 @@ public class Update {
 
         if (colPosition < -1) colPosition = -1;
         if (colPosition > 1) colPosition = 1;
-        // Góc lệch tối đa 60 độ (PI/3)
         double maxAngle = Math.PI / 3;
         double angle = colPosition * maxAngle;
         double speed = ball.getSpeed();
@@ -97,8 +96,8 @@ public class Update {
             if (Collision.check(ball, brick) && !brick.isBreak()) {
                 position(ball, brick);
                 brick.takeHit((int) ball.getPower());
-                if (brick.isBreak()) brickBreakSound.play(SoundManager.getGlobalVolume());
-                else Collision.ballBrickSound.play(SoundManager.getGlobalVolume());
+                if (brick.isBreak()) brickBreakSound.play(SoundManager.getEffectVolume());
+                else Collision.ballBrickSound.play(SoundManager.getEffectVolume());
                 return i;
             }
             i++;

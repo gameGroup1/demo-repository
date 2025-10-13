@@ -9,6 +9,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.AudioClip;
 import java.net.URL;
 
 public class GameMenu extends JFrame {
@@ -18,9 +19,17 @@ public class GameMenu extends JFrame {
     private JButton startBtn;
     private JButton bestScoreBtn;
     private JButton exitBtn;
-    private JSlider volumeSlider;
-    private JLabel volumeLabel;
+    private JSlider backgroundSlider;
+    private JLabel backgroundLabel;
+    private JSlider effectSlider;
+    private JLabel effectLabel;
     private MediaPlayer mediaPlayer;
+    private static AudioClip mouseClickSound;
+
+    static {
+        mouseClickSound = new AudioClip(Path.getFileURL(Path.MouseClick));
+        SoundManager.registerAudioClip(mouseClickSound);
+    }
 
     public void setCheckStart(boolean checkStart) {
         this.checkStart = checkStart;
@@ -83,27 +92,44 @@ public class GameMenu extends JFrame {
         makeButtonTransparent(bestScoreBtn);
         makeButtonTransparent(exitBtn);
 
-        // Add volume slider
-        volumeLabel = new JLabel("Volume: " + (int)(SoundManager.getGlobalVolume() * 100) + "%");
-        volumeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        volumeLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        volumeLabel.setForeground(Color.WHITE);
-        volumeLabel.setOpaque(false);
+        // Add background music volume slider
+        backgroundLabel = new JLabel("Background Volume: " + (int)(SoundManager.getBackgroundVolume() * 100) + "%");
+        backgroundLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        backgroundLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        backgroundLabel.setForeground(Color.WHITE);
+        backgroundLabel.setOpaque(false);
 
-        volumeSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, (int)(SoundManager.getGlobalVolume() * 100));
-        volumeSlider.setPreferredSize(new Dimension(200, 40));
-        volumeSlider.setAlignmentX(Component.CENTER_ALIGNMENT);
-        volumeSlider.setOpaque(false);
-        volumeSlider.setForeground(Color.WHITE);
-        volumeSlider.setMajorTickSpacing(25);
-        volumeSlider.setPaintTicks(true);
-        volumeSlider.addChangeListener(e -> {
-            double volume = volumeSlider.getValue() / 100.0;
-            SoundManager.setGlobalVolume(volume);
-            volumeLabel.setText("Volume: " + volumeSlider.getValue() + "%");
-            if (mediaPlayer != null) {
-                mediaPlayer.setVolume(SoundManager.getGlobalVolume());
-            }
+        backgroundSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, (int)(SoundManager.getBackgroundVolume() * 100));
+        backgroundSlider.setPreferredSize(new Dimension(200, 40));
+        backgroundSlider.setAlignmentX(Component.CENTER_ALIGNMENT);
+        backgroundSlider.setOpaque(false);
+        backgroundSlider.setForeground(Color.WHITE);
+        backgroundSlider.setMajorTickSpacing(25);
+        backgroundSlider.setPaintTicks(true);
+        backgroundSlider.addChangeListener(e -> {
+            double volume = backgroundSlider.getValue() / 100.0;
+            SoundManager.setBackgroundVolume(volume);
+            backgroundLabel.setText("Background Volume: " + backgroundSlider.getValue() + "%");
+        });
+
+        // Add effect volume slider
+        effectLabel = new JLabel("Effect Volume: " + (int)(SoundManager.getEffectVolume() * 100) + "%");
+        effectLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        effectLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        effectLabel.setForeground(Color.WHITE);
+        effectLabel.setOpaque(false);
+
+        effectSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, (int)(SoundManager.getEffectVolume() * 100));
+        effectSlider.setPreferredSize(new Dimension(200, 40));
+        effectSlider.setAlignmentX(Component.CENTER_ALIGNMENT);
+        effectSlider.setOpaque(false);
+        effectSlider.setForeground(Color.WHITE);
+        effectSlider.setMajorTickSpacing(25);
+        effectSlider.setPaintTicks(true);
+        effectSlider.addChangeListener(e -> {
+            double volume = effectSlider.getValue() / 100.0;
+            SoundManager.setEffectVolume(volume);
+            effectLabel.setText("Effect Volume: " + effectSlider.getValue() + "%");
         });
 
         panel.add(startBtn);
@@ -111,11 +137,15 @@ public class GameMenu extends JFrame {
         panel.add(bestScoreBtn);
         panel.add(Box.createVerticalStrut(15));
         panel.add(exitBtn);
-        panel.add(Box.createVerticalGlue()); // Đẩy volumeLabel và volumeSlider xuống dưới cùng
-        panel.add(volumeLabel);
+        panel.add(Box.createVerticalGlue());
+        panel.add(backgroundLabel);
         panel.add(Box.createVerticalStrut(5));
-        panel.add(volumeSlider);
-        panel.add(Box.createVerticalStrut(20)); // Khoảng cách dưới cùng để tránh sát mép
+        panel.add(backgroundSlider);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(effectLabel);
+        panel.add(Box.createVerticalStrut(5));
+        panel.add(effectSlider);
+        panel.add(Box.createVerticalStrut(20));
 
         add(panel);
 
@@ -127,6 +157,7 @@ public class GameMenu extends JFrame {
             checkStart = true;
             if (mediaPlayer != null) {
                 mediaPlayer.stop();
+                SoundManager.unregisterMediaPlayer(mediaPlayer);
             }
             setVisible(false);
             startGame();
@@ -139,6 +170,7 @@ public class GameMenu extends JFrame {
         exitBtn.addActionListener(e -> {
             if (mediaPlayer != null) {
                 mediaPlayer.stop();
+                SoundManager.unregisterMediaPlayer(mediaPlayer);
             }
             System.exit(0);
         });
@@ -156,7 +188,7 @@ public class GameMenu extends JFrame {
                 System.out.println("✓ Playing MenuMusic.wav from: " + Path.menuMusic);
             }
             mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.setVolume(SoundManager.getGlobalVolume());
+            SoundManager.registerMediaPlayer(mediaPlayer);
             mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
             mediaPlayer.play();
         } catch (Exception e) {
@@ -261,6 +293,11 @@ public class GameMenu extends JFrame {
             public void mouseEntered(MouseEvent e) {
                 button.setFont(button.getFont().deriveFont(AffineTransform.getScaleInstance(1.1, 1.1)));
                 button.repaint();
+                if (mouseClickSound != null) {
+                    mouseClickSound.play(SoundManager.getEffectVolume());
+                } else {
+                    System.err.println("Mouse_Click.wav not loaded.");
+                }
             }
 
             @Override

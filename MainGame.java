@@ -238,7 +238,7 @@ public class MainGame {
                 }
 
                 if (ball.getY() > heightW) {
-                    Update.loseLifeSound.play(SoundManager.getGlobalVolume());
+                    Update.loseLifeSound.play(SoundManager.getEffectVolume());
                     gameLoop.stop();
                     if (mediaPlayer != null) {
                         mediaPlayer.stop();

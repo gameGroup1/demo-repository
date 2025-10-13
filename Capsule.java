@@ -46,7 +46,7 @@ public class Capsule extends GameObject {
 
     public void playSound() {
         if (sound != null) {
-            sound.play(SoundManager.getGlobalVolume());
+            sound.play(SoundManager.getEffectVolume());
         } else {
             System.err.println("Capsule sound not loaded.");
         }

@@ -12,8 +12,15 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.animation.AnimationTimer;
+import javafx.scene.media.AudioClip;
 
 public class Pause {
+    private static AudioClip mouseClickSound;
+
+    static {
+        mouseClickSound = new AudioClip(Path.getFileURL(Path.MouseClick));
+        SoundManager.registerAudioClip(mouseClickSound);
+    }
 
     public static void show(Stage parentStage, AnimationTimer gameLoop) {
         // Kiểm tra xem JavaFX đã được khởi tạo chưa
@@ -55,20 +62,30 @@ public class Pause {
         continueBtn.setStyle("-fx-font-size: 16; -fx-pref-width: 120; -fx-pref-height: 35; -fx-background-color: #4CAF50; -fx-text-fill: white;");
         exitBtn.setStyle("-fx-font-size: 16; -fx-pref-width: 120; -fx-pref-height: 35; -fx-background-color: #f44336; -fx-text-fill: white;");
 
-        // Hiệu ứng scale khi hover cho continueBtn
+        // Hiệu ứng scale và âm thanh khi hover cho continueBtn
         continueBtn.setOnMouseEntered(e -> {
             continueBtn.setScaleX(1.1);
             continueBtn.setScaleY(1.1);
+            if (mouseClickSound != null) {
+                mouseClickSound.play(SoundManager.getEffectVolume());
+            } else {
+                System.err.println("Mouse_Click.wav not loaded.");
+            }
         });
         continueBtn.setOnMouseExited(e -> {
             continueBtn.setScaleX(1.0);
             continueBtn.setScaleY(1.0);
         });
 
-        // Hiệu ứng scale khi hover cho exitBtn
+        // Hiệu ứng scale và âm thanh khi hover cho exitBtn
         exitBtn.setOnMouseEntered(e -> {
             exitBtn.setScaleX(1.1);
             exitBtn.setScaleY(1.1);
+            if (mouseClickSound != null) {
+                mouseClickSound.play(SoundManager.getEffectVolume());
+            } else {
+                System.err.println("Mouse_Click.wav not loaded.");
+            }
         });
         exitBtn.setOnMouseExited(e -> {
             exitBtn.setScaleX(1.0);
