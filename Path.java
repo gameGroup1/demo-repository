@@ -1,8 +1,5 @@
 public class Path {
     public static final String highestScore = "highest_score.txt";
-    public static final String blockImage = "block.png";
-    public static final String heartImage = "heart.png";
-    public static final String explosionGIF = "explosion.gif";
     public static final String ballPaddleSound = "/sound_and_music/ball_paddle_collision.wav";
     public static final String ballWallSound = "/sound_and_music/ball_wall_collision.wav";
     public static final String ballBrickSound = "/sound_and_music/ball_brick_collision.wav";

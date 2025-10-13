@@ -18,6 +18,7 @@ public class SoundManager {
             volume = 0.0;
         } else if (volume > 1.0) {
             volume = 1.0;
+
         }
         backgroundVolume = volume;
         // Cập nhật âm lượng cho tất cả MediaPlayer

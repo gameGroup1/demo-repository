@@ -59,7 +59,7 @@ public class MainGame {
 
         double paddleX = (widthW - widthP) / 2.0;
         double paddleY = heightW - heightP;
-        paddle = new Paddle(paddleX, paddleY, widthP, heightP, Color.BROWN);
+        paddle = new Paddle(paddleX, paddleY, widthP, heightP);
 
         double centerX = paddleX + widthP / 2;
         double centerY = paddleY - radiusB;
@@ -92,7 +92,7 @@ public class MainGame {
                     capsuleIndex.add(index);
                 } else {
                     chance = random.nextDouble();
-                    if(chance < 0.3) {
+                    if(chance < 0.2) {
                         capsules[index] = new Capsule(Path.explosionCapsule, Path.explosionSound);
                         capsules[index].init(brickX, brickY, brickWidth, brickHeight, 2 * speedC, "explosion");
                         capsules[index].setVisible(false);
@@ -103,7 +103,7 @@ public class MainGame {
             }
         }
 
-        heartImage = new Image(Path.heartImage);
+        heartImage = new Image("heart.png");
         for (int i = 0; i < lives; i++) {
             ImageView iv = new ImageView(heartImage);
             iv.setFitWidth(30);
@@ -342,7 +342,7 @@ public class MainGame {
     }
 
     private void showExplosion(double x, double y) {
-        Image explosionImage = new Image(Path.explosionGIF);
+        Image explosionImage = new Image("explosion.gif");
         ImageView explosionView = new ImageView(explosionImage);
 
         explosionView.setFitWidth(100);
