@@ -13,6 +13,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.animation.ScaleTransition;
+import javafx.util.Duration;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.AudioClip;
@@ -38,13 +40,12 @@ public class EndMenu {
             Platform.runLater(() -> show(score, bestScore));
             return;
         }
-        
+
         stage = new Stage();
         stage.setTitle("Game Over");
         stage.setResizable(false);
 
         StackPane stackRoot = new StackPane();
-        
         Image backgroundImage = loadBackgroundImage();
         if (backgroundImage != null) {
             ImageView imageView = new ImageView(backgroundImage);
@@ -65,13 +66,22 @@ public class EndMenu {
         BorderPane.setAlignment(titleLabel, Pos.CENTER);
         contentPane.setTop(titleLabel);
 
+        ScaleTransition titleScale = new ScaleTransition(Duration.seconds(1.5), titleLabel);
+        titleScale.setFromX(0.8);
+        titleScale.setFromY(0.8);
+        titleScale.setToX(1.2);
+        titleScale.setToY(1.2);
+        titleScale.setCycleCount(ScaleTransition.INDEFINITE);
+        titleScale.setAutoReverse(true);
+        titleScale.play();
+
         VBox centerBox = new VBox(15);
         centerBox.setAlignment(Pos.CENTER);
-        
+
         Label scoreLabel = new Label("Score: " + score);
         scoreLabel.setFont(Font.font("Arial", 24));
         scoreLabel.setTextFill(Color.WHITE);
-        
+
         Label bestScoreLabel = new Label("Best Score: " + bestScore);
         bestScoreLabel.setFont(Font.font("Arial", 24));
         bestScoreLabel.setTextFill(Color.YELLOW);
@@ -159,7 +169,7 @@ public class EndMenu {
         HBox buttonBox = new HBox(15);
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.getChildren().addAll(playAgainBtn, exitBtn);
-        
+
         bottomBox.getChildren().add(buttonBox);
         contentPane.setBottom(bottomBox);
         BorderPane.setMargin(bottomBox, new Insets(20, 0, 0, 0));
@@ -210,9 +220,9 @@ public class EndMenu {
                 return backgroundImage;
             }
             String[] paths = {
-                "resources/end.gif",
-                "./resources/end.gif",
-                "../resources/end.gif"
+                    "resources/end.gif",
+                    "./resources/end.gif",
+                    "../resources/end.gif"
             };
             for (String path : paths) {
                 java.io.File file = new java.io.File(path);

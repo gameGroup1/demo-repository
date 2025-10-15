@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 public class Block extends GameObject {
     private Image image;
     private ImageView imageView;
-    private static final String imagePath = Path.block;
+    private static final String imagePath = "block.png";
 
     public Block(double x, double y, int width, int height) {
         super(x, y, width, height);

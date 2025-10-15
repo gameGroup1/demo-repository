@@ -14,7 +14,6 @@ import java.net.URL;
 
 public class GameMenu extends JFrame {
     private boolean checkStart = false;
-    private MainGame mainGame;
     private JLabel title;
     private JButton startBtn;
     private JButton bestScoreBtn;
@@ -31,12 +30,9 @@ public class GameMenu extends JFrame {
         SoundManager.registerAudioClip(mouseClickSound);
     }
 
-    public void setCheckStart(boolean checkStart) {
-        this.checkStart = checkStart;
-    }
-
-    public boolean isCheckStart() {
-        return checkStart;
+    static {
+        mouseClickSound = new AudioClip(Path.getFileURL(Path.MouseClick));
+        SoundManager.registerAudioClip(mouseClickSound);
     }
     private Font loadCustomFont() {
     try {
@@ -105,7 +101,7 @@ public class GameMenu extends JFrame {
         panel.add(Box.createVerticalStrut(30));
 
         startBtn = new JButton("Start");
-        bestScoreBtn = new JButton("BestScore");
+        bestScoreBtn = new JButton("Best Score");
         exitBtn = new JButton("Exit");
 
         startBtn.setFocusPainted(false);
@@ -202,7 +198,28 @@ public class GameMenu extends JFrame {
         });
 
         bestScoreBtn.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Best Score: 0");
+            JDialog dialog = new JDialog(this, "Best Score", true);
+            dialog.setSize(400, 200);
+            dialog.setLocationRelativeTo(this);
+            dialog.getContentPane().setBackground(new Color(0, 50, 0)); // Nền xanh lá đậm để hòa hợp background
+
+            JLabel label = new JLabel("Best Score: " + MainGame.getBestScore());
+            label.setFont(new Font("Arial", Font.BOLD, 32)); // Tăng kích cỡ chữ lên 32
+            label.setForeground(Color.CYAN); // Màu cyan nổi bật trên nền xanh lá
+            label.setHorizontalAlignment(SwingConstants.CENTER);
+            label.setOpaque(false);
+
+            JButton closeBtn = new JButton("Close");
+            makeButtonTransparent(closeBtn); // Áp dụng style tương tự các nút khác
+            closeBtn.addActionListener(a -> dialog.dispose());
+
+            JPanel contentPanel = new JPanel(new BorderLayout());
+            contentPanel.setOpaque(false);
+            contentPanel.add(label, BorderLayout.CENTER);
+            contentPanel.add(closeBtn, BorderLayout.SOUTH);
+
+            dialog.add(contentPanel);
+            dialog.setVisible(true);
         });
 
         exitBtn.addActionListener(e -> {
@@ -288,7 +305,6 @@ public class GameMenu extends JFrame {
             super.paintComponent(g);
             if (image != null) {
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-                System.out.println("Image drawn at " + getWidth() + "x" + getHeight());
             } else {
                 g.setColor(Color.BLACK);
                 g.fillRect(0, 0, getWidth(), getHeight());

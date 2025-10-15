@@ -1,6 +1,5 @@
 public class Path {
     public static final String highestScore = "highest_score.txt";
-    public static final String block = "/resources/block.png";
     public static final String ballPaddleSound = "/sound_and_music/ball_paddle_collision.wav";
     public static final String ballWallSound = "/sound_and_music/ball_wall_collision.wav";
     public static final String ballBrickSound = "/sound_and_music/ball_brick_collision.wav";
@@ -9,9 +8,9 @@ public class Path {
     public static final String losePointSound = "/sound_and_music/lose_point.wav";
     public static final String loseLifeSound = "/sound_and_music/lose_life.wav";
     public static final String fireSound = "/sound_and_music/fire_effect.wav";
-    public static final String toxicSound = "/sound_and_music/toxic_effect.wav";
     public static final String fastSound = "/sound_and_music/fast_effect.wav";
     public static final String slowSound = "/sound_and_music/slow_effect.wav";
+    public static final String explosionSound = "/sound_and_music/explosion.wav";
     public static final String powerUpSound = "/sound_and_music/power_up_effect.wav";
     public static final String transformSound = "/sound_and_music/transform_effect.wav";
     public static final String menuMusic = "/sound_and_music/MenuMusic.wav";
@@ -30,10 +29,10 @@ public class Path {
     public static final String fastBallCapsule = "/Image_Capsules/fast_ball_capsule.png";
     public static final String slowBallCapsule = "/Image_Capsules/slow_ball_capsule.png";
     public static final String fireBallCapsule = "/Image_Capsules/fire_ball_capsule.png";
-    public static final String toxicBallCapsule = "/Image_Capsules/toxic_ball_capsule.png";
     public static final String powerBallCapsule = "/Image_Capsules/power_ball_capsule.png";
     public static final String expandPaddleCapsule = "/Image_Capsules/expand_paddle_capsule.png";
     public static final String shrinkPaddleCapsule = "/Image_Capsules/shrink_paddle_capsule.png";
+    public static final String explosionCapsule = "/Image_Capsules/explosion_capsule.png";
     public static final String MouseClick = "/sound_and_music/Mouse_Click.wav";
 
     public static String getFileURL(String relativePath) {

@@ -39,7 +39,6 @@ public class SoundManager {
             volume = 1.0;
         }
         effectVolume = volume;
-        // AudioClip không cần cập nhật ở đây vì âm lượng được đặt khi play()
     }
 
     public static void registerMediaPlayer(MediaPlayer player) {
@@ -61,5 +60,24 @@ public class SoundManager {
 
     public static void unregisterAudioClip(AudioClip clip) {
         audioClips.remove(clip);
+    }
+
+    public static void stopAllSounds() {
+        // Dừng và xóa tất cả MediaPlayer
+        for (MediaPlayer player : new ArrayList<>(mediaPlayers)) {
+            if (player != null) {
+                player.stop();
+                player.dispose(); // Giải phóng tài nguyên
+            }
+        }
+        mediaPlayers.clear();
+
+        // Dừng và xóa tất cả AudioClip
+        for (AudioClip clip : new ArrayList<>(audioClips)) {
+            if (clip != null) {
+                clip.stop();
+            }
+        }
+        audioClips.clear();
     }
 }
