@@ -12,7 +12,7 @@ public class Paddle extends GameObject {
 
     public Paddle(double x, double y, int width, int height) {
         super(x, y, width, height);
-        image = new Image("paddle.png");
+        image = new Image("file:resources/paddle.png");
         viewPort = new Rectangle2D(0,0,88,22);
         imageView = new ImageView(image);
         imageView.setX(x);
