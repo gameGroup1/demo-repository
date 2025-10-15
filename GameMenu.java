@@ -14,7 +14,6 @@ import java.net.URL;
 
 public class GameMenu extends JFrame {
     private boolean checkStart = false;
-    private MainGame mainGame;
     private JLabel title;
     private JButton startBtn;
     private JButton bestScoreBtn;
@@ -31,14 +30,48 @@ public class GameMenu extends JFrame {
         SoundManager.registerAudioClip(mouseClickSound);
     }
 
-    public void setCheckStart(boolean checkStart) {
-        this.checkStart = checkStart;
+    static {
+        mouseClickSound = new AudioClip(Path.getFileURL(Path.MouseClick));
+        SoundManager.registerAudioClip(mouseClickSound);
     }
-
-    public boolean isCheckStart() {
-        return checkStart;
+    private Font loadCustomFont() {
+    try {
+        // Thử load từ classpath trước
+        java.net.URL fontURL = getClass().getClassLoader().getResource("Monotype_corsiva.ttf");
+        if (fontURL != null) {
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, fontURL.openStream());
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(customFont);
+            System.out.println("✓ Loaded Monotype Corsiva from classpath");
+            return customFont.deriveFont(Font.BOLD, 48f); // Size 48, Bold
+        }
+        
+        // Nếu không có trong classpath, thử từ folder resources
+        String[] paths = {
+            "resources/Monotype_corsiva.ttf",
+            "./resources/Monotype_corsiva.ttf",
+            "../resources/Monotype_corsiva.ttf"
+        };
+        
+        for (String path : paths) {
+            java.io.File fontFile = new java.io.File(path);
+            if (fontFile.exists()) {
+                Font customFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                ge.registerFont(customFont);
+                System.out.println("✓ Loaded Monotype Corsiva from: " + path);
+                return customFont.deriveFont(Font.BOLD, 48f);
+            }
+        }
+        
+        System.err.println("✗ Cannot find Monotype_corsiva.ttf, using default font");
+    } catch (Exception e) {
+        System.err.println("✗ Error loading custom font: " + e.getMessage());
+        e.printStackTrace();
     }
-
+    // Fallback về Arial nếu không load được
+    return new Font("Arial", Font.BOLD, 48);
+}
     public GameMenu() {
         setTitle("Arkanoid - Start Menu");
         setSize(1000, 500);
@@ -60,15 +93,15 @@ public class GameMenu extends JFrame {
 
         title = new JLabel("ARKANOID");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        title.setFont(new Font("Arial", Font.BOLD, 36));
-        title.setForeground(Color.CYAN);
+       title.setFont(loadCustomFont());
+        title.setForeground(new Color(154, 205, 50));
         title.setOpaque(false);
         panel.add(Box.createVerticalStrut(30));
         panel.add(title);
         panel.add(Box.createVerticalStrut(30));
 
         startBtn = new JButton("Start");
-        bestScoreBtn = new JButton("BestScore");
+        bestScoreBtn = new JButton("Best Score");
         exitBtn = new JButton("Exit");
 
         startBtn.setFocusPainted(false);
@@ -84,9 +117,9 @@ public class GameMenu extends JFrame {
         bestScoreBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         exitBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        startBtn.setFont(new Font("Arial", Font.PLAIN, 18));
-        bestScoreBtn.setFont(new Font("Arial", Font.PLAIN, 18));
-        exitBtn.setFont(new Font("Arial", Font.PLAIN, 18));
+        startBtn.setFont(new Font("Arial", Font.PLAIN, 30));
+        bestScoreBtn.setFont(new Font("Arial", Font.PLAIN, 30));
+        exitBtn.setFont(new Font("Arial", Font.PLAIN, 30));
 
         makeButtonTransparent(startBtn);
         makeButtonTransparent(bestScoreBtn);
@@ -96,11 +129,11 @@ public class GameMenu extends JFrame {
         backgroundLabel = new JLabel("Background Volume: " + (int)(SoundManager.getBackgroundVolume() * 100) + "%");
         backgroundLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         backgroundLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        backgroundLabel.setForeground(Color.WHITE);
+        backgroundLabel.setForeground(new Color(154, 205, 50));
         backgroundLabel.setOpaque(false);
 
         backgroundSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, (int)(SoundManager.getBackgroundVolume() * 100));
-        backgroundSlider.setPreferredSize(new Dimension(200, 40));
+        backgroundSlider.setPreferredSize(new Dimension(200, 10));
         backgroundSlider.setAlignmentX(Component.CENTER_ALIGNMENT);
         backgroundSlider.setOpaque(false);
         backgroundSlider.setForeground(Color.WHITE);
@@ -116,15 +149,16 @@ public class GameMenu extends JFrame {
         effectLabel = new JLabel("Effect Volume: " + (int)(SoundManager.getEffectVolume() * 100) + "%");
         effectLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         effectLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        effectLabel.setForeground(Color.WHITE);
+       effectLabel.setForeground(new Color(154, 205, 50));
+
         effectLabel.setOpaque(false);
 
         effectSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, (int)(SoundManager.getEffectVolume() * 100));
-        effectSlider.setPreferredSize(new Dimension(200, 40));
+        effectSlider.setPreferredSize(new Dimension(160, 10));
         effectSlider.setAlignmentX(Component.CENTER_ALIGNMENT);
         effectSlider.setOpaque(false);
-        effectSlider.setForeground(Color.WHITE);
-        effectSlider.setMajorTickSpacing(25);
+        effectSlider.setForeground(new Color(154, 205, 50));
+        effectSlider.setMajorTickSpacing(15);
         effectSlider.setPaintTicks(true);
         effectSlider.addChangeListener(e -> {
             double volume = effectSlider.getValue() / 100.0;
@@ -164,7 +198,28 @@ public class GameMenu extends JFrame {
         });
 
         bestScoreBtn.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Best Score: 0");
+            JDialog dialog = new JDialog(this, "Best Score", true);
+            dialog.setSize(400, 200);
+            dialog.setLocationRelativeTo(this);
+            dialog.getContentPane().setBackground(new Color(0, 50, 0)); // Nền xanh lá đậm để hòa hợp background
+
+            JLabel label = new JLabel("Best Score: " + MainGame.getBestScore());
+            label.setFont(new Font("Arial", Font.BOLD, 32)); // Tăng kích cỡ chữ lên 32
+            label.setForeground(Color.CYAN); // Màu cyan nổi bật trên nền xanh lá
+            label.setHorizontalAlignment(SwingConstants.CENTER);
+            label.setOpaque(false);
+
+            JButton closeBtn = new JButton("Close");
+            makeButtonTransparent(closeBtn); // Áp dụng style tương tự các nút khác
+            closeBtn.addActionListener(a -> dialog.dispose());
+
+            JPanel contentPanel = new JPanel(new BorderLayout());
+            contentPanel.setOpaque(false);
+            contentPanel.add(label, BorderLayout.CENTER);
+            contentPanel.add(closeBtn, BorderLayout.SOUTH);
+
+            dialog.add(contentPanel);
+            dialog.setVisible(true);
         });
 
         exitBtn.addActionListener(e -> {
@@ -202,11 +257,8 @@ public class GameMenu extends JFrame {
         button.setContentAreaFilled(false);
         button.setFocusPainted(false);
         button.setBackground(new Color(20, 40, 30, 10));
-        button.setForeground(new Color(200, 255, 150));
-        button.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(100, 255, 200, 150), 2),
-                BorderFactory.createEmptyBorder(5, 15, 5, 15)
-        ));
+        button.setForeground((new Color(154, 200, 50)));
+        button.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15)); // Xóa viền hoàn toàn
     }
 
     private Image loadBackgroundImage() {
@@ -253,7 +305,6 @@ public class GameMenu extends JFrame {
             super.paintComponent(g);
             if (image != null) {
                 g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-                System.out.println("Image drawn at " + getWidth() + "x" + getHeight());
             } else {
                 g.setColor(Color.BLACK);
                 g.fillRect(0, 0, getWidth(), getHeight());

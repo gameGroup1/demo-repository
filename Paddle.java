@@ -1,18 +1,25 @@
 /* Lớp đại diện cho tấm ván */
-import javafx.scene.shape.Rectangle;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 
 public class Paddle extends GameObject {
-    private Rectangle rect;
-    private Color color;
+    private Image image;
+    private ImageView imageView;
+    private Rectangle2D viewPort;
 
-    public Paddle(double x, double y, int width, int height, Color color) {
+    public Paddle(double x, double y, int width, int height) {
         super(x, y, width, height);
-        this.color = color;
-        rect = new Rectangle(x, y, width, height);
-        rect.setFill(color);
+        image = new Image("paddle.png");
+        viewPort = new Rectangle2D(0,0,88,22);
+        imageView = new ImageView(image);
+        imageView.setX(x);
+        imageView.setY(y);
+        imageView.setFitWidth(width);
+        imageView.setFitHeight(height);
+        imageView.setViewport(viewPort);
     }
 
     public void move(MouseEvent event, Wall leftWall, Wall rightWall) {
@@ -26,17 +33,17 @@ public class Paddle extends GameObject {
         else if (newX + getWidth() > rightBound) newX = rightBound - getWidth();
 
         super.setX(newX);
-        rect.setX(newX);
+        imageView.setX(newX);
     }
 
     @Override
     public void render() {
-        rect.setX(getX());
-        rect.setY(getY());
-        rect.setWidth(getWidth());
+        imageView.setX(getX());
+        imageView.setY(getY());
+        imageView.setFitWidth(getWidth());
     }
 
     public Node getNode() {
-        return rect;
+        return imageView;
     }
 }

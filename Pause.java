@@ -4,6 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -50,6 +51,37 @@ public class Pause {
         titleLabel.setTextFill(Color.CYAN);
         BorderPane.setAlignment(titleLabel, Pos.CENTER);
         root.setTop(titleLabel);
+
+        // Phần giữa - Điều chỉnh âm thanh
+        VBox centerBox = new VBox(10);
+        centerBox.setAlignment(Pos.CENTER);
+
+        Label backgroundLabel = new Label("Background Volume: " + (int)(SoundManager.getBackgroundVolume() * 100) + "%");
+        backgroundLabel.setFont(Font.font("Arial", 16));
+        backgroundLabel.setTextFill(Color.WHITE);
+
+        Slider backgroundSlider = new Slider(0, 100, (int)(SoundManager.getBackgroundVolume() * 100));
+        backgroundSlider.setPrefWidth(200);
+        backgroundSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            double volume = newVal.doubleValue() / 100.0;
+            SoundManager.setBackgroundVolume(volume);
+            backgroundLabel.setText("Background Volume: " + newVal.intValue() + "%");
+        });
+
+        Label effectLabel = new Label("Effect Volume: " + (int)(SoundManager.getEffectVolume() * 100) + "%");
+        effectLabel.setFont(Font.font("Arial", 16));
+        effectLabel.setTextFill(Color.WHITE);
+
+        Slider effectSlider = new Slider(0, 100, (int)(SoundManager.getEffectVolume() * 100));
+        effectSlider.setPrefWidth(200);
+        effectSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            double volume = newVal.doubleValue() / 100.0;
+            SoundManager.setEffectVolume(volume);
+            effectLabel.setText("Effect Volume: " + newVal.intValue() + "%");
+        });
+
+        centerBox.getChildren().addAll(backgroundLabel, backgroundSlider, effectLabel, effectSlider);
+        root.setCenter(centerBox);
 
         // Phần dưới - Các nút
         VBox bottomBox = new VBox(10);
@@ -122,23 +154,28 @@ public class Pause {
             pauseStage.close();
         });
 
-        // Action cho Exit: Thoát game
+        // Action cho Exit: Dừng toàn bộ chương trình
         exitBtn.setOnAction(e -> {
+            // Đóng pause stage và parent stage (primary stage của game)
             pauseStage.close();
-            parentStage.close();
+            if (parentStage != null) {
+                parentStage.close();  // Sẽ trigger onCloseRequest trong MainGame để stop gameLoop, mediaPlayer, save score
+            }
+            // Dừng tất cả âm thanh qua SoundManager để đảm bảo không còn nhạc chạy ngầm
+            SoundManager.stopAllSounds();
+            // Dừng JavaFX application thread một cách sạch sẽ
             Platform.exit();
-            System.exit(0);
         });
 
         HBox buttonBox = new HBox(20);
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.getChildren().addAll(continueBtn, exitBtn);
-        
+
         bottomBox.getChildren().add(buttonBox);
         root.setBottom(bottomBox);
         BorderPane.setMargin(bottomBox, new Insets(20, 0, 0, 0));
 
-        Scene scene = new Scene(root, 300, 200); // Kích thước nhỏ hơn cho menu pause
+        Scene scene = new Scene(root, 300, 300); // Kích thước nhỏ hơn cho menu pause
         pauseStage.setScene(scene);
         pauseStage.showAndWait(); // Chờ đến khi close mới tiếp tục
     }
