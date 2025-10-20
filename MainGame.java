@@ -103,7 +103,8 @@ public class MainGame {
             }
         }
 
-        heartImage = new Image("heart.png");
+        Image heartImage = new Image("file:resources/heart.png");
+
         for (int i = 0; i < lives; i++) {
             ImageView iv = new ImageView(heartImage);
             iv.setFitWidth(30);
@@ -345,7 +346,7 @@ public class MainGame {
     }
 
     private void showExplosion(double x, double y) {
-        Image explosionImage = new Image("explosion.gif");
+        Image explosionImage = new Image("file:resources/explosion.gif");
         ImageView explosionView = new ImageView(explosionImage);
 
         explosionView.setFitWidth(100);

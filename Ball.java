@@ -19,8 +19,8 @@ public class Ball extends GameObject{
         this.radius = radius;
         this.speed = speed;
         this.power = 1;
-        normalImage = new Image("ball.png");
-        fireImage = new Image("fireball.gif"); // Giả sử file GIF tên là fireball.gif và nằm cùng thư mục với ball.png
+        normalImage = new Image("file:resources/ball.png");
+        fireImage = new Image("file:resources/fireball.gif");
         imageView = new ImageView(normalImage);
         normalViewport = new Rectangle2D(0, 0, 128, 128);
         fireViewport = new Rectangle2D(33, 22, 55, 55);
