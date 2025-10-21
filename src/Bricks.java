@@ -1,49 +1,45 @@
-public class Bricks {
-    private int x, y, width, height;
-    boolean isBreak = false;
+/* Lớp đại diện cho khối gạch trong game Arkanoid (kế thừa từ GameObject) */
+import javafx.scene.shape.Rectangle;
+import javafx.scene.Node;
 
-    public Bricks(int x, int y, int width, int height) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+public class Bricks extends GameObject {
+    private Rectangle rect; // Đối tượng JavaFX để hiển thị (tích hợp GUI - phần 4.2.1)
+    private int health;
+
+    public Bricks(double x, double y, int width, int height, Material material) {
+        super(x, y, width, height, material); // Kế thừa từ GameObject
+        rect = new Rectangle(x, y, width, height); // Tạo Rectangle
+        rect.setFill(material.getColor()); // Gán màu từ Material
+        health = (int) material.getHardness(); // Sử dụng độ cứng làm máu
     }
 
-    public void setX(int x) {
-        this.x = x;
+    @Override
+    public void render() {
+        if (rect != null) {
+            if (!isBreak()) {
+                rect.setX(getX());
+                rect.setY(getY());
+                rect.setWidth(getWidth());
+                rect.setHeight(getHeight());
+                if (getMaterial() != null) {
+                    rect.setFill(getMaterial().getColor()); // Cập nhật màu (hiệu ứng hình ảnh - phần 4.2.2)
+                }
+                rect.setVisible(true); // Hiển thị nếu chưa phá
+            } else {
+                rect.setVisible(false); // Ẩn gạch nếu đã phá (phần 4.1.1: phá hủy Brick)
+            }
+        }
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public boolean isBreak() {
+        return health <= 0;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
+    public void takeHit(int power) {
+        health = health - power;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
+    public Node getNode() {
+        return rect;
     }
-
-    public void setBreak(boolean isBreak) {
-        this.isBreak = isBreak;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    
 }
