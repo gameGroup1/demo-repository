@@ -1,12 +1,44 @@
 {
-    "java.project.referencedLibraries": [
-        "d:\\javafx-sdk-21.0.8\\lib\\javafx.base.jar",
-        "d:\\javafx-sdk-21.0.8\\lib\\javafx.controls.jar",
-        "d:\\javafx-sdk-21.0.8\\lib\\javafx.fxml.jar",
-        "d:\\javafx-sdk-21.0.8\\lib\\javafx.graphics.jar",
-        "d:\\javafx-sdk-21.0.8\\lib\\javafx.media.jar",
-        "d:\\javafx-sdk-21.0.8\\lib\\javafx.swing.jar",
-        "d:\\javafx-sdk-21.0.8\\lib\\javafx.web.jar",
-        "d:\\javafx-sdk-21.0.8\\lib\\javafx-swt.jar"
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar",
+            "c:\\Users\\GF63\\Desktop\\javafx-sdk-21.0.8\\lib\\javafx.properties",
+            "e:\\java\\javafx-sdk-21.0.8\\lib\\javafx.base.jar",
+            "e:\\java\\javafx-sdk-21.0.8\\lib\\javafx.controls.jar",
+            "e:\\java\\javafx-sdk-21.0.8\\lib\\javafx.fxml.jar",
+            "e:\\java\\javafx-sdk-21.0.8\\lib\\javafx.graphics.jar",
+            "e:\\java\\javafx-sdk-21.0.8\\lib\\javafx-swt.jar",
+            "javafx-sdk-21.0.8/lib/javafx.base.jar",
+            "javafx-sdk-21.0.8/lib/javafx.controls.jar",
+            "javafx-sdk-21.0.8/lib/javafx.fxml.jar",
+            "javafx-sdk-21.0.8/lib/javafx.graphics.jar",
+            "javafx-sdk-21.0.8/lib/javafx.media.jar",
+            "javafx-sdk-21.0.8/lib/javafx.swing.jar",
+            "javafx-sdk-21.0.8/lib/javafx.web.jar",
+            "javafx-sdk-21.0.8/lib/javafx-swt.jar",
+            "javafx-sdk-21.0.8/lib/jdk.jsobject.jar",
+            "javafx-sdk-21.0.8/lib/jfx.incubator.input.jar",
+            "javafx-sdk-21.0.8/lib/jfx.incubator.richtext.jar",
+            "c:\\game\\javafx-sdk-21.0.8\\lib\\javafx.base.jar",
+            "c:\\game\\javafx-sdk-21.0.8\\lib\\javafx.controls.jar",
+            "c:\\game\\javafx-sdk-21.0.8\\lib\\javafx.fxml.jar",
+            "c:\\game\\javafx-sdk-21.0.8\\lib\\javafx.graphics.jar",
+            "c:\\game\\javafx-sdk-21.0.8\\lib\\javafx.media.jar",
+            "c:\\game\\javafx-sdk-21.0.8\\lib\\javafx.swing.jar",
+            "c:\\game\\javafx-sdk-21.0.8\\lib\\javafx.web.jar",
+            "c:\\game\\javafx-sdk-21.0.8\\lib\\javafx-swt.jar",
+            "c:\\game\\javafx-sdk-21.0.8\\lib\\jdk.jsobject.jar",
+            "c:\\game\\javafx-sdk-21.0.8\\lib\\jfx.incubator.input.jar",
+            "c:\\game\\javafx-sdk-21.0.8\\lib\\jfx.incubator.richtext.jar"
+        ],
+        "exclude": [
+            "e:\\java\\javafx-sdk-21.0.8\\lib\\jfx.incubator.richtext.jar",
+            "e:\\java\\javafx-sdk-21.0.8\\lib\\javafx.web.jar",
+            "e:\\java\\javafx-sdk-21.0.8\\lib\\javafx.swing.jar",
+            "e:\\java\\javafx-sdk-21.0.8\\lib\\javafx.media.jar"
+        ]
+    },
+    "java.project.sourcePaths": [
+        ""
     ]
 }

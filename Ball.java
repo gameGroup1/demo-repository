@@ -1,58 +1,65 @@
-/* Lớp đại diện cho quả bóng */
-import javafx.scene.shape.Circle;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.Node;
 
 public class Ball extends GameObject{
-     private double dx, dy;
-     private double radius;
-     private double speed;
-     private int power;
-     private Circle circle;
+    private double dx, dy;
+    private double radius;
+    private double speed;
+    private int power;
+    private ImageView imageView; // Đối tượng JavaFX để hiển thị hình ảnh
+    private Image normalImage;
+    private Image fireImage;
+    private Rectangle2D normalViewport;
+    private Rectangle2D fireViewport;
 
-     public Ball(double x, double y, double radius, double speed, Material material) {
-          super(x,y,material);
-          this.radius = radius;
-          this.speed = speed;
-          this.power = 1;
-          this.circle = new Circle(x, y, radius, material.getColor());
-     }
+    public Ball(double x, double y, double radius, double speed) {
+        super(x, y,(int) radius * 2, (int) radius * 2);
+        this.radius = radius;
+        this.speed = speed;
+        this.power = 1;
+        normalImage = new Image("file:resources/ball.png");
+        fireImage = new Image("file:resources/fireball.gif");
+        imageView = new ImageView(normalImage);
+        normalViewport = new Rectangle2D(0, 0, 128, 128);
+        fireViewport = new Rectangle2D(33, 22, 55, 55);
+        imageView.setViewport(normalViewport);
+        imageView.setFitWidth(radius * 2);
+        imageView.setFitHeight(radius * 2);
+    }
 
-     public double getRadius() { return radius; }
-     public double getSpeed() { return speed; }
-     public double getDx() { return dx; }
-     public double getDy() { return dy; }
-     public int getPower() { return power; }
+    public double getRadius() { return radius; }
+    public double getSpeed() { return speed; }
+    public double getDx() { return dx; }
+    public double getDy() { return dy; }
+    public int getPower() { return power; }
 
-     public void setSpeed(double speed) { this.speed = speed; }
-     public void setDx(double dx) { this.dx = dx; }
-     public void setDy(double dy) { this.dy = dy; }
-     public void setPower(int power) { this.power = power; }
+    public void setDx(double dx) { this.dx = dx; }
+    public void setDy(double dy) { this.dy = dy; }
+    public void setPower(int power) { this.power = power; }
+    public void setSpeed(double speed) { this.speed = speed; }
 
-     public void move() {
-        // Cập nhật vị trí từ GameObject (kế thừa)
-        setX(getX() + dx);
-        setY(getY() + dy);
-
-        // Đồng bộ với Circle trong JavaFX scene graph (tích hợp GUI - phần 4.2.1)
-        if (circle != null) {
-            circle.setCenterX(getX() + radius); // Căn giữa tâm Circle với vị trí bóng
-            circle.setCenterY(getY() + radius);
+    public void setFireBall(boolean isFireBall) {
+        if (isFireBall) {
+            imageView.setImage(fireImage);
+            imageView.setViewport(fireViewport);
+        }
+        else {
+            imageView.setImage(normalImage);
+            imageView.setViewport(normalViewport);
         }
     }
 
     @Override
     public void render() {
-        if (circle != null) {
-            circle.setCenterX(getX() + radius);
-            circle.setCenterY(getY() + radius);
-            circle.setRadius(radius);
-            if (getMaterial() != null) {
-                circle.setFill(getMaterial().getColor()); // Cập nhật màu từ Material (hiệu ứng hình ảnh - phần 4.2.2)
-            }
+        if (imageView != null) {
+            imageView.setX(getX() - radius);
+            imageView.setY(getY() - radius);
         }
     }
 
     public Node getNode() {
-        return circle;
+        return imageView;
     }
 }

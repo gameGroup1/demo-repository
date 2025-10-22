@@ -1,109 +1,180 @@
-/* main - Lớp chính cho game Arkanoid, kế thừa Application để quản lý JavaFX */
-/* hàm main càng ngắn càng tốt */
-import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.animation.AnimationTimer;
-import javafx.animation.PauseTransition; // Import cho delay (phần 4.2.3: đa luồng với delay)
-import javafx.util.Duration; // Import Duration cho PauseTransition
-import javafx.scene.input.MouseEvent;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import javafx.scene.input.KeyCode;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import java.net.URL;
+import javafx.scene.text.Text;
+import javafx.scene.text.Font;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
-public class MainGame extends Application {
-    // Hằng số kích thước game (đóng gói để dễ bảo trì)
-    private final int widthW = 400;
-    private final int heightW = 600;
-    private final int widthP = 100;
-    private final int heightP = 20;
-    private final int radiusB = 7;
+public class MainGame {
+    private final int widthW = 1080;
+    private final int heightW = 720;
+    private final int widthP = 150;
+    private final int heightP = 30;
+    private final int radiusB = 15;
     private final int speedB = 5;
-    private final int wallThickness = 10; // Độ dày tường (đóng gói)
+    private final int speedC = 5;
+    private final int wallThickness = 30;
 
-    // Các đối tượng game (private để đóng gói)
     private Ball ball;
     private Paddle paddle;
-    private Wall leftWall; // Tường trái
-    private Wall rightWall; // Tường phải
-    private Wall topWall; // Tường trên
+    private Wall leftWall;
+    private Wall rightWall;
+    private Wall topWall;
     private Bricks[] bricks;
-    private Group root; // Root cho scene graph
-    private AnimationTimer gameLoop; // Game loop (private để kiểm soát start/stop - phần 4.2.3)
+    private Capsule[] capsules;
+    private List<Integer> capsuleIndex = new ArrayList<>();
+    private Group root;
+    private AnimationTimer gameLoop;
+    private Stage primaryStage;
+    private int score = 0;
+    private static int highestScore;
+    private MediaPlayer mediaPlayer;
+    private boolean isAttached = true;
+    private int lives = 5;
+    private List<ImageView> heartImages = new ArrayList<>();
+    private Text scoreText;
+    private Image heartImage;
 
-    // Constructor: Khởi tạo tất cả đối tượng game (áp dụng đóng gói và trừu tượng hóa)
     public MainGame() {
-        // Tạo mảng 4 phần tử chứa các Material ngẫu nhiên cho Bricks
-        Material[] materials = {Material.rock, Material.metal, Material.wood, Material.jewel};
+        int[] hardnessArray = {1, 2, 3, 4};
         Random random = new Random();
 
-        // Khởi tạo Ball (vị trí giữa dưới, vận tốc ban đầu: phải-lên)
-        double ballX = (widthW / 2.0) - radiusB;
-        double ballY = heightW - heightP - (radiusB * 2);
-        ball = new Ball(ballX, ballY, radiusB, speedB, Material.metal);
-        ball.setDx(speedB); // Vận tốc X ban đầu (phải)
-        ball.setDy(-speedB); // Vận tốc Y ban đầu (lên)
-
-        // Khởi tạo Paddle (vị trí giữa dưới màn hình)
         double paddleX = (widthW - widthP) / 2.0;
-        paddle = new Paddle(paddleX, heightW - heightP, widthP, heightP, Material.wood);
+        double paddleY = heightW - heightP;
+        paddle = new Paddle(paddleX, paddleY, widthP, heightP);
 
-        // Khởi tạo ba bức tường (left, right, top - kế thừa GameObject, phần 5.1)
-        leftWall = new Wall(0, 0, wallThickness, heightW, Material.metal); // Tường trái: mỏng, cao toàn màn
-        rightWall = new Wall(widthW - wallThickness, 0, wallThickness, heightW, Material.metal); // Tường phải
-        topWall = new Wall(0, 0, widthW, wallThickness, Material.metal); // Tường trên: rộng toàn màn, mỏng
+        double centerX = paddleX + widthP / 2;
+        double centerY = paddleY - radiusB;
+        ball = new Ball(centerX, centerY, radiusB, speedB);
+        ball.setDx(0);
+        ball.setDy(0);
 
-        // Khởi tạo mảng Bricks (lưới 5 hàng x 10 cột, phần 4.3.1: hệ thống cấp độ đơn giản)
-        bricks = new Bricks[50]; // 5x10 = 50 gạch
-        int brickWidth = 30;
-        int brickHeight = 15;
+        leftWall = new Wall("left", 0, 0, wallThickness, heightW, wallThickness);
+        rightWall = new Wall("right", widthW - wallThickness, 0, wallThickness, heightW, wallThickness);
+        topWall = new Wall("top", 0, 0, widthW, wallThickness, wallThickness);
+
+        bricks = new Bricks[50];
+        capsules = new Capsule[50];
+        int brickWidth = 90;
+        int brickHeight = 30;
         int spacing = 5;
         int rowCount = 5;
         int colCount = 10;
         for (int row = 0; row < rowCount; row++) {
             for (int col = 0; col < colCount; col++) {
-                // Tính vị trí Brick (bắt đầu từ x=wallThickness + 10, y=wallThickness + 50 để tránh biên tường)
-                double brickX = col * (brickWidth + spacing) + wallThickness + 20;
+                double brickX = col * (brickWidth + spacing) + wallThickness + 30;
                 double brickY = row * (brickHeight + spacing) + wallThickness + 100;
                 int index = row * colCount + col;
-                // Chọn Material ngẫu nhiên từ mảng materials
-                Material randomMaterial = materials[random.nextInt(materials.length)];
-                bricks[index] = new Bricks(brickX, brickY, brickWidth, brickHeight, randomMaterial);
+                int randomHardness = hardnessArray[random.nextInt(hardnessArray.length)];
+                double chance = random.nextDouble();
+                bricks[index] = new Bricks(brickX, brickY, brickWidth, brickHeight, randomHardness);
+                if (chance < 0.3) {
+                    capsules[index] = EffectManager.getCapsule(brickX, brickY, brickWidth, brickHeight, speedC);
+                    capsules[index].setVisible(false);
+                    capsuleIndex.add(index);
+                } else {
+                    chance = random.nextDouble();
+                    if(chance < 0.2) {
+                        capsules[index] = new Capsule(Path.explosionCapsule, Path.explosionSound);
+                        capsules[index].init(brickX, brickY, brickWidth, brickHeight, speedC, "explosion");
+                        capsules[index].setVisible(false);
+                        capsuleIndex.add(index);
+                    }
+                    else capsules[index] = null;
+                }
             }
+        }
+
+        Image heartImage = new Image("file:resources/heart.png");
+
+        for (int i = 0; i < lives; i++) {
+            ImageView iv = new ImageView(heartImage);
+            iv.setFitWidth(30);
+            iv.setFitHeight(30);
+            iv.setX(widthW - wallThickness - 80 - i * 36);
+            iv.setY(wallThickness + 5);
+            heartImages.add(iv);
+        }
+
+        // Create score text
+        scoreText = new Text("Score: 0");
+        scoreText.setFill(Color.WHITE);
+        scoreText.setFont(new Font(36));
+        scoreText.setX(widthW - wallThickness - 200);
+        scoreText.setY(wallThickness + 64);
+    }
+
+    public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+        root = new Group();
+        Scene scene = new Scene(root, widthW, heightW, Color.BLACK);
+
+        primaryStage.setTitle("Arkanoid Game");
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.setOnCloseRequest(e -> {
+            if (gameLoop != null) {
+                gameLoop.stop();
+            }
+            if (mediaPlayer != null) {
+                mediaPlayer.stop();
+                SoundManager.unregisterMediaPlayer(mediaPlayer);
+            }
+            saveHighestScore();
+        });
+
+        primaryStage.show();
+
+        PauseTransition delay = new PauseTransition(Duration.seconds(3));
+        delay.setOnFinished(event -> {
+            addGameElementsToRoot();
+            setupInput(scene);
+            startGameLoop();
+            playBackgroundMusic();
+        });
+        delay.play();
+    }
+
+    private void playBackgroundMusic() {
+        try {
+            URL soundURL = getClass().getClassLoader().getResource(Path.backgroundMusic.substring(1));
+            Media media;
+            if (soundURL != null) {
+                media = new Media(soundURL.toString());
+                System.out.println("✓ Playing BackgroundMusic.wav from classpath");
+            } else {
+                media = new Media(Path.getFileURL(Path.backgroundMusic));
+                System.out.println("✓ Playing BackgroundMusic.wav from: " + Path.backgroundMusic);
+            }
+            mediaPlayer = new MediaPlayer(media);
+            SoundManager.registerMediaPlayer(mediaPlayer);
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            mediaPlayer.play();
+        } catch (Exception e) {
+            System.err.println("✗ Cannot find BackgroundMusic.wav at " + Path.backgroundMusic);
+            e.printStackTrace();
         }
     }
 
-    @Override
-    public void start(Stage primaryStage) {
-        // Tạo root Group cho scene graph (phần 4.2.1: xây dựng GUI - trừu tượng hóa scene graph)
-        root = new Group();
-
-        // Tạo Scene với kích thước canvas và nền đen (màn hình đen ban đầu - phần 4.2.1: giao diện thẩm mỹ)
-        Scene scene = new Scene(root, widthW, heightW, Color.BLACK);
-
-        // Thiết lập Stage ban đầu (hiển thị màn hình đen)
-        primaryStage.setTitle("Arkanoid Game");
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false); // Không cho thay đổi kích thước (giữ tỷ lệ)
-        primaryStage.show();
-
-        // Delay 3 giây trước khi load game (sử dụng PauseTransition - phần 4.2.3: đa luồng với delay)
-        PauseTransition delay = new PauseTransition(Duration.seconds(3));
-        delay.setOnFinished(event -> {
-            // Sau delay, thêm các đối tượng game vào root và khởi động game loop
-            addGameElementsToRoot(); // Phương thức riêng để thêm elements (trừu tượng hóa phần 5.2)
-            setupInput(scene); // Phương thức riêng để set input (đóng gói phần 5.2)
-            startGameLoop(); // Khởi động AnimationTimer (phần 4.2.3)
-        });
-        delay.play(); // Bắt đầu delay
-    }
-
-    /**
-     * Phương thức riêng: Thêm tất cả đối tượng game vào root (áp dụng đa hình: getNode() từ GameObject - phần 5.2).
-     * Gọi sau delay để màn hình đen trước khi hiển thị game (phần 4.2.1).
-     */
     private void addGameElementsToRoot() {
-        // Kiểm tra null và thêm Paddle, Ball vào root
         if (paddle != null && paddle.getNode() != null) {
             root.getChildren().add(paddle.getNode());
         }
@@ -111,7 +182,6 @@ public class MainGame extends Application {
             root.getChildren().add(ball.getNode());
         }
 
-        // Thêm ba bức tường vào root để hiển thị (phần 4.2.1: giao diện biên giới)
         if (leftWall != null && leftWall.getNode() != null) {
             root.getChildren().add(leftWall.getNode());
         }
@@ -122,7 +192,6 @@ public class MainGame extends Application {
             root.getChildren().add(topWall.getNode());
         }
 
-        // Thêm tất cả Bricks vào root (nếu null, bỏ qua - xử lý lỗi phần 4.1.1)
         if (bricks != null) {
             for (Bricks brick : bricks) {
                 if (brick != null && brick.getNode() != null) {
@@ -130,12 +199,29 @@ public class MainGame extends Application {
                 }
             }
         }
+
+        // Add score text and hearts
+        root.getChildren().add(scoreText);
+        for (ImageView heart : heartImages) {
+            root.getChildren().add(heart);
+        }
     }
 
     private void setupInput(Scene scene) {
         scene.setOnMouseMoved(event -> {
             if (paddle != null && leftWall != null && rightWall != null) {
-                paddle.move(event, leftWall, rightWall); // Truyền left/right wall để giới hạn
+                paddle.move(event, leftWall, rightWall);
+            }
+        });
+        scene.setOnMouseClicked(event -> {
+            if (isAttached) {
+                isAttached = false;
+                ball.setDy(-speedB);
+            }
+        });
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                Pause.show(primaryStage, gameLoop);
             }
         });
     }
@@ -144,70 +230,210 @@ public class MainGame extends Application {
         gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                // Kiểm tra null trước update (xử lý lỗi phần 4.1.1)
-                if (ball == null) return;
-
-                // Cập nhật vị trí Ball (phần 4.1.1: di chuyển Ball theo dx, dy)
-                Update.position(ball);
-
-                // Kiểm tra va chạm và phản xạ với ba bức tường riêng (sử dụng Collision.check với GameObject chung - đa hình phần 5.2)
-                if (leftWall != null) {
-                    Update.position(ball, leftWall); // Va chạm tường trái (phản xạ ngang)
-                }
-                if (rightWall != null) {
-                    Update.position(ball, rightWall); // Va chạm tường phải (phản xạ ngang)
-                }
-                if (topWall != null) {
-                    Update.position(ball, topWall); // Va chạm tường trên (phản xạ dọc)
-                }
-                if (paddle != null) {
-                    Update.position(ball, paddle); // Va chạm với Paddle (góc lệch dựa trên vị trí chạm)
-                }
-                if (bricks != null) {
-                    Update.position(ball, bricks); // Va chạm với Bricks (phá gạch, chuẩn hóa speed)
-                }
-
-                // Giới hạn Paddle sử dụng left/right wall (sau mouse move - phần 4.1.1: Paddle không vượt biên)
-                if (paddle != null && leftWall != null && rightWall != null) {
-                    // Tùy chỉnh logic giới hạn (vì Update.position(paddle, wall) cần wall tổng, sử dụng left/right)
-                    double leftBound = leftWall.getX() + leftWall.getWidth(); // Biên trái sau tường
-                    double rightBound = rightWall.getX(); // Biên phải trước tường
-                    if (paddle.getX() < leftBound) {
-                        paddle.setX(leftBound);
+                for (int index : capsuleIndex) {
+                    Capsule cap = capsules[index];
+                    if (cap == null || !cap.isVisible()) continue;
+                    Update.position(cap);
+                    if (cap.getY() + cap.getHeight() > heightW) {
+                        cap.setVisible(false);
+                        root.getChildren().remove(cap.getNode());
                     }
-                    if (paddle.getX() + paddle.getWidth() > rightBound) {
-                        paddle.setX(rightBound - paddle.getWidth());
+                    if (Collision.check(paddle, cap)) {
+                        applyEffect(cap);
+                        cap.setVisible(false);
+                        root.getChildren().remove(cap.getNode());
                     }
+                    cap.render();
                 }
 
-                // Render tất cả đối tượng (đa hình: mỗi lớp override render - phần 5.2)
-                if (paddle != null) {
-                    paddle.render(); // Đồng bộ Rectangle của Paddle
-                }
-                ball.render(); // Đồng bộ Circle của Ball
-                if (leftWall != null) leftWall.render(); // Render tường trái
-                if (rightWall != null) rightWall.render(); // Render tường phải
-                if (topWall != null) topWall.render(); // Render tường trên
-                if (bricks != null) {
-                    for (Bricks brick : bricks) {
-                        if (brick != null) {
-                            brick.render(); // Ẩn nếu isBreak = true (hiệu ứng phá gạch - phần 4.2.2)
+                if (isAttached) {
+                    double centerX = paddle.getX() + widthP / 2;
+                    double centerY = paddle.getY() - radiusB;
+                    ball.setX(centerX);
+                    ball.setY(centerY);
+                    ball.setDx(0);
+                    ball.setDy(0);
+                } else {
+                    double ballSpeed = ball.getSpeed();
+                    int subSteps = (int) Math.ceil(ballSpeed / 5.0);
+                    if (subSteps < 1) subSteps = 1;
+
+                    for (int s = 0; s < subSteps; s++) {
+                        double stepDx = ball.getDx() / subSteps;
+                        double stepDy = ball.getDy() / subSteps;
+
+                        ball.setX(ball.getX() + stepDx);
+                        ball.setY(ball.getY() + stepDy);
+
+                        Update.position(ball, leftWall);
+                        Update.position(ball, rightWall);
+                        Update.position(ball, topWall);
+                        Update.position(ball, paddle);
+
+                        int breakIndex = Update.position(ball, bricks);
+                        if (breakIndex != -1 && bricks[breakIndex].isBreak()) {
+                            score += 10;
+                            highestScore = Math.max(score, highestScore);
+                            root.getChildren().remove(bricks[breakIndex].getNode());
+                            bricks[breakIndex] = null;
+                            if (capsules[breakIndex] != null && !capsules[breakIndex].isVisible()) {
+                                Capsule cap = capsules[breakIndex];
+                                if (!root.getChildren().contains(cap.getNode())) {
+                                    root.getChildren().add(cap.getNode());
+                                }
+                                cap.setVisible(true);
+                            }
                         }
                     }
                 }
 
-                // Xử lý lỗi: Nếu Ball rơi dưới màn hình (mất mạng, thoát game - phần 4.1.1)
-                if (ball.getY() > heightW + radiusB) { // + radiusB để Ball hoàn toàn rơi
-                    // Thoát game khi bóng rơi vào khoảng trống bên dưới (tùy chọn: trừ mạng hoặc game over - phần 4.3.1)
-                    System.exit(0);
+                if (ball != null) ball.render();
+                if (paddle != null) paddle.render();
+                for (Bricks brick : bricks) {
+                    if (brick != null && !brick.isBreak()) brick.render();
+                }
+
+                // Update score display
+                scoreText.setText("Score: " + score);
+
+                if (ball.getY() > heightW) {
+                    Update.loseLifeSound.play(SoundManager.getEffectVolume());
+                    loseLife();
                 }
             }
         };
-        gameLoop.start(); // Bắt đầu game loop sau delay
+        gameLoop.start();
     }
 
-    // Main method: Khởi chạy Application (phần 4.1.2: cài đặt)
+    private void applyEffect(Capsule capsule) {
+        if (capsule != null) {
+            capsule.playSound();
+        }
+        String type = capsule.getEffectType();
+        if (type.equals("inc10Point")) score += 10;
+        else if (type.equals("dec10Point")) score -= 10;
+        else if (type.equals("inc50Point")) score += 50;
+        else if (type.equals("dec50Point")) score -= 50;
+        else if (type.equals("inc100Point")) score += 100;
+        else if (type.equals("dec100Point")) score -= 100;
+        else if (type.equals("fastBall")) {
+            EffectManager.updateSpeed(ball, 1.5);
+        }
+        else if (type.equals("slowBall")) {
+            EffectManager.updateSpeed(ball, 0.5);
+        }
+        else if (type.equals("fireBall")) {
+            EffectManager.activateFireBall(ball);
+        }
+        else if (type.equals("powerBall")) {
+            EffectManager.updatePower(ball, 3.0);
+        }
+        else if (type.equals("expandPaddle")) {
+            EffectManager.changeWidth(paddle, 2.0);
+        }
+        else if (type.equals("shrinkPaddle")) {
+            EffectManager.changeWidth(paddle, 0.5);
+        }
+        else if (type.equals("explosion")) {
+            showExplosion(capsule.getX(), capsule.getY());
+            loseLife();
+        }
+
+        highestScore = Math.max(score, highestScore);
+        if (capsule != null) {
+            capsule.playSound();
+        }
+    }
+
+    private void showExplosion(double x, double y) {
+        Image explosionImage = new Image("file:resources/explosion.gif");
+        ImageView explosionView = new ImageView(explosionImage);
+
+        explosionView.setFitWidth(100);
+        explosionView.setFitHeight(100);
+        explosionView.setX(x);
+        explosionView.setY(y);
+        root.getChildren().add(explosionView);
+
+        // Remove after animation duration, assume 2 seconds for the GIF
+        PauseTransition removeDelay = new PauseTransition(Duration.seconds(2));
+        removeDelay.setOnFinished(event -> root.getChildren().remove(explosionView));
+        removeDelay.play();
+    }
+
+    private void setPaddleDefault() {
+        paddle.setWidth(widthP);
+        paddle.setHeight(heightP);
+    }
+
+    private void setBallDefault() {
+        double centerX = paddle.getX() + widthP / 2;
+        double centerY = paddle.getY() - radiusB;
+        ball.setDx(0);
+        ball.setDy(0);
+        ball.setX(centerX);
+        ball.setY(centerY);
+        ball.setSpeed(speedB);
+        ball.setPower(1);
+        ball.setFireBall(false);
+    }
+
+    private void loseLife() {
+        lives--;
+        if (lives > 0) {
+            // Remove one heart
+            if (!heartImages.isEmpty()) {
+                ImageView lastHeart = heartImages.remove(heartImages.size() - 1);
+                root.getChildren().remove(lastHeart);
+            }
+            // Reset ball and paddle
+            setPaddleDefault();
+            setBallDefault();
+            isAttached = true;
+        } else {
+            gameLoop.stop();
+            if (mediaPlayer != null) {
+                mediaPlayer.stop();
+                SoundManager.unregisterMediaPlayer(mediaPlayer);
+            }
+            saveHighestScore();
+            Platform.runLater(() -> {
+                primaryStage.close();
+                EndMenu.show(score, highestScore);
+            });
+        }
+    }
+
+    private static void saveHighestScore() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(Path.highestScore))) {
+            writer.write(String.valueOf(highestScore));
+            System.out.println("Đã lưu highestScore: " + highestScore);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void createAndShowGame() {
+        Platform.runLater(() -> {
+            Stage stage = new Stage();
+            MainGame game = new MainGame();
+            game.start(stage);
+        });
+    }
+
+    public static int getBestScore(){
+        return highestScore;
+    }
+
     public static void main(String[] args) {
-        launch(args); // Chạy JavaFX Application
+        try (BufferedReader reader = new BufferedReader(new FileReader(Path.highestScore))) {
+            String line = reader.readLine();
+            if (line != null) highestScore = Integer.parseInt(line.trim());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        GameMenu.showMenu();
     }
 }

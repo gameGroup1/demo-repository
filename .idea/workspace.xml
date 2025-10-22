@@ -4,8 +4,292 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95e3e472-2b48-4fb9-81d0-ec0aab06a8e3" name="Changes" comment="">
+    <list default="true" id="ef8b5c06-b2f9-400e-b2a2-452fe34a50a8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/easycode.ignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/easycode/codebase-v2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vscode/launch.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vscode/tasks.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Block.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BrickImage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Capsule.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EffectManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EndMenu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image_Capsules/10+_point_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image_Capsules/10-_point_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image_Capsules/100+_point_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image_Capsules/100-_point_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image_Capsules/39-Breakout-Tiles.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image_Capsules/40-Breakout-Tiles.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image_Capsules/48-Breakout-Tiles.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image_Capsules/50+_point_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image_Capsules/50-_point_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image_Capsules/expand_paddle_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image_Capsules/explosion_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image_Capsules/fast_ball_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image_Capsules/fire_ball_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image_Capsules/green_fire_ball_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image_Capsules/multi_ball_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image_Capsules/power_ball_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image_Capsules/shrink_paddle_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Image_Capsules/slow_ball_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Path.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Pause.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SoundManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Jewel/new_sprite.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Jewel/sprite.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Metal/Iron.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Metal/IronNew.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Metal/IronNew_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Metal/IronNew_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Metal/IronNew_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Metal/Iron_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Metal/Iron_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Metal/Iron_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Metal/new_sprite.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Metal/sprite.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Rock/Rock++.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Rock/Rock.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Rock/RockNew.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Rock/RockNew_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Rock/RockNew_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Rock/Rock_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Rock/Rock_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Rock/new_sprite.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Rock/sprite.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Wood/Wood.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Wood/WoodNew.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Wood/WoodNew_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Wood/Wood_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Wood/new_sprite.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Sprite_Bricks/Wood/sprite.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/arkanoid#.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/highest_score.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idea/~$i idea.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/.github/workflows/auto-assign.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/.github/workflows/proof-html.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/.idea/libraries/algs4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/.idea/libraries/lib.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/.idea/libraries/stdlib.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/.idea/shelf/Uncommitted_changes_before_Checkout_at_10_6_2025_4_09_PM_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/.idea/shelf/Uncommitted_changes_before_Checkout_at_10_6_2025_4_09_PM__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/.vscode/launch.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/.vscode/settings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/Ball.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/Bricks.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/Collision.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/GameMenu.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/GameObject.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/Material.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/New Microsoft Word Document.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/Paddle.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/VideoBackGround.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/VideoDemo.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/Wall.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/arkanoid#.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/gameOver.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/idea/blocks_bricks.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/idea/idea.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/mainGame$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/mainGame.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/arkanoid#/update.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/easycode.ignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/easycode/codebase-v2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/shelf/Uncommitted_changes_before_Checkout_at_10_6_2025_4_09_PM_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/.vscode/launch.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Block.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/BrickImage.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Capsule.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/EffectManager.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/EndMenu.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$3.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$BackgroundPanel.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Image_Capsules/10+_point_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Image_Capsules/10-_point_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Image_Capsules/100+_point_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Image_Capsules/100-_point_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Image_Capsules/39-Breakout-Tiles.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Image_Capsules/40-Breakout-Tiles.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Image_Capsules/48-Breakout-Tiles.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Image_Capsules/50+_point_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Image_Capsules/50-_point_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Image_Capsules/expand_paddle_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Image_Capsules/explosion_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Image_Capsules/fast_ball_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Image_Capsules/fire_ball_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Image_Capsules/green_fire_ball_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Image_Capsules/multi_ball_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Image_Capsules/power_ball_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Image_Capsules/shrink_paddle_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Image_Capsules/slow_ball_capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Path.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Pause.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/SoundManager.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Jewel/new_sprite.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Jewel/sprite.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Metal/Iron.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Metal/IronNew.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Metal/IronNew_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Metal/IronNew_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Metal/IronNew_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Metal/Iron_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Metal/Iron_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Metal/Iron_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Metal/new_sprite.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Metal/sprite.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Rock/Rock++.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Rock/Rock.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Rock/RockNew.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Rock/RockNew_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Rock/RockNew_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Rock/Rock_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Rock/Rock_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Rock/new_sprite.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Rock/sprite.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Wood/Wood.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Wood/WoodNew.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Wood/WoodNew_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Wood/Wood_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Wood/new_sprite.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/Sprite_Bricks/Wood/sprite.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/arkanoid#.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/ball.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/block.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/explosion.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/fireball.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/heart.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/highest_score.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/paddle.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/resources/Monotype_Corsiva.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/resources/Monotype_Corsiva/Monotype-Corsiva-Bold-Italic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/resources/Monotype_Corsiva/Monotype-Corsiva-Bold.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/resources/Monotype_Corsiva/Monotype-Corsiva-Regular-Italic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/resources/Monotype_Corsiva/Monotype-Corsiva-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/resources/background.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/resources/end.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/BackgroundMusic.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/MenuMusic.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/Mouse_Click.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/TheEnd.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/ball_brick_collision.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/ball_paddle_collision.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/ball_wall_collision.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/brick_break.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/choose_sound.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/explosion.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/fast_effect.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/fast_effect.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/fire_effect.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/fire_effect.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/get_point.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/get_point.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/item_pick_up.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/item_pick_up.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/lose_life.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/lose_point.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/lose_point.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/power_up_effect.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/power_up_effect.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/slow_effect.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/slow_effect.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/toxic_effect.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/toxic_effect.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/transform_effect.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/transform_effect.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/Monotype_Corsiva.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/Monotype_Corsiva/Monotype-Corsiva-Bold-Italic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/Monotype_Corsiva/Monotype-Corsiva-Bold.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/Monotype_Corsiva/Monotype-Corsiva-Regular-Italic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/Monotype_Corsiva/Monotype-Corsiva-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/background.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/ball.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/block.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/end.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/explosion.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/fireball.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/heart.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/paddle.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/BackgroundMusic.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/MenuMusic.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/Mouse_Click.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/TheEnd.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/ball_brick_collision.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/ball_paddle_collision.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/ball_wall_collision.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/brick_break.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/choose_sound.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/explosion.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/fast_effect.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/fast_effect.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/fire_effect.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/fire_effect.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/get_point.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/get_point.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/item_pick_up.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/item_pick_up.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/lose_life.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/lose_point.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/lose_point.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/power_up_effect.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/power_up_effect.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/slow_effect.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/slow_effect.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/toxic_effect.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/toxic_effect.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/transform_effect.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sound_and_music/transform_effect.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Run_MainGame.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Run_MainGame.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ball.java" beforeDir="false" afterPath="$PROJECT_DIR$/Ball.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bricks.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bricks.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Collision.java" beforeDir="false" afterPath="$PROJECT_DIR$/Collision.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/MainGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Material.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Paddle.java" beforeDir="false" afterPath="$PROJECT_DIR$/Paddle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Update.java" beforeDir="false" afterPath="$PROJECT_DIR$/Update.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Wall.java" beforeDir="false" afterPath="$PROJECT_DIR$/Wall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo-repository.iml" beforeDir="false" afterPath="$PROJECT_DIR$/demo-repository.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gameOver.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameOver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/idea/Lợi idea.docx" beforeDir="false" afterPath="$PROJECT_DIR$/idea/Lợi idea.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/runConfigurations/Run_MainGame.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/runConfigurations/Run_MainGame.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.vscode/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Ball.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Ball.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Bricks.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Bricks.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Collision.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Collision.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/GameMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameObject.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/GameObject.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/MainGame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/MainGame$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/MainGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/MainGame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Paddle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Paddle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Update.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Update.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Wall.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Wall.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/demo-repository.iml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/demo-repository.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/gameOver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/gameOver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/idea/Lợi idea.docx" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/idea/Lợi idea.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/metal_break.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/metal_break.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/rock_break.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/rock_break.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/wood_break.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/sound_and_music/wood_break.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sound_and_music/metal_break.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/sound_and_music/metal_break.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sound_and_music/rock_break.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/sound_and_music/rock_break.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sound_and_music/wood_break.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/sound_and_music/wood_break.mp3" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,51 +299,56 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;DaiTaTuong&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/gameGroup1/demo-repository.git&quot;,
+    &quot;accountId&quot;: &quot;2cd69f60-9660-482d-9f0c-98a51e3fa03e&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 6
+  &quot;associatedIndex&quot;: 8
 }</component>
-  <component name="ProjectId" id="33kGsG0wvAv5gexlJDXHDfrNQPQ" />
+  <component name="ProjectId" id="34Omr5mkpNzyPZl2thBKb3NC4gK" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.MainGame.executor": "Run",
     "Application.Run MainGame.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "#29 on Merging main",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "vue.rearranger.settings.migration": "true"
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
 }]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
-        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
       </set>
     </attachedChunks>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="95e3e472-2b48-4fb9-81d0-ec0aab06a8e3" name="Changes" comment="" />
-      <created>1759853876409</created>
+      <changelist id="ef8b5c06-b2f9-400e-b2a2-452fe34a50a8" name="Changes" comment="" />
+      <created>1761062809229</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1759853876409</updated>
-      <workItem from="1759853887559" duration="2749000" />
-      <workItem from="1759858628944" duration="170000" />
+      <updated>1761062809229</updated>
     </task>
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
   </component>
 </project>

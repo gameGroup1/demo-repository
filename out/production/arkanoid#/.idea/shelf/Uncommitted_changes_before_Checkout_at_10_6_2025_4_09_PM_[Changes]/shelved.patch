@@ -1,0 +1,117 @@
+Index: mainGame.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/* main */\r\npublic class mainGame {\r\n    private final int widthW = 400;\r\n    private final int heightW = 600;\r\n    private final int widthP = 100;\r\n    private final int heightP = 20;\r\n    private final int radiusB = 15;\r\n    private final int speedB = 2;\r\n\r\n    Ball ball = new Ball((widthW - widthP)/2 + widthP/2, heightW - radiusB - heightP, radiusB, speedB);\r\n    Paddle paddle = new Paddle((widthW - widthP)/2, heightW - heightP, widthP, heightP);\r\n    Wall wall = new Wall(0, 0, widthW, heightW);\r\n    Bricks[] bricks;\r\n    public static void main(String[]args){\r\n        GameMenu.Start();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/mainGame.java b/mainGame.java
+--- a/mainGame.java	(revision 3cb40663679d1d690072eb61a165da4bd0e50d33)
++++ b/mainGame.java	(date 1759740643867)
+@@ -1,4 +1,3 @@
+-/* main */
+ public class mainGame {
+     private final int widthW = 400;
+     private final int heightW = 600;
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"0f3df055-8929-45ef-8718-656683008b97\" name=\"Changes\" comment=\"\">\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/libraries/lib.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/misc.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/misc.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Ball.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Ball.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Bricks.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Bricks.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/GameMenu.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/GameMenu.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Paddle.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Paddle.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/VideoBackGround.mp4\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/VideoDemo.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/VideoDemo.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/Wall.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Wall.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/checkCollision.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/checkCollision.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/demo-repository.iml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/demo-repository.iml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/gameOver.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/gameOver.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/mainGame.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/mainGame.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/demo-repository/Node.class\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/demo-repository/Tuong.class\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/update.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/update.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;DaiTaTuong&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/gameGroup1/demo-repository.git&quot;,\r\n    &quot;accountId&quot;: &quot;2cd69f60-9660-482d-9f0c-98a51e3fa03e&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;customColor&quot;: &quot;&quot;,\r\n  &quot;associatedIndex&quot;: 5\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"33NYQ2RbrMChIcKiDwdnQhWqya1\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Application.Run_JavaFX.executor\": \"Run\",\r\n    \"Application.VideoDemo.executor\": \"Run\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.git.unshallow\": \"true\",\r\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"git-widget-placeholder\": \"TuongCoder\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"project.structure.last.edited\": \"Libraries\",\r\n    \"project.structure.proportion\": \"0.15\",\r\n    \"project.structure.side.proportion\": \"0.2\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"Run_JavaFX\" type=\"Application\" factoryName=\"Application\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"VideoDemo\" />\r\n      <module name=\"demo-repository\" />\r\n      <option name=\"VM_PARAMETERS\" value=\"--module-path &quot;D:\\Downloads\\openjfx-25_windows-x64_bin-sdk\\javafx-sdk-25\\lib&quot; --add-modules javafx.controls,javafx.fxml \" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration default=\"true\" type=\"JetRunConfigurationType\">\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration default=\"true\" type=\"KotlinStandaloneScriptRunConfigurationType\">\r\n      <option name=\"filePath\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131\" />\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"0f3df055-8929-45ef-8718-656683008b97\" name=\"Changes\" comment=\"\" />\r\n      <created>1759158977674</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1759158977674</updated>\r\n      <workItem from=\"1759158979362\" duration=\"654000\" />\r\n      <workItem from=\"1759287991413\" duration=\"8000\" />\r\n      <workItem from=\"1759564625005\" duration=\"1651000\" />\r\n      <workItem from=\"1759636113567\" duration=\"2810000\" />\r\n      <workItem from=\"1759639176456\" duration=\"1109000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 3cb40663679d1d690072eb61a165da4bd0e50d33)
++++ b/.idea/workspace.xml	(date 1759741598938)
+@@ -5,22 +5,8 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="0f3df055-8929-45ef-8718-656683008b97" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Ball.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Ball.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Bricks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Bricks.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameMenu.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Paddle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Paddle.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/VideoBackGround.mp4" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/VideoDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/VideoDemo.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Wall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Wall.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/checkCollision.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/checkCollision.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/demo-repository.iml" beforeDir="false" afterPath="$PROJECT_DIR$/demo-repository.iml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/gameOver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameOver.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/mainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainGame.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Node.class" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Tuong.class" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/update.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/update.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/mainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/mainGame.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -36,12 +22,12 @@
+     &quot;assignee&quot;: &quot;DaiTaTuong&quot;
+   }
+ }</component>
+-  <component name="GithubPullRequestsUISettings">{
+-  &quot;selectedUrlAndAccountId&quot;: {
+-    &quot;url&quot;: &quot;https://github.com/gameGroup1/demo-repository.git&quot;,
+-    &quot;accountId&quot;: &quot;2cd69f60-9660-482d-9f0c-98a51e3fa03e&quot;
+-  }
+-}</component>
++  <component name="GithubPullRequestsUISettings"><![CDATA[{
++  "selectedUrlAndAccountId": {
++    "url": "https://github.com/gameGroup1/demo-repository.git",
++    "accountId": "dcce97fe-8360-4e1f-95f5-2ecf882f8e5a"
++  }
++}]]></component>
+   <component name="ProjectColorInfo">{
+   &quot;customColor&quot;: &quot;&quot;,
+   &quot;associatedIndex&quot;: 5
+@@ -57,9 +43,9 @@
+     "Application.VideoDemo.executor": "Run",
+     "RunOnceActivity.ShowReadmeOnStart": "true",
+     "RunOnceActivity.git.unshallow": "true",
+-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+-    "git-widget-placeholder": "TuongCoder",
++    "git-widget-placeholder": "main",
+     "kotlin-language-version-configured": "true",
++    "last_opened_file_path": "C:/arkanoid#",
+     "node.js.detected.package.eslint": "true",
+     "node.js.detected.package.tslint": "true",
+     "node.js.selected.package.eslint": "(autodetect)",
+@@ -73,30 +59,15 @@
+ }]]></component>
+   <component name="RunManager">
+     <configuration name="Run_JavaFX" type="Application" factoryName="Application">
+-      <option name="MAIN_CLASS_NAME" value="VideoDemo" />
+-      <module name="demo-repository" />
+-      <option name="VM_PARAMETERS" value="--module-path &quot;D:\Downloads\openjfx-25_windows-x64_bin-sdk\javafx-sdk-25\lib&quot; --add-modules javafx.controls,javafx.fxml " />
+-      <method v="2">
+-        <option name="Make" enabled="true" />
+-      </method>
+-    </configuration>
+-    <configuration default="true" type="JetRunConfigurationType">
++      <option name="ALTERNATIVE_JRE_PATH" value="24" />
++      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
++      <option name="MAIN_CLASS_NAME" value="mainGame" />
++      <module name="arkanoid#" />
++      <option name="VM_PARAMETERS" value="--module-path &quot;E:\javafx-sdk-21.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml " />
+       <method v="2">
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+-      <option name="filePath" />
+-      <method v="2" />
+-    </configuration>
+-  </component>
+-  <component name="SharedIndexes">
+-    <attachedChunks>
+-      <set>
+-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+-        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
+-      </set>
+-    </attachedChunks>
+   </component>
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
