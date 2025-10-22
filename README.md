@@ -47,6 +47,12 @@ Có tất cả 18 loại. Capsule có tác dụng khi paddle <b>hứng được<
   <p align="center"><img src="https://github.com/gameGroup1/demo-repository/blob/main/Image_Capsules/fast_ball_capsule.png" width=150></p></li>
   <li>Bóng đi chậm hơn:
   <p align="center"><img src="https://github.com/gameGroup1/demo-repository/blob/main/Image_Capsules/slow_ball_capsule.png" width=150></p></li>
+  <li>Explosion: Nổ, mất 1 mạng
+  <p align="center"><img src="https://github.com/gameGroup1/demo-repository/blob/main/Image_Capsules/explosion_capsule.png" width=150></p></li>
+  <li>Fireball: Bóng phá hết tất cả các loại brick chỉ 1 lần chạm
+  <p align="center"><img src="https://github.com/gameGroup1/demo-repository/blob/main/Image_Capsules/fire_ball_capsule.png" width=150></p></li>
+  <li>Power ball: Mức độ damage của bóng tăng lên 2 lần (Jewel brick và Wood brick cần 1 lần chạm, Rock brick và Metal Brick cần 2 lần chạm)
+  <p align="center"><img src="https://github.com/gameGroup1/demo-repository/blob/main/Image_Capsules/power_ball_capsule.png" width=150></p></li>
 </ul>
 
 <h2>IV. Cách tính điểm</h2>
