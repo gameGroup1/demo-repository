@@ -29,8 +29,8 @@ public class MainGame {
     private final int widthP = 150;
     private final int heightP = 30;
     private final int radiusB = 15;
-    private final int speedB = 8;
-    private final int speedC = 5;
+    private final int speedB = 5;
+    private final int speedC = 2;
     private final int wallThickness = 30;
 
     private Ball ball;

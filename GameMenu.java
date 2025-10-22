@@ -43,7 +43,7 @@ public class GameMenu extends JFrame {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(customFont);
             System.out.println("✓ Loaded Monotype Corsiva from classpath");
-            return customFont.deriveFont(Font.BOLD, 48f); // Size 48, Bold
+            return customFont.deriveFont(Font.BOLD, 58f); // Size 48, Bold
         }
         
         // Nếu không có trong classpath, thử từ folder resources
@@ -60,7 +60,7 @@ public class GameMenu extends JFrame {
                 GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
                 ge.registerFont(customFont);
                 System.out.println("✓ Loaded Monotype Corsiva from: " + path);
-                return customFont.deriveFont(Font.BOLD, 48f);
+                return customFont.deriveFont(Font.BOLD, 40f);
             }
         }
         
@@ -74,7 +74,7 @@ public class GameMenu extends JFrame {
 }
     public GameMenu() {
         setTitle("Arkanoid - Start Menu");
-        setSize(1000, 500);
+        setSize(1100, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -91,14 +91,18 @@ public class GameMenu extends JFrame {
         BackgroundPanel panel = new BackgroundPanel(backgroundImage);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        title = new JLabel("ARKANOID");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-       title.setFont(loadCustomFont());
-        title.setForeground(new Color(154, 205, 50));
-        title.setOpaque(false);
-        panel.add(Box.createVerticalStrut(30));
-        panel.add(title);
-        panel.add(Box.createVerticalStrut(30));
+        JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+titlePanel.setOpaque(false); // Giữ trong suốt
+title = new JLabel("-ARKANOID-");
+title.setFont(loadCustomFont());
+title.setForeground(new Color(154, 205, 50));
+title.setOpaque(false);
+titlePanel.add(title);
+panel.add(Box.createVerticalStrut(30));
+panel.add(titlePanel);
+panel.add(Box.createVerticalStrut(30));
+
+    
 
         startBtn = new JButton("Start");
         bestScoreBtn = new JButton("Best Score");
@@ -204,7 +208,7 @@ public class GameMenu extends JFrame {
             dialog.getContentPane().setBackground(new Color(0, 50, 0)); // Nền xanh lá đậm để hòa hợp background
 
             JLabel label = new JLabel("Best Score: " + MainGame.getBestScore());
-            label.setFont(new Font("Arial", Font.BOLD, 32)); // Tăng kích cỡ chữ lên 32
+            label.setFont(new Font("Arial", Font.BOLD, 28)); // Tăng kích cỡ chữ lên 32
             label.setForeground(Color.CYAN); // Màu cyan nổi bật trên nền xanh lá
             label.setHorizontalAlignment(SwingConstants.CENTER);
             label.setOpaque(false);
@@ -253,10 +257,10 @@ public class GameMenu extends JFrame {
     }
 
     private void makeButtonTransparent(JButton button) {
-        button.setOpaque(false);
-        button.setContentAreaFilled(false);
-        button.setFocusPainted(false);
-        button.setBackground(new Color(20, 40, 30, 10));
+        button.setOpaque(true);
+        button.setContentAreaFilled(true);
+
+        button.setBackground(new Color(20, 40, 30, 100));
         button.setForeground((new Color(154, 200, 50)));
         button.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15)); // Xóa viền hoàn toàn
     }
@@ -339,39 +343,47 @@ public class GameMenu extends JFrame {
     }
 
     private void addButtonEffects(JButton button) {
-        button.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                button.setFont(button.getFont().deriveFont(AffineTransform.getScaleInstance(1.1, 1.1)));
-                button.repaint();
-                if (mouseClickSound != null) {
-                    mouseClickSound.play(SoundManager.getEffectVolume());
-                } else {
-                    System.err.println("Mouse_Click.wav not loaded.");
-                }
-            }
+    // Lưu phông chữ gốc để khôi phục sau này
+    Font originalFont = button.getFont();
+    float enlargedSize = originalFont.getSize() * 1.05f; // Tăng kích thước phông chữ lên 10%
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-                button.setFont(button.getFont().deriveFont(AffineTransform.getScaleInstance(1.0, 1.0)));
-                button.repaint();
+    button.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            // Đặt phông chữ lớn hơn khi di chuột vào
+            button.setFont(originalFont.deriveFont(enlargedSize));
+            button.repaint();
+            if (mouseClickSound != null) {
+                mouseClickSound.play(SoundManager.getEffectVolume());
+            } else {
+                System.err.println("Mouse_Click.wav không được tải.");
             }
-        });
+        }
 
-        button.addFocusListener(new java.awt.event.FocusAdapter() {
-            @Override
-            public void focusGained(java.awt.event.FocusEvent e) {
-                button.setFont(button.getFont().deriveFont(AffineTransform.getScaleInstance(1.1, 1.1)));
-                button.repaint();
-            }
+        @Override
+        public void mouseExited(MouseEvent e) {
+            // Khôi phục kích thước phông chữ gốc
+            button.setFont(originalFont);
+            button.repaint();
+        }
+    });
 
-            @Override
-            public void focusLost(java.awt.event.FocusEvent e) {
-                button.setFont(button.getFont().deriveFont(AffineTransform.getScaleInstance(1.0, 1.0)));
-                button.repaint();
-            }
-        });
-    }
+    button.addFocusListener(new java.awt.event.FocusAdapter() {
+        @Override
+        public void focusGained(java.awt.event.FocusEvent e) {
+            // Đặt phông chữ lớn hơn khi nút được focus
+            button.setFont(originalFont.deriveFont(enlargedSize));
+            button.repaint();
+        }
+
+        @Override
+        public void focusLost(java.awt.event.FocusEvent e) {
+            // Khôi phục kích thước phông chữ gốc
+            button.setFont(originalFont);
+            button.repaint();
+        }
+    });
+}
 
     private void startGame() {
         MainGame.createAndShowGame();
