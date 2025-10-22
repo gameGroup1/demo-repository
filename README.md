@@ -18,7 +18,10 @@
 <h3>1. Ball</h3>
 <p align="center"><img src="https://github.com/gameGroup1/demo-repository/blob/main/Breakout%20Tile%20Set%20Free/PNG/58-Breakout-Tiles.png" width=150></p>
 <h3>2. Paddle</h3>
-<h3>3. Brick</h3>
+<p align="center"><img src="https://github.com/gameGroup1/demo-repository/blob/main/resources/paddle.png" width=300></p>
+<h3>3. Block</h3>
+<p align="center"><img src="https://github.com/gameGroup1/demo-repository/blob/main/resources/block.png" width=150></p>
+<h3>4. Brick</h3>
 Có 4 loại gạch, tương ứng 4 mức độ khác nhau. Cụ thể:
 <ul>
   <li><b>Jewel brick:</b> Đây là loại gạch yếu nhất. Bóng chạm gạch thì gạch bị vỡ luôn<p align="center"><img src="https://github.com/gameGroup1/demo-repository/blob/main/Sprite_Bricks/Jewel/sprite.png" width=150></p></li>
@@ -30,7 +33,7 @@ Có 4 loại gạch, tương ứng 4 mức độ khác nhau. Cụ thể:
   <li><b>Metal brick:</b> Đây là loại gạch cứng nhất. 4 lần bóng chạm vào thì gạch mới bị vỡ<p align="center"><img src="https://github.com/gameGroup1/demo-repository/blob/main/Sprite_Bricks/Metal/Iron.png" width=150></p></li>
   <p align="center"><em>Metal brick</em></p>
 </ul>
-<h3>4. Capsule</h3>
+<h3>5. Capsule</h3>
 Có tất cả 18 loại. Capsule có tác dụng khi paddle <b>hứng được</b> capsule đó.
 <ul>
   <li>Các loại capsule có ghi số với dấu +/- liền trước. Nếu là số dương thì điểm sẽ tăng một lượng được ghi trong capsule. Nếu số âm thì trừ điểm (điểm có thể là số âm). Dưới đây là một ví dụ:
