@@ -5,22 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef8b5c06-b2f9-400e-b2a2-452fe34a50a8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/GameLevel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Level1.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/shelf/Uncommitted_changes_before_Checkout_at_10_6_2025_4_09_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Image_Capsules/48-Breakout-Tiles.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Image_Capsules/green_fire_ball_capsule.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Image_Capsules/multi_ball_capsule.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Material.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/ball.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/block.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/explosion.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/fireball.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/heart.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/paddle.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

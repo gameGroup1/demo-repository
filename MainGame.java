@@ -29,7 +29,7 @@ public class MainGame {
     private final int widthP = 150;
     private final int heightP = 30;
     private final int radiusB = 15;
-    private final int speedB = 5;
+    private final int speedB = 7;
     private final int speedC = 5;
     private final int wallThickness = 30;
 
@@ -52,6 +52,8 @@ public class MainGame {
     private List<ImageView> heartImages = new ArrayList<>();
     private Text scoreText;
     private Image heartImage;
+    private GameLevel currentLevel;
+    private int currentLevelNumber = 1;
 
     public MainGame() {
         int[] hardnessArray = {1, 2, 3, 4};
@@ -104,7 +106,7 @@ public class MainGame {
             }
         }
         */
-        GameLevel currentLevel = new Level2(wallThickness, speedC);
+        currentLevel = new Level1(wallThickness, speedC);
         this.bricks = currentLevel.getBricks();
         this.capsules = currentLevel.getCapsules();
         this.capsuleIndex = currentLevel.getCapsuleIndex();
@@ -231,6 +233,46 @@ public class MainGame {
             }
         });
     }
+    private boolean isLevelCleared() {
+        for (Bricks brick : bricks) {
+            if (brick != null && !brick.isBreak()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void nextLevel() {
+        currentLevelNumber++;
+        lives = 5;
+        
+        switch (currentLevelNumber) {
+            case 2:
+                currentLevel = new Level2(wallThickness, speedC);
+                break;
+
+            default:
+                System.out.println("🎉 Bạn đã hoàn thành tất cả các màn!");
+                return;
+        }
+
+        for (Bricks brick : bricks) {
+            if (brick != null && brick.getNode() != null) {
+                root.getChildren().remove(brick.getNode());
+            }
+        }
+
+        // Lấy dữ liệu mới
+        this.bricks = currentLevel.getBricks();
+        this.capsules = currentLevel.getCapsules();
+        this.capsuleIndex = currentLevel.getCapsuleIndex();
+
+        for (Bricks brick : bricks) {
+            if (brick != null && brick.getNode() != null) {
+                root.getChildren().add(brick.getNode());
+            }
+        }
+    }
 
     private void startGameLoop() {
         gameLoop = new AnimationTimer() {
@@ -306,6 +348,11 @@ public class MainGame {
                     Update.loseLifeSound.play(SoundManager.getEffectVolume());
                     loseLife();
                 }
+
+                if (isLevelCleared()) {
+                    nextLevel();
+                }
+
             }
         };
         gameLoop.start();
