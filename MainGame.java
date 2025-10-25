@@ -29,9 +29,10 @@ public class MainGame {
     private final int widthP = 150;
     private final int heightP = 30;
     private final int radiusB = 15;
-    private final int speedB = 5;
+    private int speedB = 5;
     private final int speedC = 5;
     private final int wallThickness = 30;
+    private int numberBrokeBrick = 49;
 
     private Ball ball;
     private Paddle paddle;
@@ -53,26 +54,9 @@ public class MainGame {
     private Text scoreText;
     private Image heartImage;
 
-    public MainGame() {
+    public void genBrickAndCapsule() {
         int[] hardnessArray = {1, 2, 3, 4};
         Random random = new Random();
-
-        double paddleX = (widthW - widthP) / 2.0;
-        double paddleY = heightW - heightP;
-        paddle = new Paddle(paddleX, paddleY, widthP, heightP);
-
-        double centerX = paddleX + widthP / 2;
-        double centerY = paddleY - radiusB;
-        ball = new Ball(centerX, centerY, radiusB, speedB);
-        ball.setDx(0);
-        ball.setDy(0);
-
-        leftWall = new Wall("left", 0, 0, wallThickness, heightW, wallThickness);
-        rightWall = new Wall("right", widthW - wallThickness, 0, wallThickness, heightW, wallThickness);
-        topWall = new Wall("top", 0, 0, widthW, wallThickness, wallThickness);
-
-        bricks = new Bricks[50];
-        capsules = new Capsule[50];
         int brickWidth = 90;
         int brickHeight = 30;
         int spacing = 5;
@@ -102,6 +86,34 @@ public class MainGame {
                 }
             }
         }
+    }
+
+    public MainGame() {
+        int[] hardnessArray = {1, 2, 3, 4};
+        Random random = new Random();
+
+        double paddleX = (widthW - widthP) / 2.0;
+        double paddleY = heightW - heightP;
+        paddle = new Paddle(paddleX, paddleY, widthP, heightP);
+
+        double centerX = paddleX + widthP / 2;
+        double centerY = paddleY - radiusB;
+        ball = new Ball(centerX, centerY, radiusB, speedB);
+        ball.setDx(0);
+        ball.setDy(0);
+
+        leftWall = new Wall("left", 0, 0, wallThickness, heightW, wallThickness);
+        rightWall = new Wall("right", widthW - wallThickness, 0, wallThickness, heightW, wallThickness);
+        topWall = new Wall("top", 0, 0, widthW, wallThickness, wallThickness);
+
+        bricks = new Bricks[50];
+        capsules = new Capsule[50];
+        int brickWidth = 90;
+        int brickHeight = 30;
+        int spacing = 5;
+        int rowCount = 5;
+        int colCount = 10;
+        genBrickAndCapsule(); //Tạo gạch và capsule
 
         Image heartImage = new Image("file:resources/heart.png");
 
@@ -272,6 +284,7 @@ public class MainGame {
 
                         int breakIndex = Update.position(ball, bricks);
                         if (breakIndex != -1 && bricks[breakIndex].isBreak()) {
+                            numberBrokeBrick++;
                             score += 10;
                             highestScore = Math.max(score, highestScore);
                             root.getChildren().remove(bricks[breakIndex].getNode());
@@ -300,8 +313,26 @@ public class MainGame {
                     Update.loseLifeSound.play(SoundManager.getEffectVolume());
                     loseLife();
                 }
+
+                if (numberBrokeBrick == 50) { //Phá hết tất cả bricks trong 1 màn
+                    genBrickAndCapsule();
+                    setPaddleDefault();
+                    setBallDefault();
+                    isAttached = true;
+                    speedB += 10;
+                    numberBrokeBrick = 0;
+                }
             }
+
+            /*if (numberBrokeBrick == 50) { //Phá hết tất cả bricks trong 1 màn
+                setPaddleDefault();
+                setBallDefault();
+                isAttached = true;
+                speedB += 10;
+                numberBrokeBrick = 0;
+            }*/
         };
+
         gameLoop.start();
     }
 
