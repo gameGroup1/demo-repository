@@ -32,7 +32,7 @@ public class MainGame {
     private int speedB = 5;
     private final int speedC = 5;
     private final int wallThickness = 30;
-    private int numberBrokeBrick = 49;
+    private int numberBrokeBrick = 0;
 
     private Ball ball;
     private Paddle paddle;
@@ -318,10 +318,40 @@ public class MainGame {
                     speedB += 5;
                     ball.setSpeed(speedB); //Sang màn mới tốc độ bóng tăng thêm 5
                     numberBrokeBrick = 0;
+
+//                    for (Bricks brick: bricks) { //Xóa gạch
+//                        if (brick != null && brick.getNode() != null) {
+//                            root.getChildren().remove(brick.getNode());
+//                            brick = null;
+//                        }
+//                    }
+//
+//                    for (Capsule capsule: capsules) { //Xóa capsule
+//                        if (capsule != null && capsule.getNode() != null) {
+//                            root.getChildren().remove(capsule.getNode());
+//                            capsule = null;
+//                        }
+//                    }
+//
+//                    for (Capsule capsule: capsuleIndex) { //Xóa capsule
+//                        if (capsule != null && capsule.getNode() != null) {
+//                            root.getChildren().remove(capsule.getNode());
+//                            capsule = null;
+//                        }
+//                    }
+
                     setPaddleDefault();
                     setBallDefault();
                     isAttached = true;
                     genBrickAndCapsule();
+
+                    if (bricks != null) { //Thêm gạch vào root
+                        for (Bricks brick : bricks) {
+                            if (brick != null && brick.getNode() != null) {
+                                root.getChildren().add(brick.getNode());
+                            }
+                        }
+                    }
                 }
             }
         };
