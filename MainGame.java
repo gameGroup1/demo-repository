@@ -71,6 +71,7 @@ public class MainGame {
         rightWall = new Wall("right", widthW - wallThickness, 0, wallThickness, heightW, wallThickness);
         topWall = new Wall("top", 0, 0, widthW, wallThickness, wallThickness);
 
+        /*
         bricks = new Bricks[50];
         capsules = new Capsule[50];
         int brickWidth = 90;
@@ -102,6 +103,11 @@ public class MainGame {
                 }
             }
         }
+        */
+        GameLevel currentLevel = new Level2(wallThickness, speedC);
+        this.bricks = currentLevel.getBricks();
+        this.capsules = currentLevel.getCapsules();
+        this.capsuleIndex = currentLevel.getCapsuleIndex();
 
         Image heartImage = new Image("file:resources/heart.png");
 
