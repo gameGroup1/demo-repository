@@ -127,7 +127,7 @@ public class MainGame {
         }
 
         // Create score text
-        scoreText = new Text("Score: 0");
+        scoreText = new Text("Score: " + score);
         scoreText.setFill(Color.WHITE);
         scoreText.setFont(new Font(36));
         scoreText.setX(widthW - wallThickness - 200);
@@ -315,22 +315,15 @@ public class MainGame {
                 }
 
                 if (numberBrokeBrick == 50) { //Phá hết tất cả bricks trong 1 màn
-                    genBrickAndCapsule();
+                    speedB += 5;
+                    ball.setSpeed(speedB); //Sang màn mới tốc độ bóng tăng thêm 5
+                    numberBrokeBrick = 0;
                     setPaddleDefault();
                     setBallDefault();
                     isAttached = true;
-                    speedB += 10;
-                    numberBrokeBrick = 0;
+                    genBrickAndCapsule();
                 }
             }
-
-            /*if (numberBrokeBrick == 50) { //Phá hết tất cả bricks trong 1 màn
-                setPaddleDefault();
-                setBallDefault();
-                isAttached = true;
-                speedB += 10;
-                numberBrokeBrick = 0;
-            }*/
         };
 
         gameLoop.start();
