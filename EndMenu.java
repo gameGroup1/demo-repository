@@ -32,6 +32,39 @@ public class EndMenu {
         SoundManager.registerAudioClip(mouseClickSound);
     }
 
+    private static Image loadGameOverImage() {
+   	Image gameOverImage = null;
+    try {
+        // 1. Thử load từ classpath (resources)
+        URL imageURL = EndMenu.class.getClassLoader().getResource(Path.GameOverImage.substring(1)); // bỏ dấu /
+        if (imageURL != null) {
+            gameOverImage = new Image(imageURL.toString(), true);
+            System.out.println("Loaded game-over.png from classpath: " + Path.GameOverImage);
+            return gameOverImage;
+        }
+
+        // 2. Nếu không có trong classpath → dùng file hệ thống
+        String fileURL = Path.getFileURL(Path.GameOverImage);
+        System.out.println("Trying file path: " + fileURL);
+        gameOverImage = new Image(fileURL, true);
+
+        // Kiểm tra ảnh có load thành công không
+        gameOverImage.errorProperty().addListener((obs, old, error) -> {
+            if (error) {
+                System.err.println("Failed to load game-over.png from file system");
+            }
+        });
+
+        System.out.println("Loaded game-over.png from file: " + Path.GameOverImage);
+        return gameOverImage;
+
+    } catch (Exception e) {
+        System.err.println("Cannot load game-over.png from: " + Path.GameOverImage);
+        e.printStackTrace();
+    }
+    return gameOverImage;
+    }
+
     public static void show(int score, int bestScore) {
         EndMenu.score = score;
         EndMenu.bestScore = bestScore;
@@ -60,17 +93,21 @@ public class EndMenu {
         BorderPane contentPane = new BorderPane();
         contentPane.setStyle("-fx-background-color: transparent; -fx-padding: 20;");
 
-        Label titleLabel = new Label("GAME OVER");
-        titleLabel.setFont(Font.font("Arial", 36));
-        titleLabel.setTextFill(Color.RED);
-        BorderPane.setAlignment(titleLabel, Pos.CENTER);
-        contentPane.setTop(titleLabel);
+        ImageView titleImageView = new ImageView(loadGameOverImage());
+        titleImageView.setFitWidth(450);           // Tùy chỉnh kích thước
+        titleImageView.setPreserveRatio(true);
+        titleImageView.setSmooth(true);
+        titleImageView.setCache(true);             // Tăng hiệu suất
 
-        ScaleTransition titleScale = new ScaleTransition(Duration.seconds(1.5), titleLabel);
+        BorderPane.setAlignment(titleImageView, Pos.CENTER);
+        contentPane.setTop(titleImageView);
+
+        // === HIỆU ỨNG PHÓNG TO/THU NHỎ ===
+        ScaleTransition titleScale = new ScaleTransition(Duration.seconds(1.5), titleImageView);
         titleScale.setFromX(0.8);
         titleScale.setFromY(0.8);
-        titleScale.setToX(1.2);
-        titleScale.setToY(1.2);
+        titleScale.setToX(1.01);
+        titleScale.setToY(1.01);
         titleScale.setCycleCount(ScaleTransition.INDEFINITE);
         titleScale.setAutoReverse(true);
         titleScale.play();
@@ -84,7 +121,7 @@ public class EndMenu {
 
         Label bestScoreLabel = new Label("Best Score: " + bestScore);
         bestScoreLabel.setFont(Font.font("Arial", 24));
-        bestScoreLabel.setTextFill(Color.YELLOW);
+        bestScoreLabel.setTextFill(Color.WHITE);
 
         centerBox.getChildren().addAll(scoreLabel, bestScoreLabel);
         contentPane.setCenter(centerBox);

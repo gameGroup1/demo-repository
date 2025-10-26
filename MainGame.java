@@ -52,17 +52,19 @@ public class MainGame {
     private List<ImageView> heartImages = new ArrayList<>();
     private Text scoreText;
     private Image heartImage;
+    private Image collisionImage;
 
     public MainGame() {
         int[] hardnessArray = {1, 2, 3, 4};
         Random random = new Random();
-
+        collisionImage = new Image("file:resources/boom_collision.gif");
         double paddleX = (widthW - widthP) / 2.0;
         double paddleY = heightW - heightP;
-        paddle = new Paddle(paddleX, paddleY, widthP, heightP);
 
+        paddle = new Paddle(paddleX, paddleY, widthP, heightP);
         double centerX = paddleX + widthP / 2;
         double centerY = paddleY - radiusB;
+
         ball = new Ball(centerX, centerY, radiusB, speedB);
         ball.setDx(0);
         ball.setDy(0);
@@ -120,6 +122,20 @@ public class MainGame {
         scoreText.setFont(new Font(36));
         scoreText.setX(widthW - wallThickness - 200);
         scoreText.setY(wallThickness + 64);
+    }
+
+    private void showBrickCollisionEffect(double x, double y) {
+        ImageView effect = new ImageView(collisionImage);
+        effect.setFitWidth(60);
+        effect.setFitHeight(60);
+        effect.setX(x - 30);  // Căn giữa
+        effect.setY(y - 30);
+        root.getChildren().add(effect);
+
+        // Xóa sau 1 giây (độ dài GIF)
+        PauseTransition remove = new PauseTransition(Duration.seconds(1.0));
+        remove.setOnFinished(e -> root.getChildren().remove(effect));
+        remove.play();
     }
 
     public void start(Stage primaryStage) {
@@ -269,21 +285,32 @@ public class MainGame {
                         Update.position(ball, rightWall);
                         Update.position(ball, topWall);
                         Update.position(ball, paddle);
+        int breakIndex = Update.position(ball, bricks);
+        if (breakIndex != -1 && bricks[breakIndex].isBreak()) {
+            score += 10;
+            highestScore = Math.max(score, highestScore);
 
-                        int breakIndex = Update.position(ball, bricks);
-                        if (breakIndex != -1 && bricks[breakIndex].isBreak()) {
-                            score += 10;
-                            highestScore = Math.max(score, highestScore);
-                            root.getChildren().remove(bricks[breakIndex].getNode());
-                            bricks[breakIndex] = null;
-                            if (capsules[breakIndex] != null && !capsules[breakIndex].isVisible()) {
-                                Capsule cap = capsules[breakIndex];
-                                if (!root.getChildren().contains(cap.getNode())) {
-                                    root.getChildren().add(cap.getNode());
-                                }
-                                cap.setVisible(true);
-                            }
-                        }
+            // Lấy tọa độ brick để đặt hiệu ứng
+            Bricks brokenBrick = bricks[breakIndex];
+            double brickCenterX = brokenBrick.getX() + brokenBrick.getWidth() / 2;
+            double brickCenterY = brokenBrick.getY() + brokenBrick.getHeight() / 2;
+
+            // Chỉ hiển thị hiệu ứng nếu bóng KHÔNG phải fireball
+            if (ball.getPower() == 1) { // hoặc kiểm tra !ball.isFireBall() nếu bạn thêm getter
+                showBrickCollisionEffect(brickCenterX, brickCenterY);
+            }
+
+            root.getChildren().remove(bricks[breakIndex].getNode());
+            bricks[breakIndex] = null;
+
+            if (capsules[breakIndex] != null && !capsules[breakIndex].isVisible()) {
+                Capsule cap = capsules[breakIndex];
+                if (!root.getChildren().contains(cap.getNode())) {
+                root.getChildren().add(cap.getNode());
+                }
+                cap.setVisible(true);
+            }
+        }
                     }
                 }
 

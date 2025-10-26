@@ -43,7 +43,7 @@ public class GameMenu extends JFrame {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(customFont);
             System.out.println("✓ Loaded Monotype Corsiva from classpath");
-            return customFont.deriveFont(Font.BOLD, 58f); // Size 48, Bold
+            return customFont.deriveFont(Font.BOLD, 48f); // Size 48, Bold
         }
         
         // Nếu không có trong classpath, thử từ folder resources
@@ -92,17 +92,15 @@ public class GameMenu extends JFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-titlePanel.setOpaque(false); // Giữ trong suốt
-title = new JLabel("-ARKANOID-");
-title.setFont(loadCustomFont());
-title.setForeground(new Color(154, 205, 50));
-title.setOpaque(false);
-titlePanel.add(title);
-panel.add(Box.createVerticalStrut(30));
-panel.add(titlePanel);
-panel.add(Box.createVerticalStrut(30));
-
-    
+        titlePanel.setOpaque(false); // Giữ trong suốt
+        title = new JLabel("-ARKANOID-");
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+       title.setFont(loadCustomFont());
+        title.setForeground(new Color(154, 205, 50));
+        title.setOpaque(false);
+        panel.add(Box.createVerticalStrut(30));
+        panel.add(title);
+        panel.add(Box.createVerticalStrut(30));
 
         startBtn = new JButton("Start");
         bestScoreBtn = new JButton("Best Score");
@@ -257,8 +255,8 @@ panel.add(Box.createVerticalStrut(30));
     }
 
     private void makeButtonTransparent(JButton button) {
-        button.setOpaque(true);
-        button.setContentAreaFilled(true);
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
 
         button.setBackground(new Color(20, 40, 30, 100));
         button.setForeground((new Color(154, 200, 50)));
