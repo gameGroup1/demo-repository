@@ -33,6 +33,7 @@ public class MainGame {
     private final int speedC = 5;
     private final int wallThickness = 30;
     private int numberBrokeBrick = 0;
+    private int numberLevel = 1;
 
     private Ball ball;
     private Paddle paddle;
@@ -52,6 +53,7 @@ public class MainGame {
     private int lives = 5;
     private List<ImageView> heartImages = new ArrayList<>();
     private Text scoreText;
+    private Text levelText;
     private Image heartImage;
 
     public void genBrickAndCapsule() {
@@ -132,6 +134,13 @@ public class MainGame {
         scoreText.setFont(new Font(36));
         scoreText.setX(widthW - wallThickness - 200);
         scoreText.setY(wallThickness + 64);
+
+        // Create level text
+        levelText = new Text("Level " + numberLevel);
+        levelText.setFill(Color.WHITE);
+        levelText.setFont(new Font(36));
+        levelText.setX(wallThickness + 20);
+        levelText.setY(wallThickness + 64);
     }
 
     public void start(Stage primaryStage) {
@@ -212,8 +221,9 @@ public class MainGame {
             }
         }
 
-        // Add score text and hearts
+        // Add score text, level text and hearts
         root.getChildren().add(scoreText);
+        root.getChildren().add(levelText);
         for (ImageView heart : heartImages) {
             root.getChildren().add(heart);
         }
@@ -317,28 +327,23 @@ public class MainGame {
                 if (numberBrokeBrick == 50) { //Phá hết tất cả bricks trong 1 màn
                     speedB += 5;
                     ball.setSpeed(speedB); //Sang màn mới tốc độ bóng tăng thêm 5
+                    numberLevel++;
+                    levelText.setText("Level: " + numberLevel);
                     numberBrokeBrick = 0;
 
-//                    for (Bricks brick: bricks) { //Xóa gạch
-//                        if (brick != null && brick.getNode() != null) {
-//                            root.getChildren().remove(brick.getNode());
-//                            brick = null;
-//                        }
-//                    }
-//
-//                    for (Capsule capsule: capsules) { //Xóa capsule
-//                        if (capsule != null && capsule.getNode() != null) {
-//                            root.getChildren().remove(capsule.getNode());
-//                            capsule = null;
-//                        }
-//                    }
-//
-//                    for (Capsule capsule: capsuleIndex) { //Xóa capsule
-//                        if (capsule != null && capsule.getNode() != null) {
-//                            root.getChildren().remove(capsule.getNode());
-//                            capsule = null;
-//                        }
-//                    }
+                    for (Bricks brick: bricks) { //Xóa gạch
+                        if (brick != null && brick.getNode() != null) {
+                            root.getChildren().remove(brick.getNode());
+                            brick = null;
+                        }
+                    }
+
+                    for (Capsule capsule: capsules) { //Xóa capsule
+                        if (capsule != null && capsule.getNode() != null) {
+                            root.getChildren().remove(capsule.getNode());
+                            capsule = null;
+                        }
+                    }
 
                     setPaddleDefault();
                     setBallDefault();
