@@ -29,9 +29,11 @@ public class MainGame {
     private final int widthP = 150;
     private final int heightP = 30;
     private final int radiusB = 15;
-    private final int speedB = 5;
+    private int speedB = 5;
     private final int speedC = 5;
     private final int wallThickness = 30;
+    private int numberBrokeBrick = 0;
+    private int numberLevel = 1;
 
     private Ball ball;
     private Paddle paddle;
@@ -51,28 +53,12 @@ public class MainGame {
     private int lives = 5;
     private List<ImageView> heartImages = new ArrayList<>();
     private Text scoreText;
+    private Text levelText;
     private Image heartImage;
 
-    public MainGame() {
+    public void genBrickAndCapsule() {
         int[] hardnessArray = {1, 2, 3, 4};
         Random random = new Random();
-
-        double paddleX = (widthW - widthP) / 2.0;
-        double paddleY = heightW - heightP;
-        paddle = new Paddle(paddleX, paddleY, widthP, heightP);
-
-        double centerX = paddleX + widthP / 2;
-        double centerY = paddleY - radiusB;
-        ball = new Ball(centerX, centerY, radiusB, speedB);
-        ball.setDx(0);
-        ball.setDy(0);
-
-        leftWall = new Wall("left", 0, 0, wallThickness, heightW, wallThickness);
-        rightWall = new Wall("right", widthW - wallThickness, 0, wallThickness, heightW, wallThickness);
-        topWall = new Wall("top", 0, 0, widthW, wallThickness, wallThickness);
-
-        bricks = new Bricks[50];
-        capsules = new Capsule[50];
         int brickWidth = 90;
         int brickHeight = 30;
         int spacing = 5;
@@ -102,6 +88,34 @@ public class MainGame {
                 }
             }
         }
+    }
+
+    public MainGame() {
+        int[] hardnessArray = {1, 2, 3, 4};
+        Random random = new Random();
+
+        double paddleX = (widthW - widthP) / 2.0;
+        double paddleY = heightW - heightP;
+        paddle = new Paddle(paddleX, paddleY, widthP, heightP);
+
+        double centerX = paddleX + widthP / 2;
+        double centerY = paddleY - radiusB;
+        ball = new Ball(centerX, centerY, radiusB, speedB);
+        ball.setDx(0);
+        ball.setDy(0);
+
+        leftWall = new Wall("left", 0, 0, wallThickness, heightW, wallThickness);
+        rightWall = new Wall("right", widthW - wallThickness, 0, wallThickness, heightW, wallThickness);
+        topWall = new Wall("top", 0, 0, widthW, wallThickness, wallThickness);
+
+        bricks = new Bricks[50];
+        capsules = new Capsule[50];
+        int brickWidth = 90;
+        int brickHeight = 30;
+        int spacing = 5;
+        int rowCount = 5;
+        int colCount = 10;
+        genBrickAndCapsule(); //Tạo gạch và capsule
 
         Image heartImage = new Image("file:resources/heart.png");
 
@@ -115,11 +129,18 @@ public class MainGame {
         }
 
         // Create score text
-        scoreText = new Text("Score: 0");
+        scoreText = new Text("Score: " + score);
         scoreText.setFill(Color.WHITE);
         scoreText.setFont(new Font(36));
         scoreText.setX(widthW - wallThickness - 200);
         scoreText.setY(wallThickness + 64);
+
+        // Create level text
+        levelText = new Text("Level " + numberLevel);
+        levelText.setFill(Color.WHITE);
+        levelText.setFont(new Font(36));
+        levelText.setX(wallThickness + 20);
+        levelText.setY(wallThickness + 64);
     }
 
     public void start(Stage primaryStage) {
@@ -200,8 +221,9 @@ public class MainGame {
             }
         }
 
-        // Add score text and hearts
+        // Add score text, level text and hearts
         root.getChildren().add(scoreText);
+        root.getChildren().add(levelText);
         for (ImageView heart : heartImages) {
             root.getChildren().add(heart);
         }
@@ -272,6 +294,7 @@ public class MainGame {
 
                         int breakIndex = Update.position(ball, bricks);
                         if (breakIndex != -1 && bricks[breakIndex].isBreak()) {
+                            numberBrokeBrick++;
                             score += 10;
                             highestScore = Math.max(score, highestScore);
                             root.getChildren().remove(bricks[breakIndex].getNode());
@@ -300,8 +323,44 @@ public class MainGame {
                     Update.loseLifeSound.play(SoundManager.getEffectVolume());
                     loseLife();
                 }
+
+                if (numberBrokeBrick == 50) { //Phá hết tất cả bricks trong 1 màn
+                    speedB += 5;
+                    ball.setSpeed(speedB); //Sang màn mới tốc độ bóng tăng thêm 5
+                    numberLevel++;
+                    levelText.setText("Level: " + numberLevel);
+                    numberBrokeBrick = 0;
+
+                    for (Bricks brick: bricks) { //Xóa gạch
+                        if (brick != null && brick.getNode() != null) {
+                            root.getChildren().remove(brick.getNode());
+                            brick = null;
+                        }
+                    }
+
+                    for (Capsule capsule: capsules) { //Xóa capsule
+                        if (capsule != null && capsule.getNode() != null) {
+                            root.getChildren().remove(capsule.getNode());
+                            capsule = null;
+                        }
+                    }
+
+                    setPaddleDefault();
+                    setBallDefault();
+                    isAttached = true;
+                    genBrickAndCapsule();
+
+                    if (bricks != null) { //Thêm gạch vào root
+                        for (Bricks brick : bricks) {
+                            if (brick != null && brick.getNode() != null) {
+                                root.getChildren().add(brick.getNode());
+                            }
+                        }
+                    }
+                }
             }
         };
+
         gameLoop.start();
     }
 
