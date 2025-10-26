@@ -5,7 +5,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
-public class EffectManager {
+abstract public class EffectManager {
     private static final List<String> effectTypes = new ArrayList<>(List.of(
             "inc10Point", "dec10Point", "inc50Point", "dec50Point", "inc100Point", "dec100Point",
             "fastBall", "slowBall", "fireBall", "powerBall", "expandPaddle", "shrinkPaddle"

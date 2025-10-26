@@ -2,17 +2,7 @@
   <configuration default="false" name="Run MainGame" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="MainGame" />
     <module name="demo-repository" />
-    <option name="VM_PARAMETERS" value="--module-path D:\javafx-sdk-21.0.8\lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media --add-exports javafx.base/com.sun.javafx=ALL-UNNAMED" />
-    <method v="2">
-      <option name="Make" enabled="true" />
-    </method>
-  </configuration>
-</component>
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Run MainGame" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="MainGame" />
-    <module name="demo-repository" />
-    <option name="VM_PARAMETERS" value="--module-path D:\javafx-sdk-21.0.8\lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media --add-exports javafx.base/com.sun.javafx.logging=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.embed=ALL-UNNAMED" />
+    <option name="VM_PARAMETERS" value="--module-path &quot;D:\openjfx-21.0.8_windows-x64_bin-sdk\javafx-sdk-21.0.8\lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing " />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

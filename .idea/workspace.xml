@@ -4,18 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0fac5e75-a1dc-4ca7-8bf4-9fe60e2ad829" name="Changes" comment="" />
+    <list default="true" id="ef8b5c06-b2f9-400e-b2a2-452fe34a50a8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -29,63 +24,41 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/gameGroup1/demo-repository.git&quot;,
-    &quot;accountId&quot;: &quot;dcce97fe-8360-4e1f-95f5-2ecf882f8e5a&quot;
+    &quot;accountId&quot;: &quot;2cd69f60-9660-482d-9f0c-98a51e3fa03e&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 6
+  &quot;associatedIndex&quot;: 8
 }</component>
-  <component name="ProjectId" id="33kGsG0wvAv5gexlJDXHDfrNQPQ" />
+  <component name="ProjectId" id="34Omr5mkpNzyPZl2thBKb3NC4gK" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Run_JavaFX.executor": "Run",
-    "Application.VideoDemo.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Application.MainGame.executor": "Run",
+    "Application.Run MainGame.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "#22 on Loidemo",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+    "project.structure.side.proportion": "0.2"
   }
 }]]></component>
-  <component name="RunManager">
-    <configuration name="Run_JavaFX" type="Application" factoryName="Application">
-      <option name="ALTERNATIVE_JRE_PATH" value="24" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="mainGame" />
-      <module name="arkanoid#" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;E:\javafx-sdk-21.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml " />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="0fac5e75-a1dc-4ca7-8bf4-9fe60e2ad829" name="Changes" comment="" />
-      <created>1759158977674</created>
+      <changelist id="ef8b5c06-b2f9-400e-b2a2-452fe34a50a8" name="Changes" comment="" />
+      <created>1761062809229</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1759853876409</updated>
-      <workItem from="1759853887559" duration="2749000" />
+      <updated>1761062809229</updated>
     </task>
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
   </component>
 </project>

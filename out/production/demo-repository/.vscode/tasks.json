@@ -1,0 +1,34 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Copy Resources",
+            "type": "shell",
+            "command": "xcopy",
+            "args": [
+                "/E",
+                "/I",
+                "/Y",
+                "resources",
+                "bin\\resources"
+            ],
+            "windows": {
+                "command": "xcopy",
+                "args": [
+                    "/E",
+                    "/I", 
+                    "/Y",
+                    "resources",
+                ]
+            },
+            "linux": {
+                "command": "cp",
+                "args": [
+                    "-r",
+                    "resources",
+                ]
+            },
+            "problemMatcher": []
+        }
+    ]
+}

@@ -1,8 +1,8 @@
 public abstract class GameObject {
-    private double x;
-    private double y;
-    private int width;
-    private int height;
+    protected double x;
+    protected double y;
+    protected int width;
+    protected int height;
 
     public GameObject(double x, double y, int width, int height) {
         this.x = x;
