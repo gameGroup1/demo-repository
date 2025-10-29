@@ -29,7 +29,7 @@ public class MainGame {
     private final int widthP = 150;
     private final int heightP = 30;
     private final int radiusB = 15;
-    private int speedB = 5;
+    private int speedB = 7;
     private final int speedC = 5;
     private final int wallThickness = 30;
     private int numberBrokeBrick = 0;
