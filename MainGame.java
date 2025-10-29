@@ -48,12 +48,12 @@ public class MainGame {
     private static int highestScore;
     private MediaPlayer mediaPlayer;
     private boolean isAttached = true;
-    private int lives = 5;
+    private int lives = 10;
     private List<ImageView> heartImages = new ArrayList<>();
     private Text scoreText;
     private Image heartImage;
     private GameLevel currentLevel;
-    private int currentLevelNumber = 1;
+    private int currentLevelNumber = 0;
 
     public MainGame() {
         int[] hardnessArray = {1, 2, 3, 4};
@@ -106,7 +106,7 @@ public class MainGame {
             }
         }
         */
-        currentLevel = new Level1(wallThickness, speedC);
+        currentLevel = new LevelDemo(wallThickness, speedC);
         this.bricks = currentLevel.getBricks();
         this.capsules = currentLevel.getCapsules();
         this.capsuleIndex = currentLevel.getCapsuleIndex();
@@ -245,18 +245,20 @@ public class MainGame {
 
     private void nextLevel() {
         currentLevelNumber++;
-        lives = 5;
+        lives = 10;
 
         switch (currentLevelNumber) {
+            case 1:
+                currentLevel = new Level1(wallThickness, speedC);
+                break;
             case 2:
                 currentLevel = new Level2(wallThickness, speedC);
                 break;
-
             default:
                 System.out.println(" Successfully!");
                 return;
         }
-        
+
         // Nếu qua màn rồi thì bỏ hết bricks và capsule cũ thay vào cái mới
         for (Bricks brick : bricks) {
             if (brick != null && brick.getNode() != null) {
@@ -270,6 +272,14 @@ public class MainGame {
             }
         }
 
+        for(ImageView heart : heartImages) {
+            root.getChildren().remove(heart);
+        }
+
+        setPaddleDefault();
+        setBallDefault();
+        isAttached = true;
+
         // Lấy dữ liệu mới
         this.bricks = currentLevel.getBricks();
         this.capsules = currentLevel.getCapsules();
@@ -279,6 +289,10 @@ public class MainGame {
             if (brick != null && brick.getNode() != null) {
                 root.getChildren().add(brick.getNode());
             }
+        }
+
+        for (ImageView heart : heartImages) {
+            root.getChildren().add(heart);
         }
     }
 
