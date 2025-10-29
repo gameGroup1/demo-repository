@@ -233,6 +233,7 @@ public class MainGame {
             }
         });
     }
+
     private boolean isLevelCleared() {
         for (Bricks brick : bricks) {
             if (brick != null && !brick.isBreak()) {
@@ -245,20 +246,27 @@ public class MainGame {
     private void nextLevel() {
         currentLevelNumber++;
         lives = 5;
-        
+
         switch (currentLevelNumber) {
             case 2:
                 currentLevel = new Level2(wallThickness, speedC);
                 break;
 
             default:
-                System.out.println("🎉 Bạn đã hoàn thành tất cả các màn!");
+                System.out.println(" Successfully!");
                 return;
         }
-
+        
+        // Nếu qua màn rồi thì bỏ hết bricks và capsule cũ thay vào cái mới
         for (Bricks brick : bricks) {
             if (brick != null && brick.getNode() != null) {
                 root.getChildren().remove(brick.getNode());
+            }
+        }
+
+        for (Capsule capsule : capsules) {
+            if (capsule != null && capsule.getNode() != null) {
+                root.getChildren().remove(capsule.getNode());
             }
         }
 
