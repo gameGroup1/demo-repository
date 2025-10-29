@@ -62,7 +62,7 @@ public class MainGame {
         int brickWidth = 90;
         int brickHeight = 30;
         int spacing = 5;
-        int rowCount = 5;
+        int rowCount = Math.min(numberLevel, 5);
         int colCount = 10;
         for (int row = 0; row < rowCount; row++) {
             for (int col = 0; col < colCount; col++) {
@@ -324,7 +324,7 @@ public class MainGame {
                     loseLife();
                 }
 
-                if (numberBrokeBrick == 50) { //Phá hết tất cả bricks trong 1 màn
+                if (numberBrokeBrick == 10 * Math.min(numberLevel, 5)) { //Phá hết tất cả bricks trong 1 màn
                     speedB += 5;
                     ball.setSpeed(speedB); //Sang màn mới tốc độ bóng tăng thêm 5
                     numberLevel++;
