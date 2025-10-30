@@ -147,12 +147,36 @@ public class Pause {
         });
 
         // Action cho Continue: Tiếp tục game
-        continueBtn.setOnAction(e -> {
-            if (gameLoop != null) {
-                gameLoop.start();
+       continueBtn.setOnAction(e -> {
+    if (gameLoop != null) {
+        gameLoop.start();
+    }
+
+    Platform.runLater(() -> {
+        // BẬT LẠI INPUT
+        MainGame.isPaused = false;
+
+        // HIỆN LẠI CON TRỎ
+        parentStage.getScene().setCursor(javafx.scene.Cursor.DEFAULT);
+
+        // ĐẶT CHUỘT VỀ GIỮA PADDLE
+        Paddle paddle = MainGame.staticPaddle;
+        if (paddle != null) {
+            double paddleCenterX = paddle.getX();// + paddle.getWidth() / 2;
+            double screenX = parentStage.getX() + paddleCenterX + 8;
+            double screenY = parentStage.getY() + paddle.getY() + 50; // Trên paddle
+
+            try {
+                java.awt.Robot robot = new java.awt.Robot();
+                robot.mouseMove((int) screenX, (int) screenY);
+            } catch (Exception ex) {
+                System.out.println("Không thể di chuyển chuột tự động: " + ex.getMessage());
             }
-            pauseStage.close();
-        });
+        }
+    });
+
+    pauseStage.close();
+});
 
         // Action cho Exit: Dừng toàn bộ chương trình
         exitBtn.setOnAction(e -> {
@@ -176,6 +200,8 @@ public class Pause {
         BorderPane.setMargin(bottomBox, new Insets(20, 0, 0, 0));
 
         Scene scene = new Scene(root, 300, 300); // Kích thước nhỏ hơn cho menu pause
+        // Ẩn con trỏ chuột khi vào Pause
+        //scene.setCursor(javafx.scene.Cursor.NONE);
         pauseStage.setScene(scene);
         pauseStage.showAndWait(); // Chờ đến khi close mới tiếp tục
     }

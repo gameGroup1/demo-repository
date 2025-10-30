@@ -29,7 +29,7 @@ public class MainGame {
     private final int widthP = 150;
     private final int heightP = 30;
     private final int radiusB = 15;
-    private final int speedB = 7;
+    private final int speedB = 5;
     private final int speedC = 5;
     private final int wallThickness = 30;
 
@@ -48,12 +48,10 @@ public class MainGame {
     private static int highestScore;
     private MediaPlayer mediaPlayer;
     private boolean isAttached = true;
-    private int lives = 10;
+    private int lives = 5;
     private List<ImageView> heartImages = new ArrayList<>();
     private Text scoreText;
     private Image heartImage;
-    private GameLevel currentLevel;
-    private int currentLevelNumber = 0;
 
     public MainGame() {
         int[] hardnessArray = {1, 2, 3, 4};
@@ -73,7 +71,6 @@ public class MainGame {
         rightWall = new Wall("right", widthW - wallThickness, 0, wallThickness, heightW, wallThickness);
         topWall = new Wall("top", 0, 0, widthW, wallThickness, wallThickness);
 
-        /*
         bricks = new Bricks[50];
         capsules = new Capsule[50];
         int brickWidth = 90;
@@ -105,11 +102,6 @@ public class MainGame {
                 }
             }
         }
-        */
-        currentLevel = new LevelDemo(wallThickness, speedC);
-        this.bricks = currentLevel.getBricks();
-        this.capsules = currentLevel.getCapsules();
-        this.capsuleIndex = currentLevel.getCapsuleIndex();
 
         Image heartImage = new Image("file:resources/heart.png");
 
@@ -234,68 +226,6 @@ public class MainGame {
         });
     }
 
-    private boolean isLevelCleared() {
-        for (Bricks brick : bricks) {
-            if (brick != null && !brick.isBreak()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private void nextLevel() {
-        currentLevelNumber++;
-        lives = 10;
-
-        switch (currentLevelNumber) {
-            case 1:
-                currentLevel = new Level1(wallThickness, speedC);
-                break;
-            case 2:
-                currentLevel = new Level2(wallThickness, speedC);
-                break;
-            default:
-                System.out.println(" Successfully!");
-                return;
-        }
-
-        // Nếu qua màn rồi thì bỏ hết bricks và capsule cũ thay vào cái mới
-        for (Bricks brick : bricks) {
-            if (brick != null && brick.getNode() != null) {
-                root.getChildren().remove(brick.getNode());
-            }
-        }
-
-        for (Capsule capsule : capsules) {
-            if (capsule != null && capsule.getNode() != null) {
-                root.getChildren().remove(capsule.getNode());
-            }
-        }
-
-        for(ImageView heart : heartImages) {
-            root.getChildren().remove(heart);
-        }
-
-        setPaddleDefault();
-        setBallDefault();
-        isAttached = true;
-
-        // Lấy dữ liệu mới
-        this.bricks = currentLevel.getBricks();
-        this.capsules = currentLevel.getCapsules();
-        this.capsuleIndex = currentLevel.getCapsuleIndex();
-
-        for (Bricks brick : bricks) {
-            if (brick != null && brick.getNode() != null) {
-                root.getChildren().add(brick.getNode());
-            }
-        }
-
-        for (ImageView heart : heartImages) {
-            root.getChildren().add(heart);
-        }
-    }
-
     private void startGameLoop() {
         gameLoop = new AnimationTimer() {
             @Override
@@ -370,11 +300,6 @@ public class MainGame {
                     Update.loseLifeSound.play(SoundManager.getEffectVolume());
                     loseLife();
                 }
-
-                if (isLevelCleared()) {
-                    nextLevel();
-                }
-
             }
         };
         gameLoop.start();
