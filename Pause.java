@@ -91,8 +91,8 @@ public class Pause {
         Button continueBtn = new Button("Continue");
         Button exitBtn = new Button("Exit");
 
-        continueBtn.setStyle("-fx-font-size: 16; -fx-pref-width: 120; -fx-pref-height: 35; -fx-background-color: #4CAF50; -fx-text-fill: white;");
-        exitBtn.setStyle("-fx-font-size: 16; -fx-pref-width: 120; -fx-pref-height: 35; -fx-background-color: #f44336; -fx-text-fill: white;");
+        continueBtn.setStyle("-fx-font-size: 16; -fx-pref-width: 120; -fx-pref-height: 35; -fx-background-color: #6d856eff; -fx-text-fill: white;");
+        exitBtn.setStyle("-fx-font-size: 16; -fx-pref-width: 120; -fx-pref-height: 35; -fx-background-color: #887c7bff; -fx-text-fill: white;");
 
         // Hiệu ứng scale và âm thanh khi hover cho continueBtn
         continueBtn.setOnMouseEntered(e -> {
@@ -179,18 +179,24 @@ public class Pause {
 });
 
         // Action cho Exit: Dừng toàn bộ chương trình
-        exitBtn.setOnAction(e -> {
-            // Đóng pause stage và parent stage (primary stage của game)
-            pauseStage.close();
-            if (parentStage != null) {
-                parentStage.close();  // Sẽ trigger onCloseRequest trong MainGame để stop gameLoop, mediaPlayer, save score
-            }
-            // Dừng tất cả âm thanh qua SoundManager để đảm bảo không còn nhạc chạy ngầm
-            SoundManager.stopAllSounds();
-            // Dừng JavaFX application thread một cách sạch sẽ
-            Platform.exit();
-            System.exit(0);
-        });
+        // Action cho Exit: Dừng toàn bộ chương trình
+    // Action cho Exit: Dừng toàn bộ chương trình
+exitBtn.setOnAction(e -> {
+    // Gọi cleanup trước
+    MainGame.cleanup();
+    //GameMenu.cleanup();
+    // Đóng pause stage
+    pauseStage.close();
+    
+    // Đóng parent stage
+    if (parentStage != null) {
+        parentStage.close();
+    }
+    
+    // Thoát JavaFX
+    Platform.exit();
+    System.exit(0);
+});
 
         HBox buttonBox = new HBox(20);
         buttonBox.setAlignment(Pos.CENTER);

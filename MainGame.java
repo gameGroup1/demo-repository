@@ -37,10 +37,8 @@ public class MainGame {
     private int speedB = 7;                    // Tốc độ bóng, tăng dần theo level
     private final int speedC = 2;
     private final int wallThickness = 30;
-
     private int numberBrokeBrick = 0;          // Số gạch đã phá trong level hiện tại
     private int numberLevel = 1;               // Level hiện tại
-
     // Các đối tượng trong game
     private Ball ball;
     private Paddle paddle;
@@ -48,15 +46,13 @@ public class MainGame {
     private Bricks[] bricks;
     private Capsule[] capsules;
     private List<Integer> capsuleIndex = new ArrayList<>();
-
     private Group root;
-    private AnimationTimer gameLoop;
+    private static AnimationTimer gameLoop;
     private Stage primaryStage;
-
     // Điểm số, mạng, giao diện
     private int score = 0;
     private static int highestScore;
-    private MediaPlayer mediaPlayer;
+    private static MediaPlayer mediaPlayer;
     private boolean isAttached = true;         // Bóng dính vào paddle
     private int lives = 5;
     private List<ImageView> heartImages = new ArrayList<>();
@@ -64,11 +60,28 @@ public class MainGame {
     private Text levelText;
     private Image heartImage;
     private Image collisionImage;
-
     // Trạng thái pause và paddle tĩnh để Pause truy cập
     public static boolean isPaused = false;
     public static Paddle staticPaddle;
 
+    public static void cleanup() {
+    // Dừng game loop
+    if (gameLoop != null) {
+        gameLoop.stop();
+    }
+    
+    // Dừng âm thanh game
+    if (mediaPlayer != null) {
+        mediaPlayer.stop();
+        SoundManager.unregisterMediaPlayer(mediaPlayer);
+    }
+    
+    // Dừng tất cả âm thanh khác
+    SoundManager.stopAllSounds();
+    
+    // Lưu điểm nếu cần
+    getBestScore();
+}
     // Tạo gạch và capsule (gọi lại khi qua level)
     private void genBrickAndCapsule() {
         int[] hardnessArray = {1, 2, 3, 4};
@@ -177,12 +190,7 @@ public class MainGame {
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.setOnCloseRequest(e -> {
-            if (gameLoop != null) gameLoop.stop();
-            if (mediaPlayer != null) {
-                mediaPlayer.stop();
-                SoundManager.unregisterMediaPlayer(mediaPlayer);
-            }
-            saveHighestScore();
+            cleanup();
         });
 
         primaryStage.show();

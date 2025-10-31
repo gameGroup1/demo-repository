@@ -45,7 +45,7 @@ public class ImageButton extends StackPane {
         // Text
         textNode = new Text(text);
         textNode.setFont(font);
-        textNode.setFill(Color.web("#9ac832"));
+        textNode.setFill(Color.web("#ecfacaff"));
         textNode.setStyle("-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 3, 0, 1, 1);");
 
         getChildren().addAll(normalView, hoveredView, textNode);
@@ -86,31 +86,29 @@ public class ImageButton extends StackPane {
 
     // Tạo ảnh scale
     private Image createScaledImage(Image src, double scale) {
-    int w = (int) (src.getWidth() * scale);
-    int h = (int) (src.getHeight() * scale);
-    WritableImage out = new WritableImage(w, h);
-    PixelReader reader = src.getPixelReader();
-    PixelWriter writer = out.getPixelWriter();
+        int w = (int) (src.getWidth() * scale);
+        int h = (int) (src.getHeight() * scale);
+        WritableImage out = new WritableImage(w, h);
+        PixelReader reader = src.getPixelReader();
+        PixelWriter writer = out.getPixelWriter();
 
-    for (int y = 0; y < h; y++) {
-        for (int x = 0; x < w; x++) {
-            int sx = (int) (x / scale);
-            int sy = (int) (y / scale);
-            int argb = reader.getArgb(sx, sy);
+        for (int y = 0; y < h; y++) {
+            for (int x = 0; x < w; x++) {
+                int sx = (int) (x / scale);
+                int sy = (int) (y / scale);
+                int argb = reader.getArgb(sx, sy);
 
-            // === CHỈNH ĐỘ TRONG SUỐT TẠI ĐÂY ===
-            int alpha = (argb >> 24) & 0xFF;     // Lấy độ trong suốt gốc
-            int newAlpha = (int) (alpha * 1); // ← 85% đục (15% trong suốt)
-            // int newAlpha = 255;               // ← 100% đục (không trong suốt)
-            // int newAlpha = 180;               // ← 70% đục (30% trong suốt)
+                //CHỈNH ĐỘ TRONG SUỐT TẠI ĐÂY
+                int alpha = (argb >> 24) & 0xFF;     
+                int newAlpha = (int) (alpha * 1); 
+    
+                int r = (argb >> 16) & 0xFF;
+                int g = (argb >> 8) & 0xFF;
+                int b = argb & 0xFF;
 
-            int r = (argb >> 16) & 0xFF;
-            int g = (argb >> 8) & 0xFF;
-            int b = argb & 0xFF;
-
-            writer.setArgb(x, y, (newAlpha << 24) | (r << 16) | (g << 8) | b);
+                writer.setArgb(x, y, (newAlpha << 24) | (r << 16) | (g << 8) | b);
+            }
         }
+        return out;
     }
-    return out;
-}
 }
