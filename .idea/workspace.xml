@@ -6,22 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="ef8b5c06-b2f9-400e-b2a2-452fe34a50a8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EffectManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/EffectManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/MainGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.vscode/launch.json" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.vscode/launch.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Collision.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Collision.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/EndMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/EndMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$BackgroundPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$BackgroundPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/GameMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Path.java" beforeDir="false" afterPath="$PROJECT_DIR$/Path.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/EffectManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/EffectManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/MainGame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/MainGame$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/MainGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/MainGame.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Path.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Path.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Pause.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Pause.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Update.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Update.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/idea/Lợi idea.docx" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/idea/Lợi idea.docx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +34,9 @@
     &quot;accountId&quot;: &quot;2cd69f60-9660-482d-9f0c-98a51e3fa03e&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 8
@@ -76,5 +70,16 @@
       <updated>1761062809229</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

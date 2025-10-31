@@ -326,10 +326,18 @@ public class MainGame {
 
                             if (capsules[breakIndex] != null && !capsules[breakIndex].isVisible()) {
                                 Capsule cap = capsules[breakIndex];
-                                if (!root.getChildren().contains(cap.getNode())) {
-                                    root.getChildren().add(cap.getNode());
+                                if (lives == 5 && cap.getEffectType().equals("improveLife")) {
+                                    if (root.getChildren().contains(cap.getNode())) {
+                                        root.getChildren().remove(cap.getNode());
+                                    }
+                                    cap.setVisible(false);
+                                    cap = null;
+                                } else {
+                                    if (!root.getChildren().contains(cap.getNode())) {
+                                        root.getChildren().add(cap.getNode());
+                                    }
+                                    cap.setVisible(true);
                                 }
-                                cap.setVisible(true);
                             }
                         }
                     }
@@ -410,6 +418,7 @@ public class MainGame {
             case "powerBall": EffectManager.updatePower(ball, 3.0); break;
             case "expandPaddle": EffectManager.changeWidth(paddle, 2.0); break;
             case "shrinkPaddle": EffectManager.changeWidth(paddle, 0.5); break;
+            case "improveLife": addLife(); break;
             case "explosion":
                 showExplosion(capsule.getX(), capsule.getY());
                 loseLife();
@@ -452,6 +461,18 @@ public class MainGame {
         ball.setSpeed(speedB);
         ball.setPower(1);
         ball.setFireBall(false);
+    }
+
+    // Tăng 1 mạng
+    private void addLife() {
+        ImageView lastHeart = new ImageView(heartImage);
+        lastHeart.setFitWidth(30);
+        lastHeart.setFitHeight(30);
+        lastHeart.setX(widthW - wallThickness - 80 - lives * 36);
+        lastHeart.setY(wallThickness + 5);
+        root.getChildren().add(lastHeart);
+        heartImages.add(lastHeart);
+        lives++;
     }
 
     // Mất 1 mạng
