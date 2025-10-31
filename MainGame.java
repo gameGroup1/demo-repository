@@ -111,7 +111,6 @@ public class MainGame {
     // Constructor: Khởi tạo toàn bộ game
     public MainGame() {
         collisionImage = new Image("file:resources/boom_collision.gif");
-
         double paddleX = (widthW - widthP) / 2.0;
         double paddleY = heightW - heightP;
         paddle = new Paddle(paddleX, paddleY, widthP, heightP);

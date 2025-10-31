@@ -19,7 +19,7 @@ public class Pause {
     private static AudioClip mouseClickSound;
 
     static {
-        mouseClickSound = new AudioClip(Path.getFileURL(Path.MouseClick));
+        mouseClickSound = new AudioClip(Path.getFileURL(Path.mouseClick));
         SoundManager.registerAudioClip(mouseClickSound);
     }
 
@@ -189,6 +189,7 @@ public class Pause {
             SoundManager.stopAllSounds();
             // Dừng JavaFX application thread một cách sạch sẽ
             Platform.exit();
+            System.exit(0);
         });
 
         HBox buttonBox = new HBox(20);

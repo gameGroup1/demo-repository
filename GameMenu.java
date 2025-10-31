@@ -15,20 +15,24 @@ import java.net.URL;
 public class GameMenu extends JFrame {
     private boolean checkStart = false; // Kiểm tra đã nhấn Start chưa
     private JLabel title;               // Tiêu đề "-ARKANOID-"
-    private JButton startBtn;           // Nút bắt đầu game
-    private JButton bestScoreBtn;       // Nút xem điểm cao nhất
-    private JButton exitBtn;            // Nút thoát game
+    private JComponent startBtn;           // Nút bắt đầu game
+    private JComponent bestScoreBtn;       // Nút xem điểm cao nhất
+    private JComponent exitBtn;            // Nút thoát game
     private JSlider backgroundSlider;   // Thanh điều chỉnh âm lượng nhạc nền
     private JLabel backgroundLabel;     // Nhãn hiển thị % âm lượng nhạc nền
     private JSlider effectSlider;       // Thanh điều chỉnh âm lượng hiệu ứng
     private JLabel effectLabel;         // Nhãn hiển thị % âm lượng hiệu ứng
     private MediaPlayer mediaPlayer;    // Đối tượng phát nhạc nền menu
     private static AudioClip mouseClickSound; // Âm thanh khi di chuột vào nút
-
+    private Image greenButtonImage;
+    
     // Khởi tạo âm thanh click chuột (chỉ chạy 1 lần khi class được nạp)
     static {
-        mouseClickSound = new AudioClip(Path.getFileURL(Path.MouseClick));
+        mouseClickSound = new AudioClip(Path.getFileURL(Path.mouseClick));
         SoundManager.registerAudioClip(mouseClickSound);
+    }
+    public static AudioClip mouseClickSound() {
+        return mouseClickSound;
     }
     // Tải font chữ tùy chỉnh "Monotype Corsiva" từ nhiều nguồn
     private Font loadCustomFont() {
@@ -70,6 +74,51 @@ public class GameMenu extends JFrame {
         return new Font("Arial", Font.BOLD, 48);
     }
 
+    private Image loadButtonImage() {
+        try {
+            URL imageURL = getClass().getClassLoader().getResource(Path.greenButton.substring(1));
+            if (imageURL != null) {
+                return new ImageIcon(imageURL).getImage();
+            }
+            java.io.File file = new java.io.File("resources/green_button.png");
+            if (file.exists()) {
+                return new ImageIcon(file.getPath()).getImage();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    // Khởi tạo nút hình ảnh với hiệu ứng
+    private JComponent createImageButton(String text, Font font) {
+    ImageButton imgBtn = new ImageButton(greenButtonImage, text, font);
+    return imgBtn; // Bây giờ hợp lệ: ImageButton là JComponent
+    }
+
+    private void showBestScoreDialog() {
+        JDialog dialog = new JDialog(this, "Best Score", true);
+        dialog.setSize(400, 200);
+        dialog.setLocationRelativeTo(this);
+        dialog.getContentPane().setBackground(new Color(0, 50, 0));
+
+        JLabel label = new JLabel("Best Score: " + MainGame.getBestScore());
+        label.setFont(new Font("Arial", Font.BOLD, 28));
+        label.setForeground(Color.CYAN);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        label.setOpaque(false);
+
+        JButton closeBtn = new JButton("Close");
+        makeButtonTransparent(closeBtn);
+        closeBtn.addActionListener(a -> dialog.dispose());
+
+        JPanel contentPanel = new JPanel(new BorderLayout());
+        contentPanel.setOpaque(false);
+        contentPanel.add(label, BorderLayout.CENTER);
+        contentPanel.add(closeBtn, BorderLayout.SOUTH);
+
+        dialog.add(contentPanel);
+        dialog.setVisible(true);
+    }
     // Constructor: khởi tạo giao diện menu
     public GameMenu() {
         setTitle("Arkanoid - Start Menu");
@@ -77,12 +126,12 @@ public class GameMenu extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Căn giữa màn hình
         setResizable(false);
-
         new JFXPanel(); // Khởi động JavaFX (cần thiết để dùng MediaPlayer)
 
         // Phát nhạc nền menu
         playBackgroundMusic();
-
+        //load nút hình ảnh
+        greenButtonImage = loadButtonImage();
         // Tải hình nền
         Image backgroundImage = loadBackgroundImage();
         System.out.println("Hình nền: " + (backgroundImage != null ? "Tải thành công" : "Thất bại"));
@@ -103,21 +152,46 @@ public class GameMenu extends JFrame {
         panel.add(title);
         panel.add(Box.createVerticalStrut(30));
 
+        if (greenButtonImage == null) {
+            System.err.println("Không tải được green_button.png → dùng nút mặc định");
+            // Fallback: dùng nút cũ nếu lỗi
+        }
         // === CÁC NÚT ===
-        startBtn = new JButton("Start");
-        bestScoreBtn = new JButton("Best Score");
-        exitBtn = new JButton("Exit");
+                // === TẠO NÚT HÌNH ẢNH ===
+        Font buttonFont = new Font("Arial", Font.BOLD, 28);
+
+        if (greenButtonImage != null) {
+            startBtn = createImageButton("Start", buttonFont);
+            bestScoreBtn = createImageButton("Best Score", buttonFont);
+            exitBtn = createImageButton("Exit", buttonFont);
+        } else {
+            // Fallback: dùng nút cũ nếu không tải được ảnh
+            startBtn = new JButton("Start");
+            bestScoreBtn = new JButton("Best Score");
+            exitBtn = new JButton("Exit");
+            makeButtonTransparent(startBtn);
+            makeButtonTransparent(bestScoreBtn);
+            makeButtonTransparent(exitBtn);
+            startBtn.setFont(buttonFont);
+            bestScoreBtn.setFont(buttonFont);
+            exitBtn.setFont(buttonFont);
+        }
+
+        // Căn giữa
+        startBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        bestScoreBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        exitBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Tắt viền focus
-        startBtn.setFocusPainted(false);
-        bestScoreBtn.setFocusPainted(false);
-        exitBtn.setFocusPainted(false);
+        startBtn.setFocusable(false);
+        bestScoreBtn.setFocusable(false);
+        exitBtn.setFocusable(false);
 
         // Kích thước nút
-        Dimension btnSize = new Dimension(200, 40);
-        startBtn.setPreferredSize(btnSize);
-        bestScoreBtn.setPreferredSize(btnSize);
-        exitBtn.setPreferredSize(btnSize);
+        //Dimension btnSize = new Dimension(200, 40);
+        //startBtn.setPreferredSize(btnSize);
+        //bestScoreBtn.setPreferredSize(btnSize);
+        //exitBtn.setPreferredSize(btnSize);
 
         // Căn giữa
         startBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -162,7 +236,7 @@ public class GameMenu extends JFrame {
         effectLabel.setOpaque(false);
 
         effectSlider = new JSlider(0, 100, (int)(SoundManager.getEffectVolume() * 100));
-        effectSlider.setPreferredSize(new Dimension(160, 10));
+        effectSlider.setPreferredSize(new Dimension(160, 40));
         effectSlider.setAlignmentX(Component.CENTER_ALIGNMENT);
         effectSlider.setOpaque(false);
         effectSlider.setForeground(new Color(154, 205, 50));
@@ -192,57 +266,54 @@ public class GameMenu extends JFrame {
 
         add(panel);
 
-        // Hiệu ứng nút (phóng to, âm thanh)
-        addButtonEffects(startBtn);
-        addButtonEffects(bestScoreBtn);
-        addButtonEffects(exitBtn);
+                // === GÁN SỰ KIỆN CHO CÁC NÚT (HỖ TRỢ CẢ ImageButton VÀ JButton) ===
+        if (startBtn instanceof ImageButton) {
+            ((ImageButton) startBtn).addActionListener(e -> {
+                checkStart = true;
+                if (mediaPlayer != null) {
+                    mediaPlayer.stop();
+                    SoundManager.unregisterMediaPlayer(mediaPlayer);
+                }
+                setVisible(false);
+                startGame();
+            });
+        } else {
+            ( (ImageButton) startBtn).addActionListener(e -> {
+                checkStart = true;
+                if (mediaPlayer != null) {
+                    mediaPlayer.stop();
+                    SoundManager.unregisterMediaPlayer(mediaPlayer);
+                }
+                setVisible(false);
+                startGame();
+            });
+        }
 
-        // === SỰ KIỆN NÚT START ===
-        startBtn.addActionListener(e -> {
-            checkStart = true;
-            if (mediaPlayer != null) {
-                mediaPlayer.stop();
-                SoundManager.unregisterMediaPlayer(mediaPlayer);
-            }
-            setVisible(false); // Ẩn menu
-            startGame();       // Bắt đầu game
-        });
+        if (bestScoreBtn instanceof ImageButton) {
+            ((ImageButton) bestScoreBtn).addActionListener(e -> showBestScoreDialog());
+        } else {
+            ((ImageButton) bestScoreBtn).addActionListener(e -> showBestScoreDialog());
+        }
 
-        // === SỰ KIỆN NÚT BEST SCORE ===
-        bestScoreBtn.addActionListener(e -> {
-            JDialog dialog = new JDialog(this, "Best Score", true);
-            dialog.setSize(400, 200);
-            dialog.setLocationRelativeTo(this);
-            dialog.getContentPane().setBackground(new Color(0, 50, 0)); // Nền xanh đậm
-
-            JLabel label = new JLabel("Best Score: " + MainGame.getBestScore());
-            label.setFont(new Font("Arial", Font.BOLD, 28));
-            label.setForeground(Color.CYAN);
-            label.setHorizontalAlignment(SwingConstants.CENTER);
-            label.setOpaque(false);
-
-            JButton closeBtn = new JButton("Close");
-            makeButtonTransparent(closeBtn);
-            closeBtn.addActionListener(a -> dialog.dispose());
-
-            JPanel contentPanel = new JPanel(new BorderLayout());
-            contentPanel.setOpaque(false);
-            contentPanel.add(label, BorderLayout.CENTER);
-            contentPanel.add(closeBtn, BorderLayout.SOUTH);
-
-            dialog.add(contentPanel);
-            dialog.setVisible(true);
-        });
-
-        // === SỰ KIỆN NÚT EXIT ===
-        exitBtn.addActionListener(e -> {
-            if (mediaPlayer != null) {
-                mediaPlayer.stop();
-                SoundManager.unregisterMediaPlayer(mediaPlayer);
-            }
-            System.exit(0); // Thoát hoàn toàn
-        });
+        if (exitBtn instanceof ImageButton) {
+            ((ImageButton) exitBtn).addActionListener(e -> {
+                if (mediaPlayer != null) {
+                    mediaPlayer.stop();
+                    SoundManager.unregisterMediaPlayer(mediaPlayer);
+                }
+                System.exit(0);
+            });
+        } else {
+            ((ImageButton) exitBtn).addActionListener(e -> {
+                if (mediaPlayer != null) {
+                    mediaPlayer.stop();
+                    SoundManager.unregisterMediaPlayer(mediaPlayer);
+                }
+                System.exit(0);
+            });
+        }
     }
+
 
     // Phát nhạc nền menu (lặp vô hạn)
     private void playBackgroundMusic() {
@@ -267,12 +338,19 @@ public class GameMenu extends JFrame {
     }
 
     // Làm nút trong suốt, có nền mờ + màu chữ
-    private void makeButtonTransparent(JButton button) {
-        button.setOpaque(false);
-        button.setContentAreaFilled(false);
-        button.setBackground(new Color(20, 40, 30, 100)); // Nền mờ
-        button.setForeground(new Color(154, 200, 50));    // Màu chữ
-        button.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
+   private void makeButtonTransparent(JComponent btn) {
+    btn.setOpaque(false);
+    btn.setBackground(new Color(20, 40, 30, 100)); // nền mờ
+    btn.setForeground(new Color(154, 200, 50));    // màu chữ
+    btn.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
+
+    // Chỉ áp dụng cho AbstractButton (JButton, etc.)
+    if (btn instanceof AbstractButton) {
+        AbstractButton ab = (AbstractButton) btn;
+        ab.setContentAreaFilled(false);
+        ab.setBorderPainted(false);
+    }
+    // ImageButton không cần setContentAreaFilled → bỏ qua
     }
 
     // Tải hình nền từ classpath hoặc file
@@ -346,15 +424,15 @@ public class GameMenu extends JFrame {
     }
 
     // Hiệu ứng nút: phóng to chữ + âm thanh khi di chuột vào
-    private void addButtonEffects(JButton button) {
-        Font originalFont = button.getFont();
-        float enlargedSize = originalFont.getSize() * 1.05f;
+    private void addButtonEffects(JComponent startBtn2) {
+        Font originalFont = startBtn2.getFont();
+        float enlargedSize = originalFont.getSize() * 1.5f;
 
-        button.addMouseListener(new MouseAdapter() {
+        startBtn2.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                button.setFont(originalFont.deriveFont(enlargedSize));
-                button.repaint();
+                startBtn2.setFont(originalFont.deriveFont(enlargedSize));
+                startBtn2.repaint();
                 if (mouseClickSound != null) {
                     mouseClickSound.play(SoundManager.getEffectVolume());
                 }
@@ -362,22 +440,22 @@ public class GameMenu extends JFrame {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                button.setFont(originalFont);
-                button.repaint();
+                startBtn2.setFont(originalFont);
+                startBtn2.repaint();
             }
         });
 
-        button.addFocusListener(new java.awt.event.FocusAdapter() {
+        startBtn2.addFocusListener(new java.awt.event.FocusAdapter() {
             @Override
             public void focusGained(java.awt.event.FocusEvent e) {
-                button.setFont(originalFont.deriveFont(enlargedSize));
-                button.repaint();
+                startBtn2.setFont(originalFont.deriveFont(enlargedSize));
+                startBtn2.repaint();
             }
 
             @Override
             public void focusLost(java.awt.event.FocusEvent e) {
-                button.setFont(originalFont);
-                button.repaint();
+                startBtn2.setFont(originalFont);
+                startBtn2.repaint();
             }
         });
     }
@@ -386,7 +464,6 @@ public class GameMenu extends JFrame {
     private void startGame() {
         MainGame.createAndShowGame();
     }
-
     // Hiển thị menu (gọi từ main)
     public static void showMenu() {
         SwingUtilities.invokeLater(() -> {
@@ -394,5 +471,5 @@ public class GameMenu extends JFrame {
             menu.setVisible(true);
             // menu.startTitleAnimation(); // Bật nếu muốn hiệu ứng tiêu đề nhấp nhô
         });
-    }
-}
+    }  
+}  // Kết thúc class GameMenu (đây là } cuối cùng của file)
