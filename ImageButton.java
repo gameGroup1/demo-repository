@@ -26,7 +26,8 @@ public class ImageButton extends StackPane {
         // Tính tỷ lệ ảnh gốc
         double aspectRatio = normalImage.getWidth() / normalImage.getHeight();
         double targetHeight = targetWidth / aspectRatio;
-
+        setMaxSize(targetWidth, targetHeight);
+        setPrefSize(targetWidth, targetHeight);
         // Normal image
         normalView = new ImageView(normalImage);
         normalView.setFitWidth(targetWidth);
@@ -36,8 +37,8 @@ public class ImageButton extends StackPane {
         // Hovered image: scale 1.2x từ normal
         Image hoveredImage = createScaledImage(normalImage, 1.2);
         hoveredView = new ImageView(hoveredImage);
-        hoveredView.setFitWidth(targetWidth * 1.2);
-        hoveredView.setFitHeight(targetHeight * 1.2);
+        hoveredView.setFitWidth(targetWidth * 1.05);
+        hoveredView.setFitHeight(targetHeight * 1.05);
         hoveredView.setSmooth(true);
         hoveredView.setVisible(false);
 
