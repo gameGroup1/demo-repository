@@ -38,7 +38,7 @@ public class MainGame {
     private final int speedC = 2;
     private final int wallThickness = 30;
 
-    private int numberBrokeBrick = 0;          // Số gạch đã phá trong level hiện tại
+    private int numberBrokeBrick = 9;          // Số gạch đã phá trong level hiện tại
     private int numberLevel = 1;               // Level hiện tại
 
     // Các đối tượng trong game
