@@ -24,6 +24,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class MainGame {
+    // Cài đặt kích thước màn hình và đối tượng
     private final int widthW = 1080;
     private final int heightW = 720;
     private final int widthP = 150;
@@ -33,6 +34,7 @@ public class MainGame {
     private final int speedC = 5;
     private final int wallThickness = 30;
 
+    // Các đối tượng
     private Ball ball;
     private Paddle paddle;
     private Wall leftWall;
@@ -52,6 +54,13 @@ public class MainGame {
     private List<ImageView> heartImages = new ArrayList<>();
     private Text scoreText;
     private Image heartImage;
+    private GameLevel currentLevel;
+    private int currentLevelNumber;
+    private Text levelText;
+
+    // Trạng thái pause và paddle tĩnh để Pause truy cập
+    public static boolean isPaused = false;
+    public static Paddle staticPaddle;
 
     public MainGame() {
         int[] hardnessArray = {1, 2, 3, 4};
@@ -71,37 +80,10 @@ public class MainGame {
         rightWall = new Wall("right", widthW - wallThickness, 0, wallThickness, heightW, wallThickness);
         topWall = new Wall("top", 0, 0, widthW, wallThickness, wallThickness);
 
-        bricks = new Bricks[50];
-        capsules = new Capsule[50];
-        int brickWidth = 90;
-        int brickHeight = 30;
-        int spacing = 5;
-        int rowCount = 5;
-        int colCount = 10;
-        for (int row = 0; row < rowCount; row++) {
-            for (int col = 0; col < colCount; col++) {
-                double brickX = col * (brickWidth + spacing) + wallThickness + 30;
-                double brickY = row * (brickHeight + spacing) + wallThickness + 100;
-                int index = row * colCount + col;
-                int randomHardness = hardnessArray[random.nextInt(hardnessArray.length)];
-                double chance = random.nextDouble();
-                bricks[index] = new Bricks(brickX, brickY, brickWidth, brickHeight, randomHardness);
-                if (chance < 0.3) {
-                    capsules[index] = EffectManager.getCapsule(brickX, brickY, brickWidth, brickHeight, speedC);
-                    capsules[index].setVisible(false);
-                    capsuleIndex.add(index);
-                } else {
-                    chance = random.nextDouble();
-                    if(chance < 0.2) {
-                        capsules[index] = new Capsule(Path.explosionCapsule, Path.explosionSound);
-                        capsules[index].init(brickX, brickY, brickWidth, brickHeight, speedC, "explosion");
-                        capsules[index].setVisible(false);
-                        capsuleIndex.add(index);
-                    }
-                    else capsules[index] = null;
-                }
-            }
-        }
+        currentLevel = new LevelDemo(wallThickness, speedC);
+        this.bricks = currentLevel.getBricks();
+        this.capsules = currentLevel.getCapsules();
+        this.capsuleIndex = currentLevel.getCapsuleIndex();
 
         Image heartImage = new Image("file:resources/heart.png");
 
@@ -120,6 +102,67 @@ public class MainGame {
         scoreText.setFont(new Font(36));
         scoreText.setX(widthW - wallThickness - 200);
         scoreText.setY(wallThickness + 64);
+
+        levelText = new Text("Level " + currentLevelNumber);
+        levelText.setFill(Color.WHITE);
+        levelText.setFont(new Font(36));
+        levelText.setX(wallThickness + 20);
+        levelText.setY(wallThickness + 64);
+    }
+
+    private boolean isLevelCleared() {
+        for (Bricks brick : bricks) {
+            if(brick != null && !brick.isBreak()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void nextLevel() {
+        currentLevelNumber++;
+
+        switch (currentLevelNumber) {
+            case 1:
+                currentLevel = new Level1(wallThickness, speedC);
+                break;
+            case 2:
+                currentLevel = new Level2(wallThickness, speedC);
+                break;
+
+            default:
+                System.out.println("SuccessFully");
+                return;
+        }
+
+        // Xóa dữ liệu cũ đi
+        for (Bricks brick : bricks) {
+            if (brick != null && brick.getNode() != null) {
+                root.getChildren().remove(brick.getNode());
+            }
+        }
+
+        for(Capsule capsule : capsules) {
+            if (capsule != null && capsule.getNode() != null) {
+                root.getChildren().remove(capsule.getNode());
+            }
+        }
+
+        // Lấy dữ liệu mới
+        this.bricks = currentLevel.getBricks();
+        this.capsules = currentLevel.getCapsules();
+        this.capsuleIndex = currentLevel.getCapsuleIndex();
+
+        setPaddleDefault();
+        setBallDefault();
+        levelText.setText("Level " + currentLevelNumber);
+        isAttached = true;
+
+        for(Bricks brick : bricks) {
+            if(brick != null && brick.getNode() != null) {
+                root.getChildren().add(brick.getNode());
+            }
+        }
     }
 
     public void start(Stage primaryStage) {
@@ -200,8 +243,9 @@ public class MainGame {
             }
         }
 
-        // Add score text and hearts
+        // Add score text, level text and hearts
         root.getChildren().add(scoreText);
+        root.getChildren().add(levelText);
         for (ImageView heart : heartImages) {
             root.getChildren().add(heart);
         }
@@ -299,6 +343,10 @@ public class MainGame {
                 if (ball.getY() > heightW) {
                     Update.loseLifeSound.play(SoundManager.getEffectVolume());
                     loseLife();
+                }
+
+                if(isLevelCleared()) {
+                    nextLevel();
                 }
             }
         };

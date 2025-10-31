@@ -5,49 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef8b5c06-b2f9-400e-b2a2-452fe34a50a8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hs_err_pid12692.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hs_err_pid28816.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hs_err_pid31916.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/idea/~WRL0003.tmp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/libraries/lib.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/hs_err_pid12692.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/hs_err_pid28816.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/demo-repository/hs_err_pid31916.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/boom_collision.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/gameover.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/lib1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/launch.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Collision.java" beforeDir="false" afterPath="$PROJECT_DIR$/Collision.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EndMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/EndMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/MainGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Path.java" beforeDir="false" afterPath="$PROJECT_DIR$/Path.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pause.java" beforeDir="false" afterPath="$PROJECT_DIR$/Pause.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Update.java" beforeDir="false" afterPath="$PROJECT_DIR$/Update.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/demo-repository.iml" beforeDir="false" afterPath="$PROJECT_DIR$/demo-repository.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/idea/Lợi idea.docx" beforeDir="false" afterPath="$PROJECT_DIR$/idea/Lợi idea.docx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/.name" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/libraries/lib1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.vscode/launch.json" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.vscode/launch.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Collision.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Collision.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/EndMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/EndMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$BackgroundPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$BackgroundPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/GameMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/MainGame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/MainGame$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/MainGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/MainGame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Path.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Path.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Pause.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Pause.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Update.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Update.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/demo-repository.iml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/demo-repository.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Ball.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Block.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/BrickImage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Bricks.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Capsule.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Collision.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/EffectManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/EndMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameMenu$BackgroundPanel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameObject.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/MainGame$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/MainGame.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Paddle.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Path.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Pause.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/SoundManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Update.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Wall.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/gameOver.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/idea/Lợi idea.docx" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/idea/Lợi idea.docx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -86,21 +73,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Run MainGame.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Merging Tuong__CodeAgain&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Run MainGame.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "Tuong__CodeAgain",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
