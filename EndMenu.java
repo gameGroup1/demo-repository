@@ -29,7 +29,7 @@ public class EndMenu {
 
     // Khởi tạo âm thanh click chuột (chỉ chạy 1 lần khi class được nạp)
     static {
-        mouseClickSound = new AudioClip(Path.getFileURL(Path.MouseClick));
+        mouseClickSound = new AudioClip(Path.getFileURL(Path.mouseClick));
         SoundManager.registerAudioClip(mouseClickSound);
     }
 
@@ -38,7 +38,7 @@ public class EndMenu {
         Image gameOverImage = null;
         try {
             // 1. Thử tải từ classpath (trong JAR)
-            URL imageURL = EndMenu.class.getClassLoader().getResource(Path.GameOverImage.substring(1));
+            URL imageURL = EndMenu.class.getClassLoader().getResource(Path.gameOverImage.substring(1));
             if (imageURL != null) {
                 gameOverImage = new Image(imageURL.toString(), true);
                 System.out.println("Đã tải game-over.png từ classpath");
@@ -46,7 +46,7 @@ public class EndMenu {
             }
 
             // 2. Nếu không có → thử từ file hệ thống
-            String fileURL = Path.getFileURL(Path.GameOverImage);
+            String fileURL = Path.getFileURL(Path.gameOverImage);
             System.out.println("Đang thử tải từ file: " + fileURL);
             gameOverImage = new Image(fileURL, true);
 
@@ -61,7 +61,7 @@ public class EndMenu {
             return gameOverImage;
 
         } catch (Exception e) {
-            System.err.println("Không thể tải game-over.png: " + Path.GameOverImage);
+            System.err.println("Không thể tải game-over.png: " + Path.gameOverImage);
             e.printStackTrace();
         }
         return gameOverImage; // Trả về null nếu thất bại

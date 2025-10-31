@@ -33,8 +33,10 @@ public class Path {
     public static final String expandPaddleCapsule = "/Image_Capsules/expand_paddle_capsule.png";
     public static final String shrinkPaddleCapsule = "/Image_Capsules/shrink_paddle_capsule.png";
     public static final String explosionCapsule = "/Image_Capsules/explosion_capsule.png";
-    public static final String MouseClick = "/sound_and_music/Mouse_Click.wav";
-    public static final String GameOverImage = "/resources/gameover.png";
+    public static final String mouseClick = "/sound_and_music/Mouse_Click.wav";
+    public static final String gameOverImage = "/resources/gameover.png";
+    public static final String greenButton = "/resources/green_button.png";
+    public static final String greyButton = "/resources/grey_button.png";
 
     public static String getFileURL(String relativePath) {
         return "file:///" + System.getProperty("user.dir").replace("\\", "/") + relativePath;
