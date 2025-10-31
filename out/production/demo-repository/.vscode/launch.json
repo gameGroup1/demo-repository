@@ -6,6 +6,13 @@
             "name": "EndMenu",
             "request": "launch",
             "mainClass": "EndMenu",
+            "projectName": "demo-repository_6c296484"
+        },
+        {
+            "type": "java",
+            "name": "EndMenu",
+            "request": "launch",
+            "mainClass": "EndMenu",
             "projectName": "gameg1_a60f91f"
         },
         {
@@ -21,8 +28,7 @@
             "request": "launch",
             "mainClass": "MainGame",
             "projectName": "gameg1_a60f91f",
-             "vmArgs": "--module-path C:\\game\\javafx-sdk-21.0.8\\lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web,javafx.base --enable-native-access=javafx.graphics"
-
+            "vmArgs": "--module-path C:\\game\\javafx-sdk-21.0.8\\lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web,javafx.base --enable-native-access=javafx.graphics"
         },
         {
             "type": "java",
@@ -30,7 +36,6 @@
             "request": "launch",
             "mainClass": "MainGame",
             "vmArgs": "--module-path C:\\game\\javafx-sdk-21.0.8\\lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web,javafx.base --enable-native-access=javafx.graphics"
-
         },
         {
             "type": "java",
@@ -38,7 +43,6 @@
             "request": "launch",
             "mainClass": "VideoDemo",
             "vmArgs": "--module-path C:\\game\\javafx-sdk-21.0.8\\lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web,javafx.base --enable-native-access=javafx.graphics"
-
         }
     ]
 }

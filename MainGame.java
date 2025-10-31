@@ -76,7 +76,7 @@ public class MainGame {
         int brickWidth = 90;
         int brickHeight = 30;
         int spacing = 5;
-        int rowCount = 5;
+        int rowCount = Math.min(numberLevel, 5);
         int colCount = 10;
 
         for (int row = 0; row < rowCount; row++) {
@@ -317,7 +317,7 @@ public class MainGame {
                             double brickCenterX = brokenBrick.getX() + brokenBrick.getWidth() / 2;
                             double brickCenterY = brokenBrick.getY() + brokenBrick.getHeight() / 2;
 
-                            if (ball.getPower() == 1) {
+                            if (ball.getPower() > 0) {
                                 showBrickCollisionEffect(brickCenterX, brickCenterY);
                             }
 
@@ -351,7 +351,7 @@ public class MainGame {
                 }
 
                 // Qua level
-                if (numberBrokeBrick == 50) {
+                if (numberBrokeBrick == 10 * Math.min(5, numberLevel)) {
                     speedB += 5;
                     ball.setSpeed(speedB);
                     numberLevel++;
