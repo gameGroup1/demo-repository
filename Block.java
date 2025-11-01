@@ -23,9 +23,7 @@ public class Block extends GameObject {
 
     // Hàm render: Đồng bộ thuộc tính từ GameObject sang Rectangle (nếu cần cập nhật động)
     @Override
-    public void render() {
-        imageView.setEffect(blurEffect);
-    }
+    public void render() {}
 
     // Phương thức hỗ trợ: Trả về Node để thêm vào scene graph (Group hoặc Pane)
     public Node getNode() {

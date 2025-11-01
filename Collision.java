@@ -14,13 +14,13 @@ public class Collision {
     // Khối static: khởi tạo âm thanh ngay khi class được nạp
     static {
         ballWallSound = new AudioClip(Path.getFileURL(Path.ballWallSound));
-        SoundManager.registerAudioClip(ballWallSound); // Đăng ký để điều chỉnh âm lượng
+        VolumeManager.registerAudioClip(ballWallSound); // Đăng ký để điều chỉnh âm lượng
 
         ballPaddleSound = new AudioClip(Path.getFileURL(Path.ballPaddleSound));
-        SoundManager.registerAudioClip(ballPaddleSound);
+        VolumeManager.registerAudioClip(ballPaddleSound);
 
         ballBrickSound = new AudioClip(Path.getFileURL(Path.ballBrickSound));
-        SoundManager.registerAudioClip(ballBrickSound);
+        VolumeManager.registerAudioClip(ballBrickSound);
     }
 
     // Kiểm tra va chạm giữa bóng (hình tròn) và vật thể (hình chữ nhật)
@@ -43,9 +43,9 @@ public class Collision {
         if (distanceSquared <= ball.getRadius() * ball.getRadius()) {
             // Phát âm thanh theo loại vật thể
             if (object instanceof Paddle) {
-                ballPaddleSound.play(SoundManager.getEffectVolume()); // Chạm paddle
+                ballPaddleSound.play(VolumeManager.getEffectVolume()); // Chạm paddle
             } else if (object instanceof Wall) {
-                ballWallSound.play(SoundManager.getEffectVolume());   // Chạm tường
+                ballWallSound.play(VolumeManager.getEffectVolume());   // Chạm tường
             }
             // Lưu ý: âm thanh chạm gạch được phát ở Update.position() khi gạch chưa vỡ
             return true;

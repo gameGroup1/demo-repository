@@ -37,10 +37,8 @@ public class MainGame {
     private int speedB = 7;                    // Tốc độ bóng, tăng dần theo level
     private final int speedC = 2;
     private final int wallThickness = 30;
-
     private int numberBrokeBrick = 0;          // Số gạch đã phá trong level hiện tại
     private int numberLevel = 1;               // Level hiện tại
-
     // Các đối tượng trong game
     private Ball ball;
     private Paddle paddle;
@@ -48,15 +46,13 @@ public class MainGame {
     private Bricks[] bricks;
     private Capsule[] capsules;
     private List<Integer> capsuleIndex = new ArrayList<>();
-
     private Group root;
-    private AnimationTimer gameLoop;
+    private static AnimationTimer gameLoop;
     private Stage primaryStage;
-
     // Điểm số, mạng, giao diện
     private int score = 0;
     private static int highestScore;
-    private MediaPlayer mediaPlayer;
+    private static MediaPlayer mediaPlayer;
     private boolean isAttached = true;         // Bóng dính vào paddle
     private int lives = 5;
     private List<ImageView> heartImages = new ArrayList<>();
@@ -64,11 +60,33 @@ public class MainGame {
     private Text levelText;
     private Image heartImage;
     private Image collisionImage;
-
     // Trạng thái pause và paddle tĩnh để Pause truy cập
     public static boolean isPaused = false;
     public static Paddle staticPaddle;
 
+    public static void cleanup() {
+        System.out.println("MainGame.cleanup() started.");
+        // Dừng game loop
+        if (gameLoop != null) {
+            gameLoop.stop();
+            System.out.println("GameLoop stopped in cleanup.");
+        }
+
+        // Dừng âm thanh game
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            VolumeManager.unregisterMediaPlayer(mediaPlayer);
+            System.out.println("MediaPlayer stopped.");
+        }
+
+        // Dừng tất cả âm thanh khác
+        VolumeManager.stopAllSounds();
+        System.out.println("All sounds stopped in cleanup.");
+
+        // Lưu điểm
+        saveHighestScore();
+        System.out.println("Highest score saved. Cleanup completed.");
+    }
     // Tạo gạch và capsule (gọi lại khi qua level)
     private void genBrickAndCapsule() {
         int[] hardnessArray = {1, 2, 3, 4};
@@ -177,12 +195,8 @@ public class MainGame {
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.setOnCloseRequest(e -> {
-            if (gameLoop != null) gameLoop.stop();
-            if (mediaPlayer != null) {
-                mediaPlayer.stop();
-                SoundManager.unregisterMediaPlayer(mediaPlayer);
-            }
-            saveHighestScore();
+            System.out.println("Window close requested - calling cleanup...");
+            cleanup();
         });
 
         primaryStage.show();
@@ -202,11 +216,11 @@ public class MainGame {
         try {
             URL soundURL = getClass().getClassLoader().getResource(Path.backgroundMusic.substring(1));
             Media media = soundURL != null
-                ? new Media(soundURL.toString())
-                : new Media(Path.getFileURL(Path.backgroundMusic));
+                    ? new Media(soundURL.toString())
+                    : new Media(Path.getFileURL(Path.backgroundMusic));
 
             mediaPlayer = new MediaPlayer(media);
-            SoundManager.registerMediaPlayer(mediaPlayer);
+            VolumeManager.registerMediaPlayer(mediaPlayer);
             mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
             mediaPlayer.play();
         } catch (Exception e) {
@@ -345,7 +359,7 @@ public class MainGame {
 
                 // Mất mạng
                 if (ball.getY() > heightW) {
-                    Update.loseLifeSound.play(SoundManager.getEffectVolume());
+                    Update.loseLifeSound.play(VolumeManager.getEffectVolume());
                     loseLife();
                 }
 
@@ -396,23 +410,40 @@ public class MainGame {
         if (capsule != null) capsule.playSound();
         String type = capsule.getEffectType();
 
-        switch (type) {
-            case "inc10Point": score += 10; break;
-            case "dec10Point": score -= 10; break;
-            case "inc50Point": score += 50; break;
-            case "dec50Point": score -= 50; break;
-            case "inc100Point": score += 100; break;
-            case "dec100Point": score -= 100; break;
-            case "fastBall": EffectManager.updateSpeed(ball, 1.5); break;
-            case "slowBall": EffectManager.updateSpeed(ball, 0.5); break;
-            case "fireBall": EffectManager.activateFireBall(ball); break;
-            case "powerBall": EffectManager.updatePower(ball, 3.0); break;
-            case "expandPaddle": EffectManager.changeWidth(paddle, 2.0); break;
-            case "shrinkPaddle": EffectManager.changeWidth(paddle, 0.5); break;
-            case "explosion":
-                showExplosion(capsule.getX(), capsule.getY());
-                loseLife();
-                break;
+        if (type.equals("inc10Point")) score += 10;
+        else if (type.equals("dec10Point")) score -= 10;
+        else if (type.equals("inc50Point")) score += 50;
+        else if (type.equals("dec50Point")) score -= 50;
+        else if (type.equals("inc100Point")) score += 100;
+        else if (type.equals("dec100Point")) score -= 100;
+        else if (type.equals("fastBall")) {
+            EffectManager.updateSpeed(ball, 1.5);
+        } else if (type.equals("slowBall")) {
+            EffectManager.updateSpeed(ball, 0.5);
+        } else if (type.equals("fireBall")) {
+            EffectManager.activateFireBall(ball);
+        } else if (type.equals("powerBall")) {
+            EffectManager.updatePower(ball, 3.0);
+        } else if (type.equals("expandPaddle")) {
+            EffectManager.changeWidth(paddle, 2.0);
+        } else if (type.equals("shrinkPaddle")) {
+            EffectManager.changeWidth(paddle, 0.5);
+        } else if (type.equals("health")) {
+            if (lives < 5) {
+                int newIndex = lives;
+                double newX = widthW - wallThickness - 80 - newIndex * 36;
+                ImageView newHeart = new ImageView(heartImage);
+                newHeart.setFitWidth(30);
+                newHeart.setFitHeight(30);
+                newHeart.setX(newX);
+                newHeart.setY(wallThickness + 5);
+                root.getChildren().add(newHeart);
+                heartImages.add(newHeart);
+                lives++;
+            }
+        } else if (type.equals("explosion")) {
+            showExplosion(capsule.getX(), capsule.getY());
+            loseLife();
         }
 
         highestScore = Math.max(score, highestScore);
@@ -468,7 +499,7 @@ public class MainGame {
             gameLoop.stop();
             if (mediaPlayer != null) {
                 mediaPlayer.stop();
-                SoundManager.unregisterMediaPlayer(mediaPlayer);
+                VolumeManager.unregisterMediaPlayer(mediaPlayer);
             }
             saveHighestScore();
             Platform.runLater(() -> {

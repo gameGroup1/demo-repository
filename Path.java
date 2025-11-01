@@ -13,6 +13,7 @@ public class Path {
     public static final String explosionSound = "/sound_and_music/explosion.wav";
     public static final String powerUpSound = "/sound_and_music/power_up_effect.wav";
     public static final String transformSound = "/sound_and_music/transform_effect.wav";
+    public static final String healingSound = "/sound_and_music/healing_effect.wav";
     public static final String menuMusic = "/sound_and_music/MenuMusic.wav";
     public static final String theEndMusic = "/sound_and_music/TheEnd.wav";
     public static final String backgroundMusic = "/sound_and_music/BackgroundMusic.wav";
@@ -33,6 +34,7 @@ public class Path {
     public static final String expandPaddleCapsule = "/Image_Capsules/expand_paddle_capsule.png";
     public static final String shrinkPaddleCapsule = "/Image_Capsules/shrink_paddle_capsule.png";
     public static final String explosionCapsule = "/Image_Capsules/explosion_capsule.png";
+    public static final String healthCapsule = "/Image_Capsules/health_capsule.png";
     public static final String mouseClick = "/sound_and_music/Mouse_Click.wav";
     public static final String gameOverImage = "/resources/gameover.png";
     public static final String greenButton = "/resources/green_button.png";

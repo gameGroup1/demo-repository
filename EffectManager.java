@@ -8,7 +8,7 @@ import javafx.util.Duration;
 abstract public class EffectManager {
     private static final List<String> effectTypes = new ArrayList<>(List.of(
             "inc10Point", "dec10Point", "inc50Point", "dec50Point", "inc100Point", "dec100Point",
-            "fastBall", "slowBall", "fireBall", "powerBall", "expandPaddle", "shrinkPaddle"
+            "fastBall", "slowBall", "fireBall", "powerBall", "expandPaddle", "shrinkPaddle", "health"
     ));
 
     public static Capsule getCapsule(double x, double y, int width, int height, double speed) {
@@ -49,6 +49,8 @@ abstract public class EffectManager {
             return Path.expandPaddleCapsule;
         } else if (type.equals("shrinkPaddle")) {
             return Path.shrinkPaddleCapsule;
+        } else if (type.equals("health")) {
+            return Path.healthCapsule;
         } else {
             return null; // Or a default path
         }
@@ -65,12 +67,14 @@ abstract public class EffectManager {
             return Path.slowSound;
         } else if (type.equals("fireBall")) {
             return Path.fireSound;
-        } else if (type.equals("powerBall")) {
+        } else if (type.equals("powerBall") || type.equals("health")) {
             return Path.powerUpSound;
         } else if (type.equals("expandPaddle") || type.equals("shrinkPaddle")) {
             return Path.transformSound;
+        } else if (type.equals("health")){
+            return Path.healingSound;
         } else {
-            return null; // Or a default sound
+            return null;
         }
     }
 

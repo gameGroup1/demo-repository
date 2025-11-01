@@ -176,7 +176,7 @@ public class ImageButton extends JComponent {
     private void playHoverSound() {
         try {
             AudioClip sound = GameMenu.mouseClickSound();
-            if (sound != null) sound.play(SoundManager.getEffectVolume());
+            if (sound != null) sound.play(VolumeManager.getEffectVolume());
         } catch (Exception ignored) {}
     }
 

@@ -14,26 +14,27 @@ import java.net.URL;
 
 public class GameMenu extends JFrame {
     private boolean checkStart = false; // Kiểm tra đã nhấn Start chưa
-    private JLabel title;               // Tiêu đề "-ARKANOID-"
-    private JComponent startBtn;           // Nút bắt đầu game
-    private JComponent bestScoreBtn;       // Nút xem điểm cao nhất
-    private JComponent exitBtn;            // Nút thoát game
-    private JSlider backgroundSlider;   // Thanh điều chỉnh âm lượng nhạc nền
-    private JLabel backgroundLabel;     // Nhãn hiển thị % âm lượng nhạc nền
-    private JSlider effectSlider;       // Thanh điều chỉnh âm lượng hiệu ứng
-    private JLabel effectLabel;         // Nhãn hiển thị % âm lượng hiệu ứng
-    private MediaPlayer mediaPlayer;    // Đối tượng phát nhạc nền menu
+    private JLabel title; // Tiêu đề "-ARKANOID-"
+    private JComponent startBtn; // Nút bắt đầu game
+    private JComponent bestScoreBtn; // Nút xem điểm cao nhất
+    private JComponent settingBtn; // Nút setting mới
+    private JComponent exitBtn; // Nút thoát game
+    private MediaPlayer mediaPlayer; // Đối tượng phát nhạc nền menu
     private static AudioClip mouseClickSound; // Âm thanh khi di chuột vào nút
     private Image greenButtonImage;
-    
+    private static final int BASE_MENU_WIDTH = 1100;
+    private static final int BASE_MENU_HEIGHT = 500;
+
     // Khởi tạo âm thanh click chuột (chỉ chạy 1 lần khi class được nạp)
     static {
         mouseClickSound = new AudioClip(Path.getFileURL(Path.mouseClick));
-        SoundManager.registerAudioClip(mouseClickSound);
+        VolumeManager.registerAudioClip(mouseClickSound);
     }
+
     public static AudioClip mouseClickSound() {
         return mouseClickSound;
     }
+
     // Tải font chữ tùy chỉnh "Monotype Corsiva" từ nhiều nguồn
     private Font loadCustomFont() {
         try {
@@ -46,14 +47,14 @@ public class GameMenu extends JFrame {
                 System.out.println("Đã tải font từ classpath");
                 return customFont.deriveFont(Font.BOLD, 48f); // Kích thước 48, đậm
             }
-            
+
             // 2. Nếu không có trong classpath → thử từ file hệ thống
             String[] paths = {
-                "resources/Monotype_corsiva.ttf",
-                "./resources/Monotype_corsiva.ttf",
-                "../resources/Monotype_corsiva.ttf"
+                    "resources/Monotype_corsiva.ttf",
+                    "./resources/Monotype_corsiva.ttf",
+                    "../resources/Monotype_corsiva.ttf"
             };
-            
+
             for (String path : paths) {
                 java.io.File fontFile = new java.io.File(path);
                 if (fontFile.exists()) {
@@ -64,7 +65,7 @@ public class GameMenu extends JFrame {
                     return customFont.deriveFont(Font.BOLD, 40f);
                 }
             }
-            
+
             System.err.println("Không tìm thấy Monotype_corsiva.ttf → dùng font mặc định");
         } catch (Exception e) {
             System.err.println("Lỗi tải font: " + e.getMessage());
@@ -89,10 +90,11 @@ public class GameMenu extends JFrame {
         }
         return null;
     }
+
     // Khởi tạo nút hình ảnh với hiệu ứng
     private JComponent createImageButton(String text, Font font) {
-    ImageButton imgBtn = new ImageButton(greenButtonImage, text, font);
-    return imgBtn; // Bây giờ hợp lệ: ImageButton là JComponent
+        ImageButton imgBtn = new ImageButton(greenButtonImage, text, font);
+        return imgBtn; // Bây giờ hợp lệ: ImageButton là JComponent
     }
 
     private void showBestScoreDialog() {
@@ -100,34 +102,83 @@ public class GameMenu extends JFrame {
         dialog.setSize(400, 200);
         dialog.setLocationRelativeTo(this);
         dialog.getContentPane().setBackground(new Color(0, 50, 0));
-
         JLabel label = new JLabel("Best Score: " + MainGame.getBestScore());
         label.setFont(new Font("Arial", Font.BOLD, 28));
         label.setForeground(Color.CYAN);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setOpaque(false);
-
         JButton closeBtn = new JButton("Close");
         makeButtonTransparent(closeBtn);
         closeBtn.addActionListener(a -> dialog.dispose());
-
         JPanel contentPanel = new JPanel(new BorderLayout());
         contentPanel.setOpaque(false);
         contentPanel.add(label, BorderLayout.CENTER);
         contentPanel.add(closeBtn, BorderLayout.SOUTH);
-
         dialog.add(contentPanel);
         dialog.setVisible(true);
     }
+
+    // Hiển thị dialog Setting với 2 slider (Background và Effect Volume)
+    private void showSettingDialog() {
+        JDialog dialog = new JDialog(this, "Settings", true);
+        dialog.setSize(400, 250);
+        dialog.setLocationRelativeTo(this);
+        dialog.getContentPane().setBackground(new Color(0, 50, 0));
+        dialog.setLayout(new BorderLayout());
+
+        JPanel sliderPanel = new JPanel();
+        sliderPanel.setLayout(new BoxLayout(sliderPanel, BoxLayout.Y_AXIS));
+        sliderPanel.setBackground(new Color(0, 50, 0));
+        sliderPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        // Background Volume
+        JLabel bgLabel = new JLabel("Background Volume: " + (int)(VolumeManager.getBackgroundVolume() * 100) + "%");
+        bgLabel.setForeground(Color.WHITE);
+        bgLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        JSlider bgSlider = new JSlider(0, 100, (int)(VolumeManager.getBackgroundVolume() * 100));
+        bgSlider.addChangeListener(e -> {
+            double vol = bgSlider.getValue() / 100.0;
+            VolumeManager.setBackgroundVolume(vol);
+            bgLabel.setText("Background Volume: " + bgSlider.getValue() + "%");
+            if (mediaPlayer != null) {
+                mediaPlayer.setVolume(vol);
+            }
+        });
+
+        // Effect Volume
+        JLabel effectLabelDlg = new JLabel("Effect Volume: " + (int)(VolumeManager.getEffectVolume() * 100) + "%");
+        effectLabelDlg.setForeground(Color.WHITE);
+        effectLabelDlg.setFont(new Font("Arial", Font.PLAIN, 14));
+        JSlider effectSliderDlg = new JSlider(0, 100, (int)(VolumeManager.getEffectVolume() * 100));
+        effectSliderDlg.addChangeListener(e -> {
+            double vol = effectSliderDlg.getValue() / 100.0;
+            VolumeManager.setEffectVolume(vol);
+            effectLabelDlg.setText("Effect Volume: " + effectSliderDlg.getValue() + "%");
+        });
+
+        sliderPanel.add(bgLabel);
+        sliderPanel.add(bgSlider);
+        sliderPanel.add(Box.createVerticalStrut(10));
+        sliderPanel.add(effectLabelDlg);
+        sliderPanel.add(effectSliderDlg);
+
+        JButton closeBtn = new JButton("Close");
+        closeBtn.addActionListener(a -> dialog.dispose());
+        makeButtonTransparent(closeBtn);
+
+        dialog.add(sliderPanel, BorderLayout.CENTER);
+        dialog.add(closeBtn, BorderLayout.SOUTH);
+        dialog.setVisible(true);
+    }
+
     // Constructor: khởi tạo giao diện menu
     public GameMenu() {
         setTitle("Arkanoid - Start Menu");
-        setSize(1100, 500);
+        setSize((int)(BASE_MENU_WIDTH * ScaleManager.getScale()), (int)(BASE_MENU_HEIGHT * ScaleManager.getScale()));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Căn giữa màn hình
         setResizable(false);
         new JFXPanel(); // Khởi động JavaFX (cần thiết để dùng MediaPlayer)
-
         // Phát nhạc nền menu
         playBackgroundMusic();
         //load nút hình ảnh
@@ -135,11 +186,9 @@ public class GameMenu extends JFrame {
         // Tải hình nền
         Image backgroundImage = loadBackgroundImage();
         System.out.println("Hình nền: " + (backgroundImage != null ? "Tải thành công" : "Thất bại"));
-
         // Panel chính có hình nền
         BackgroundPanel panel = new BackgroundPanel(backgroundImage);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
         // === TIÊU ĐỀ ===
         JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         titlePanel.setOpaque(false);
@@ -151,169 +200,119 @@ public class GameMenu extends JFrame {
         panel.add(Box.createVerticalStrut(30));
         panel.add(title);
         panel.add(Box.createVerticalStrut(30));
-
         if (greenButtonImage == null) {
             System.err.println("Không tải được green_button.png → dùng nút mặc định");
             // Fallback: dùng nút cũ nếu lỗi
         }
         // === CÁC NÚT ===
-                // === TẠO NÚT HÌNH ẢNH ===
+        // === TẠO NÚT HÌNH ẢNH ===
         Font buttonFont = new Font("Arial", Font.BOLD, 28);
-
         if (greenButtonImage != null) {
             startBtn = createImageButton("Start", buttonFont);
             bestScoreBtn = createImageButton("Best Score", buttonFont);
+            settingBtn = createImageButton("Settings", buttonFont);
             exitBtn = createImageButton("Exit", buttonFont);
         } else {
             // Fallback: dùng nút cũ nếu không tải được ảnh
             startBtn = new JButton("Start");
             bestScoreBtn = new JButton("Best Score");
+            settingBtn = new JButton("Settings");
             exitBtn = new JButton("Exit");
             makeButtonTransparent(startBtn);
             makeButtonTransparent(bestScoreBtn);
+            makeButtonTransparent(settingBtn);
             makeButtonTransparent(exitBtn);
             startBtn.setFont(buttonFont);
             bestScoreBtn.setFont(buttonFont);
+            settingBtn.setFont(buttonFont);
             exitBtn.setFont(buttonFont);
         }
-
         // Căn giữa
         startBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         bestScoreBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        settingBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         exitBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         // Tắt viền focus
         startBtn.setFocusable(false);
         bestScoreBtn.setFocusable(false);
+        settingBtn.setFocusable(false);
         exitBtn.setFocusable(false);
-
-        // Kích thước nút
-        //Dimension btnSize = new Dimension(200, 40);
-        //startBtn.setPreferredSize(btnSize);
-        //bestScoreBtn.setPreferredSize(btnSize);
-        //exitBtn.setPreferredSize(btnSize);
-
         // Căn giữa
         startBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         bestScoreBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        settingBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         exitBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         // Font chữ nút
         startBtn.setFont(new Font("Arial", Font.PLAIN, 30));
         bestScoreBtn.setFont(new Font("Arial", Font.PLAIN, 30));
+        settingBtn.setFont(new Font("Arial", Font.PLAIN, 30));
         exitBtn.setFont(new Font("Arial", Font.PLAIN, 30));
-
         // Làm nút trong suốt + màu chữ
         makeButtonTransparent(startBtn);
         makeButtonTransparent(bestScoreBtn);
+        makeButtonTransparent(settingBtn);
         makeButtonTransparent(exitBtn);
-
-        // === THANH ÂM LƯỢNG NHẠC NỀN ===
-        backgroundLabel = new JLabel("Background Volume: " + (int)(SoundManager.getBackgroundVolume() * 100) + "%");
-        backgroundLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        backgroundLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        backgroundLabel.setForeground(new Color(154, 205, 50));
-        backgroundLabel.setOpaque(false);
-
-        backgroundSlider = new JSlider(0, 100, (int)(SoundManager.getBackgroundVolume() * 100));
-        backgroundSlider.setPreferredSize(new Dimension(200, 10));
-        backgroundSlider.setAlignmentX(Component.CENTER_ALIGNMENT);
-        backgroundSlider.setOpaque(false);
-        backgroundSlider.setForeground(Color.WHITE);
-        backgroundSlider.setMajorTickSpacing(25);
-        backgroundSlider.setPaintTicks(true);
-        backgroundSlider.addChangeListener(e -> {
-            double volume = backgroundSlider.getValue() / 100.0;
-            SoundManager.setBackgroundVolume(volume);
-            backgroundLabel.setText("Background Volume: " + backgroundSlider.getValue() + "%");
-        });
-
-        // === THANH ÂM LƯỢNG HIỆU ỨNG ===
-        effectLabel = new JLabel("Effect Volume: " + (int)(SoundManager.getEffectVolume() * 100) + "%");
-        effectLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        effectLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        effectLabel.setForeground(new Color(154, 205, 50));
-        effectLabel.setOpaque(false);
-
-        effectSlider = new JSlider(0, 100, (int)(SoundManager.getEffectVolume() * 100));
-        effectSlider.setPreferredSize(new Dimension(160, 40));
-        effectSlider.setAlignmentX(Component.CENTER_ALIGNMENT);
-        effectSlider.setOpaque(false);
-        effectSlider.setForeground(new Color(154, 205, 50));
-        effectSlider.setMajorTickSpacing(15);
-        effectSlider.setPaintTicks(true);
-        effectSlider.addChangeListener(e -> {
-            double volume = effectSlider.getValue() / 100.0;
-            SoundManager.setEffectVolume(volume);
-            effectLabel.setText("Effect Volume: " + effectSlider.getValue() + "%");
-        });
-
         // === THÊM VÀO PANEL ===
         panel.add(startBtn);
         panel.add(Box.createVerticalStrut(15));
         panel.add(bestScoreBtn);
         panel.add(Box.createVerticalStrut(15));
+        panel.add(settingBtn);
+        panel.add(Box.createVerticalStrut(15));
         panel.add(exitBtn);
         panel.add(Box.createVerticalGlue());
-        panel.add(backgroundLabel);
-        panel.add(Box.createVerticalStrut(5));
-        panel.add(backgroundSlider);
-        panel.add(Box.createVerticalStrut(10));
-        panel.add(effectLabel);
-        panel.add(Box.createVerticalStrut(5));
-        panel.add(effectSlider);
         panel.add(Box.createVerticalStrut(20));
-
         add(panel);
-
-                // === GÁN SỰ KIỆN CHO CÁC NÚT (HỖ TRỢ CẢ ImageButton VÀ JButton) ===
+        // === GÁN SỰ KIỆM CHO CÁC NÚT (HỖ TRỢ CẢ ImageButton VÀ JButton) ===
         if (startBtn instanceof ImageButton) {
             ((ImageButton) startBtn).addActionListener(e -> {
                 checkStart = true;
                 if (mediaPlayer != null) {
                     mediaPlayer.stop();
-                    SoundManager.unregisterMediaPlayer(mediaPlayer);
+                    VolumeManager.unregisterMediaPlayer(mediaPlayer);
                 }
                 setVisible(false);
                 startGame();
             });
         } else {
-            ( (ImageButton) startBtn).addActionListener(e -> {
+            ((JButton) startBtn).addActionListener(e -> {
                 checkStart = true;
                 if (mediaPlayer != null) {
                     mediaPlayer.stop();
-                    SoundManager.unregisterMediaPlayer(mediaPlayer);
+                    VolumeManager.unregisterMediaPlayer(mediaPlayer);
                 }
                 setVisible(false);
                 startGame();
             });
         }
-
         if (bestScoreBtn instanceof ImageButton) {
             ((ImageButton) bestScoreBtn).addActionListener(e -> showBestScoreDialog());
         } else {
-            ((ImageButton) bestScoreBtn).addActionListener(e -> showBestScoreDialog());
+            ((JButton) bestScoreBtn).addActionListener(e -> showBestScoreDialog());
         }
-
+        if (settingBtn instanceof ImageButton) {
+            ((ImageButton) settingBtn).addActionListener(e -> showSettingDialog());
+        } else {
+            ((JButton) settingBtn).addActionListener(e -> showSettingDialog());
+        }
         if (exitBtn instanceof ImageButton) {
             ((ImageButton) exitBtn).addActionListener(e -> {
                 if (mediaPlayer != null) {
                     mediaPlayer.stop();
-                    SoundManager.unregisterMediaPlayer(mediaPlayer);
+                    VolumeManager.unregisterMediaPlayer(mediaPlayer);
                 }
                 System.exit(0);
             });
         } else {
-            ((ImageButton) exitBtn).addActionListener(e -> {
+            ((JButton) exitBtn).addActionListener(e -> {
                 if (mediaPlayer != null) {
                     mediaPlayer.stop();
-                    SoundManager.unregisterMediaPlayer(mediaPlayer);
+                    VolumeManager.unregisterMediaPlayer(mediaPlayer);
                 }
                 System.exit(0);
             });
         }
     }
-
 
     // Phát nhạc nền menu (lặp vô hạn)
     private void playBackgroundMusic() {
@@ -328,7 +327,7 @@ public class GameMenu extends JFrame {
                 System.out.println("Phát nhạc từ: " + Path.menuMusic);
             }
             mediaPlayer = new MediaPlayer(media);
-            SoundManager.registerMediaPlayer(mediaPlayer);
+            VolumeManager.registerMediaPlayer(mediaPlayer);
             mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
             mediaPlayer.play();
         } catch (Exception e) {
@@ -338,19 +337,18 @@ public class GameMenu extends JFrame {
     }
 
     // Làm nút trong suốt, có nền mờ + màu chữ
-   private void makeButtonTransparent(JComponent btn) {
-    btn.setOpaque(false);
-    btn.setBackground(new Color(20, 40, 30, 100)); // nền mờ
-    btn.setForeground(new Color(154, 200, 50));    // màu chữ
-    btn.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
-
-    // Chỉ áp dụng cho AbstractButton (JButton, etc.)
-    if (btn instanceof AbstractButton) {
-        AbstractButton ab = (AbstractButton) btn;
-        ab.setContentAreaFilled(false);
-        ab.setBorderPainted(false);
-    }
-    // ImageButton không cần setContentAreaFilled → bỏ qua
+    private void makeButtonTransparent(JComponent btn) {
+        btn.setOpaque(false);
+        btn.setBackground(new Color(20, 40, 30, 100)); // nền mờ
+        btn.setForeground(new Color(154, 200, 50)); // màu chữ
+        btn.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
+        // Chỉ áp dụng cho AbstractButton (JButton, etc.)
+        if (btn instanceof AbstractButton) {
+            AbstractButton ab = (AbstractButton) btn;
+            ab.setContentAreaFilled(false);
+            ab.setBorderPainted(false);
+        }
+        // ImageButton không cần setContentAreaFilled → bỏ qua
     }
 
     // Tải hình nền từ classpath hoặc file
@@ -427,14 +425,13 @@ public class GameMenu extends JFrame {
     private void addButtonEffects(JComponent startBtn2) {
         Font originalFont = startBtn2.getFont();
         float enlargedSize = originalFont.getSize() * 1.5f;
-
         startBtn2.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 startBtn2.setFont(originalFont.deriveFont(enlargedSize));
                 startBtn2.repaint();
                 if (mouseClickSound != null) {
-                    mouseClickSound.play(SoundManager.getEffectVolume());
+                    mouseClickSound.play(VolumeManager.getEffectVolume());
                 }
             }
 
@@ -444,7 +441,6 @@ public class GameMenu extends JFrame {
                 startBtn2.repaint();
             }
         });
-
         startBtn2.addFocusListener(new java.awt.event.FocusAdapter() {
             @Override
             public void focusGained(java.awt.event.FocusEvent e) {
@@ -464,6 +460,7 @@ public class GameMenu extends JFrame {
     private void startGame() {
         MainGame.createAndShowGame();
     }
+
     // Hiển thị menu (gọi từ main)
     public static void showMenu() {
         SwingUtilities.invokeLater(() -> {
@@ -471,5 +468,5 @@ public class GameMenu extends JFrame {
             menu.setVisible(true);
             // menu.startTitleAnimation(); // Bật nếu muốn hiệu ứng tiêu đề nhấp nhô
         });
-    }  
-}  // Kết thúc class GameMenu (đây là } cuối cùng của file)
+    }
+} // Kết thúc class GameMenu (đây là } cuối cùng của file)

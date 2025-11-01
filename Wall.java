@@ -4,7 +4,7 @@ import javafx.scene.Node;
 public class Wall extends GameObject {
     private Block[] blocks;
     private String direction;
-    private Group blockGroup; // Group để chứa tất cả ImageView của các block
+    private Group blockGroup;// Group để chứa tất cả ImageView của các block
 
     public Wall(String direction, double x, double y, int width, int height, int blockSize) {
         super(x, y, width, height);
@@ -35,14 +35,7 @@ public class Wall extends GameObject {
     }
 
     @Override
-    public void render() {
-        // Vì wall tĩnh, không cần cập nhật, nhưng có thể gọi render cho từng block nếu cần
-        /*for (Block block : blocks) {
-            if (block != null) {
-                block.render();
-            }
-        }*/
-    }
+    public void render() {}
 
     // Phương thức hỗ trợ: Trả về Node (Group chứa tất cả ImageView của blocks) để thêm vào scene graph
     public Node getNode() {

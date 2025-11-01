@@ -1,3 +1,4 @@
+// File: EndMenu.java
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,18 +20,21 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.AudioClip;
 import java.net.URL;
+import java.io.File;
 
 public class EndMenu {
-    private static Stage stage;           // Cửa sổ Game Over
-    private static int score;             // Điểm hiện tại
-    private static int bestScore;         // Điểm cao nhất
+    private static Stage stage; // Cửa sổ Game Over
+    private static int score; // Điểm hiện tại
+    private static int bestScore; // Điểm cao nhất
     private static MediaPlayer mediaPlayer; // Phát nhạc kết thúc
     private static AudioClip mouseClickSound; // Âm thanh khi di chuột vào nút
+    public static final int WIDTH_END = 768;
+    public static final int HEIGHT_END = 246;
 
     // Khởi tạo âm thanh click chuột (chỉ chạy 1 lần khi class được nạp)
     static {
         mouseClickSound = new AudioClip(Path.getFileURL(Path.mouseClick));
-        SoundManager.registerAudioClip(mouseClickSound);
+        VolumeManager.registerAudioClip(mouseClickSound);
     }
 
     // Tải hình "Game Over" từ classpath hoặc file hệ thống
@@ -44,22 +48,18 @@ public class EndMenu {
                 System.out.println("Đã tải game-over.png từ classpath");
                 return gameOverImage;
             }
-
             // 2. Nếu không có → thử từ file hệ thống
             String fileURL = Path.getFileURL(Path.gameOverImage);
             System.out.println("Đang thử tải từ file: " + fileURL);
             gameOverImage = new Image(fileURL, true);
-
             // Bắt lỗi nếu ảnh không tải được
             gameOverImage.errorProperty().addListener((obs, old, error) -> {
                 if (error) {
                     System.err.println("Lỗi: Không thể tải game-over.png từ hệ thống");
                 }
             });
-
             System.out.println("Đã tải game-over.png từ file");
             return gameOverImage;
-
         } catch (Exception e) {
             System.err.println("Không thể tải game-over.png: " + Path.gameOverImage);
             e.printStackTrace();
@@ -71,44 +71,39 @@ public class EndMenu {
     public static void show(int score, int bestScore) {
         EndMenu.score = score;
         EndMenu.bestScore = bestScore;
-
         // Đảm bảo chạy trên luồng JavaFX
         if (!Platform.isFxApplicationThread()) {
             Platform.runLater(() -> show(score, bestScore));
             return;
         }
-
         stage = new Stage();
         stage.setTitle("Game Over");
         stage.setResizable(false);
-
         // === LAYER 1: Hình nền (GIF) ===
         StackPane stackRoot = new StackPane();
         Image backgroundImage = loadBackgroundImage();
         if (backgroundImage != null) {
             ImageView bgView = new ImageView(backgroundImage);
-            bgView.setFitWidth(768);
-            bgView.setFitHeight(256);
+            bgView.setFitWidth(WIDTH_END);
+            bgView.setFitHeight(HEIGHT_END);
             bgView.setPreserveRatio(false); // Kéo giãn vừa khung
             stackRoot.getChildren().add(bgView);
         } else {
             stackRoot.setStyle("-fx-background-color: #2b2b2b;"); // Nền đen nếu không có ảnh
         }
-
         // === LAYER 2: Nội dung (trên nền) ===
         BorderPane contentPane = new BorderPane();
         contentPane.setStyle("-fx-background-color: transparent; -fx-padding: 20;");
-
         // Tiêu đề "Game Over"
         ImageView titleImageView = new ImageView(loadGameOverImage());
-        titleImageView.setFitWidth(450);
-        titleImageView.setPreserveRatio(true);
-        titleImageView.setSmooth(true);
-        titleImageView.setCache(true); // Tăng hiệu suất render
-
+        if (titleImageView.getImage() != null) {
+            titleImageView.setFitWidth(450);
+            titleImageView.setPreserveRatio(true);
+            titleImageView.setSmooth(true);
+            titleImageView.setCache(true); // Tăng hiệu suất render
+        }
         BorderPane.setAlignment(titleImageView, Pos.CENTER);
         contentPane.setTop(titleImageView);
-
         // Hiệu ứng nhấp nhô (phóng to/thu nhỏ liên tục)
         ScaleTransition titleScale = new ScaleTransition(Duration.seconds(1.5), titleImageView);
         titleScale.setFromX(0.8);
@@ -118,42 +113,34 @@ public class EndMenu {
         titleScale.setCycleCount(ScaleTransition.INDEFINITE);
         titleScale.setAutoReverse(true);
         titleScale.play();
-
         // === PHẦN GIỮA: ĐIỂM SỐ ===
         VBox centerBox = new VBox(15);
         centerBox.setAlignment(Pos.CENTER);
-
         Label scoreLabel = new Label("Score: " + score);
         scoreLabel.setFont(Font.font("Arial", 24));
         scoreLabel.setTextFill(Color.WHITE);
-
         Label bestScoreLabel = new Label("Best Score: " + bestScore);
         bestScoreLabel.setFont(Font.font("Arial", 24));
         bestScoreLabel.setTextFill(Color.WHITE);
-
         centerBox.getChildren().addAll(scoreLabel, bestScoreLabel);
         contentPane.setCenter(centerBox);
-
         // === PHẦN DƯỚI: NÚT BẤM ===
         VBox bottomBox = new VBox(10);
         bottomBox.setAlignment(Pos.CENTER);
         bottomBox.setStyle("-fx-padding: 15; -fx-background-color: transparent;");
-
         Button playAgainBtn = new Button("Play Again");
         Button exitBtn = new Button("Exit");
-
         // Style nút: trong suốt, chữ trắng
         String btnStyle = "-fx-font-size: 16; -fx-pref-width: 120; -fx-pref-height: 35; " +
-                          "-fx-background-color: transparent; -fx-text-fill: white;";
+                "-fx-background-color: transparent; -fx-text-fill: white;";
         playAgainBtn.setStyle(btnStyle);
         exitBtn.setStyle(btnStyle);
-
-        // === HIỆU ỨNG DI Nible: phóng to + âm thanh khi di chuột vào ===
+        // === HIỆU ỨNG DI CHUỘT: phóng to + âm thanh khi di chuột vào ===
         playAgainBtn.setOnMouseEntered(e -> {
             playAgainBtn.setScaleX(1.1);
             playAgainBtn.setScaleY(1.1);
             if (mouseClickSound != null) {
-                mouseClickSound.play(SoundManager.getEffectVolume());
+                mouseClickSound.play(VolumeManager.getEffectVolume());
             } else {
                 System.err.println("Mouse_Click.wav chưa được tải");
             }
@@ -162,19 +149,17 @@ public class EndMenu {
             playAgainBtn.setScaleX(1.0);
             playAgainBtn.setScaleY(1.0);
         });
-
         exitBtn.setOnMouseEntered(e -> {
             exitBtn.setScaleX(1.1);
             exitBtn.setScaleY(1.1);
             if (mouseClickSound != null) {
-                mouseClickSound.play(SoundManager.getEffectVolume());
+                mouseClickSound.play(VolumeManager.getEffectVolume());
             }
         });
         exitBtn.setOnMouseExited(e -> {
             exitBtn.setScaleX(1.0);
             exitBtn.setScaleY(1.0);
         });
-
         // Hiệu ứng khi nút được focus (dùng phím Tab)
         playAgainBtn.focusedProperty().addListener((obs, oldVal, newVal) -> {
             playAgainBtn.setScaleX(newVal ? 1.1 : 1.0);
@@ -184,34 +169,29 @@ public class EndMenu {
             exitBtn.setScaleX(newVal ? 1.1 : 1.0);
             exitBtn.setScaleY(newVal ? 1.1 : 1.0);
         });
-
-        // === SỰ KIỆN NÚT ===
+        // === SỰ KIỆM NÚT ===
         playAgainBtn.setOnAction(e -> {
             stopMusicAndClose();
             startNewGame(); // Bắt đầu game mới
         });
-
         exitBtn.setOnAction(e -> {
             stopMusicAndClose();
             Platform.exit();
             System.exit(0); // Thoát hoàn toàn
         });
-
         HBox buttonBox = new HBox(15, playAgainBtn, exitBtn);
         buttonBox.setAlignment(Pos.CENTER);
         bottomBox.getChildren().add(buttonBox);
         contentPane.setBottom(bottomBox);
         BorderPane.setMargin(bottomBox, new Insets(20, 0, 0, 0));
-
         // === GỘP TẤT CẢ ===
         stackRoot.getChildren().add(contentPane);
-
-        Scene scene = new Scene(stackRoot, 768, 246);
+        Scene scene = new Scene(stackRoot, WIDTH_END, HEIGHT_END);
         stage.setScene(scene);
-
+        stage.setWidth(WIDTH_END);
+        stage.setHeight(HEIGHT_END);
         // Phát nhạc kết thúc
         playBackgroundMusic();
-
         stage.show();
     }
 
@@ -219,7 +199,7 @@ public class EndMenu {
     private static void stopMusicAndClose() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
-            SoundManager.unregisterMediaPlayer(mediaPlayer);
+            VolumeManager.unregisterMediaPlayer(mediaPlayer);
         }
         if (stage != null) {
             stage.close();
@@ -239,7 +219,7 @@ public class EndMenu {
                 System.out.println("Phát TheEnd.wav từ: " + Path.theEndMusic);
             }
             mediaPlayer = new MediaPlayer(media);
-            SoundManager.registerMediaPlayer(mediaPlayer);
+            VolumeManager.registerMediaPlayer(mediaPlayer);
             mediaPlayer.setCycleCount(1); // Chỉ phát 1 lần
             mediaPlayer.play();
         } catch (Exception e) {
@@ -263,10 +243,9 @@ public class EndMenu {
                 System.out.println("Đã tải end.gif từ classpath");
                 return backgroundImage;
             }
-
             String[] paths = { "resources/end.gif", "./resources/end.gif", "../resources/end.gif" };
             for (String path : paths) {
-                java.io.File file = new java.io.File(path);
+                File file = new File(path);
                 if (file.exists()) {
                     backgroundImage = new Image(file.toURI().toString(), true);
                     System.out.println("Đã tải end.gif từ: " + path);
