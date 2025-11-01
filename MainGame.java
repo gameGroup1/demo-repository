@@ -129,7 +129,21 @@ public class MainGame {
             case 2:
                 currentLevel = new Level2(wallThickness, speedC);
                 break;
-
+            case 3:
+                currentLevel = new Level3(wallThickness, speedC);
+                break;
+            case 4:
+                currentLevel = new Level4(wallThickness, speedC);
+                break;
+            case 5:
+                currentLevel = new Level5(wallThickness, speedC);
+                break;
+            case 6:
+                currentLevel = new Level6(wallThickness, speedC);
+                break;
+            case 7:
+                currentLevel = new Level7(wallThickness, speedC);
+                break;
             default:
                 System.out.println("SuccessFully");
                 return;

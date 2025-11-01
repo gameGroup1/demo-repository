@@ -4,7 +4,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 import javafx.scene.Node;
 
-public class    Capsule extends GameObject {
+public class Capsule extends GameObject {
     private Image image;
     private AudioClip sound;
     private ImageView imageView;

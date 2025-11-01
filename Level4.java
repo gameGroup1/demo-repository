@@ -1,8 +1,8 @@
 import java.util.Random;
 
-public class Level2 extends GameLevel {
+public class Level4 extends GameLevel {
 
-    public Level2(int wallThickness, int speedC) {
+    public Level4(int wallThickness, int speedC) {
         super(7, 11, 80, 25, 5, wallThickness, speedC); // 7 hàng, 11 cột
         generateMap();
     }
@@ -10,13 +10,13 @@ public class Level2 extends GameLevel {
     @Override
     public void generateMap() {
         int[][] crownPattern = {
-                {0,0,0,0,1,1,0,0,0,0,0},
-                {0,0,1,1,0,0,1,1,0,0,0},
-                {0,1,1,0,0,0,0,0,1,1,0},
+                {1,0,0,1,0,1,0,1,0,0,1},
+                {1,1,0,1,1,1,1,1,0,1,1},
                 {1,1,1,1,1,1,1,1,1,1,1},
-                {0,1,0,0,0,0,0,0,1,1,0},
-                {0,0,1,1,0,0,1,1,0,0,0},
-                {0,0,0,0,1,1,0,0,0,0,0}
+                {1,1,1,1,1,1,1,1,1,1,1},
+                {1,1,1,1,1,1,1,1,1,1,1},
+                {1,1,0,0,1,1,1,0,0,1,1},
+                {1,1,0,0,1,1,1,0,0,1,1}
         };
 
         int rows = crownPattern.length;

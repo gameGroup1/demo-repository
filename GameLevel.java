@@ -28,7 +28,13 @@ public abstract class GameLevel {
 
     public abstract void generateMap();
 
-    public Bricks[] getBricks() { return bricks; }
-    public Capsule[] getCapsules() { return capsules; }
-    public List<Integer> getCapsuleIndex() { return capsuleIndex; }
+    public Bricks[] getBricks() {
+        return bricks;
+    }
+    public Capsule[] getCapsules() {
+        return capsules;
+    }
+    public List<Integer> getCapsuleIndex() {
+        return capsuleIndex;
+    }
 }
