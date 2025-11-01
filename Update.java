@@ -11,10 +11,10 @@ public class Update {
     // Khối static: khởi tạo âm thanh ngay khi class được nạp
     static {
         loseLifeSound = new AudioClip(Path.getFileURL(Path.loseLifeSound));
-        SoundManager.registerAudioClip(loseLifeSound); // Đăng ký để điều chỉnh âm lượng chung
+        VolumeManager.registerAudioClip(loseLifeSound); // Đăng ký để điều chỉnh âm lượng chung
 
         brickBreakSound = new AudioClip(Path.getFileURL(Path.brickBreakSound));
-        SoundManager.registerAudioClip(brickBreakSound);
+        VolumeManager.registerAudioClip(brickBreakSound);
     }
 
     // Cập nhật vị trí bóng theo vận tốc (dx, dy)
@@ -126,9 +126,9 @@ public class Update {
 
                 // Phát âm thanh phù hợp
                 if (brick.isBreak()) {
-                    brickBreakSound.play(SoundManager.getEffectVolume()); // Gạch vỡ hoàn toàn
+                    brickBreakSound.play(VolumeManager.getEffectVolume()); // Gạch vỡ hoàn toàn
                 } else {
-                    Collision.ballBrickSound.play(SoundManager.getEffectVolume()); // Va chạm nhẹ
+                    Collision.ballBrickSound.play(VolumeManager.getEffectVolume()); // Va chạm nhẹ
                 }
                 return i; // Trả về chỉ số gạch bị phá
             }

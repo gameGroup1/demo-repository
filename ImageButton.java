@@ -70,7 +70,7 @@ public class ImageButton extends StackPane {
             normalView.setVisible(false);
             hoveredView.setVisible(true);
             scaleIn.playFromStart();
-            if (hoverSound != null) hoverSound.play(SoundManager.getEffectVolume());
+            if (hoverSound != null) hoverSound.play(VolumeManager.getEffectVolume());
         });
 
         setOnMouseExited(e -> {

@@ -19,7 +19,7 @@ public class Capsule extends GameObject {
         imageView.setViewport(new Rectangle2D(0, 0, 485, 128));
         try {
             sound = new AudioClip(Path.getFileURL(soundPath));
-            SoundManager.registerAudioClip(sound);
+            VolumeManager.registerAudioClip(sound);
         } catch (Exception e) {
             System.err.println("Failed to load capsule sound: " + e.getMessage());
         }
@@ -46,7 +46,7 @@ public class Capsule extends GameObject {
 
     public void playSound() {
         if (sound != null) {
-            sound.play(SoundManager.getEffectVolume());
+            sound.play(VolumeManager.getEffectVolume());
         } else {
             System.err.println("Capsule sound not loaded.");
         }

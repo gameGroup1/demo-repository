@@ -25,7 +25,7 @@ public class GameMenu extends Application {
 
     static {
         mouseClickSound = new AudioClip(Path.getFileURL(Path.mouseClick));
-        SoundManager.registerAudioClip(mouseClickSound);
+        VolumeManager.registerAudioClip(mouseClickSound);
     }
 
     @Override
@@ -79,18 +79,18 @@ public class GameMenu extends Application {
 
         // === THANH ÂM LƯỢNG ===
         // Background Volume
-        Label bgLabel = new Label("Background Volume: " + (int)(SoundManager.getBackgroundVolume() * 100) + "%");
+        Label bgLabel = new Label("Background Volume: " + (int)(VolumeManager.getBackgroundVolume() * 100) + "%");
         bgLabel.setFont(Font.font("Arial", 16));
         bgLabel.setTextFill(Color.web("#9acd32"));
 
-        Slider bgSlider = new Slider(0, 100, SoundManager.getBackgroundVolume() * 100);
+        Slider bgSlider = new Slider(0, 100, VolumeManager.getBackgroundVolume() * 100);
         bgSlider.setPrefWidth(200);
         bgSlider.setMajorTickUnit(25);
         bgSlider.setShowTickMarks(true);
         bgSlider.setStyle("-fx-control-inner-background: #1a1a1a; -fx-accent: #9acd32;");
         bgSlider.valueProperty().addListener((obs, old, val) -> {
             double volume = val.doubleValue() / 100.0;
-            SoundManager.setBackgroundVolume(volume);
+            VolumeManager.setBackgroundVolume(volume);
             bgLabel.setText("Background Volume: " + val.intValue() + "%");
             if (mediaPlayer != null) {
                 mediaPlayer.setVolume(volume);
@@ -98,18 +98,18 @@ public class GameMenu extends Application {
         });
 
         // Effect Volume
-        Label effectLabel = new Label("Effect Volume: " + (int)(SoundManager.getEffectVolume() * 100) + "%");
+        Label effectLabel = new Label("Effect Volume: " + (int)(VolumeManager.getEffectVolume() * 100) + "%");
         effectLabel.setFont(Font.font("Arial", 16));
         effectLabel.setTextFill(Color.web("#9acd32"));
 
-        Slider effectSlider = new Slider(0, 100, SoundManager.getEffectVolume() * 100);
+        Slider effectSlider = new Slider(0, 100, VolumeManager.getEffectVolume() * 100);
         effectSlider.setPrefWidth(200);
         effectSlider.setMajorTickUnit(25);
         effectSlider.setShowTickMarks(true);
         effectSlider.setStyle("-fx-control-inner-background: #1a1a1a; -fx-accent: #abde46ff;");
         effectSlider.valueProperty().addListener((obs, old, val) -> {
             double volume = val.doubleValue() / 100.0;
-            SoundManager.setEffectVolume(volume);
+            VolumeManager.setEffectVolume(volume);
             effectLabel.setText("Effect Volume: " + val.intValue() + "%");
         });
 
@@ -139,9 +139,9 @@ public class GameMenu extends Application {
             URL url = getClass().getClassLoader().getResource(Path.menuMusic.substring(1));
             Media media = url != null ? new Media(url.toString()) : new Media(Path.getFileURL(Path.menuMusic));
             mediaPlayer = new MediaPlayer(media);
-            SoundManager.registerMediaPlayer(mediaPlayer);
+            VolumeManager.registerMediaPlayer(mediaPlayer);
             mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-            mediaPlayer.setVolume(SoundManager.getBackgroundVolume());
+            mediaPlayer.setVolume(VolumeManager.getBackgroundVolume());
             mediaPlayer.play();
         } catch (Exception e) {
             System.err.println("Không phát được nhạc menu");
@@ -151,7 +151,7 @@ public class GameMenu extends Application {
     private void stopMusic() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
-            SoundManager.unregisterMediaPlayer(mediaPlayer);
+            VolumeManager.unregisterMediaPlayer(mediaPlayer);
         }
     }
 
