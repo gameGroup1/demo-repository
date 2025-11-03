@@ -5,21 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ef8b5c06-b2f9-400e-b2a2-452fe34a50a8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Level3.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Level4.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Level5.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Level6.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Level7.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LevelSpecial.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bricks.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bricks.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Capsule.java" beforeDir="false" afterPath="$PROJECT_DIR$/Capsule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameLevel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Level2.java" beforeDir="false" afterPath="$PROJECT_DIR$/Level2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/MainGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/highest_score.txt" beforeDir="false" afterPath="$PROJECT_DIR$/highest_score.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameLevel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/GameLevel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Level2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Level2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/MainGame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/MainGame$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Bricks.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Bricks.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Capsule.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Capsule.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/MainGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/MainGame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/highest_score.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/highest_score.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

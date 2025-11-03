@@ -50,7 +50,7 @@ public class MainGame {
     private static int highestScore;
     private MediaPlayer mediaPlayer;
     private boolean isAttached = true;
-    private int lives = 5;
+    private int lives = 15;
     private List<ImageView> heartImages = new ArrayList<>();
     private Text scoreText;
     private Image heartImage;
@@ -143,6 +143,9 @@ public class MainGame {
                 break;
             case 7:
                 currentLevel = new Level7(wallThickness, speedC);
+                break;
+            case 8:
+                currentLevel = new LevelSpecial(wallThickness, speedC);
                 break;
             default:
                 System.out.println("SuccessFully");

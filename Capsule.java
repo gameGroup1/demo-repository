@@ -64,6 +64,12 @@ public class Capsule extends GameObject {
         }
     }
 
+    public void setPosition(double x, double y) {
+        // Cập nhật vị trí logic trong GameObject
+        this.x = x;
+        this.y = y;
+    }
+
     public Node getNode() {
         return imageView;
     }

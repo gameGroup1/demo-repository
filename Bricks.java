@@ -59,6 +59,18 @@ public class Bricks extends GameObject {
         }
     }
 
+    public void setPosition(double x, double y) {
+        // Cập nhật vị trí logic trong GameObject
+        this.x = x;
+        this.y = y;
+
+        // Cập nhật vị trí hiển thị trong JavaFX
+        if (imageView != null) {
+            imageView.setX(x);
+            imageView.setY(y);
+        }
+    }
+
     public boolean isBreak() {
         return frameIndex >= frameViewport.size();
     }
