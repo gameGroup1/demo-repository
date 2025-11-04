@@ -3,7 +3,6 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -124,57 +123,27 @@ public class EndMenu {
         bestScoreLabel.setTextFill(Color.WHITE);
         centerBox.getChildren().addAll(scoreLabel, bestScoreLabel);
         contentPane.setCenter(centerBox);
-        // === PHẦN DƯỚI: NÚT BẤM ===
+
+        // === PHẦN DƯỚI: NÚT BẤM (SỬ DỤNG ImageButton GIỐNG GameMenu) ===
         VBox bottomBox = new VBox(10);
         bottomBox.setAlignment(Pos.CENTER);
         bottomBox.setStyle("-fx-padding: 15; -fx-background-color: transparent;");
-        Button playAgainBtn = new Button("Play Again");
-        Button exitBtn = new Button("Exit");
-        // Style nút: trong suốt, chữ trắng
-        String btnStyle = "-fx-font-size: 16; -fx-pref-width: 120; -fx-pref-height: 35; " +
-                "-fx-background-color: transparent; -fx-text-fill: white;";
-        playAgainBtn.setStyle(btnStyle);
-        exitBtn.setStyle(btnStyle);
-        // === HIỆU ỨNG DI CHUỘT: phóng to + âm thanh khi di chuột vào ===
-        playAgainBtn.setOnMouseEntered(e -> {
-            playAgainBtn.setScaleX(1.1);
-            playAgainBtn.setScaleY(1.1);
-            if (mouseClickSound != null) {
-                mouseClickSound.play(VolumeManager.getEffectVolume());
-            } else {
-                System.err.println("Mouse_Click.wav chưa được tải");
-            }
-        });
-        playAgainBtn.setOnMouseExited(e -> {
-            playAgainBtn.setScaleX(1.0);
-            playAgainBtn.setScaleY(1.0);
-        });
-        exitBtn.setOnMouseEntered(e -> {
-            exitBtn.setScaleX(1.1);
-            exitBtn.setScaleY(1.1);
-            if (mouseClickSound != null) {
-                mouseClickSound.play(VolumeManager.getEffectVolume());
-            }
-        });
-        exitBtn.setOnMouseExited(e -> {
-            exitBtn.setScaleX(1.0);
-            exitBtn.setScaleY(1.0);
-        });
-        // Hiệu ứng khi nút được focus (dùng phím Tab)
-        playAgainBtn.focusedProperty().addListener((obs, oldVal, newVal) -> {
-            playAgainBtn.setScaleX(newVal ? 1.1 : 1.0);
-            playAgainBtn.setScaleY(newVal ? 1.1 : 1.0);
-        });
-        exitBtn.focusedProperty().addListener((obs, oldVal, newVal) -> {
-            exitBtn.setScaleX(newVal ? 1.1 : 1.0);
-            exitBtn.setScaleY(newVal ? 1.1 : 1.0);
-        });
-        // === SỰ KIỆM NÚT ===
-        playAgainBtn.setOnAction(e -> {
+
+        // Tải ảnh nút xám và font
+        Image greyBtn = loadImage("grey_button.png");
+        Font btnFont = Font.font("Arial", 20);
+
+        // Tạo các nút với ImageButton
+        ImageButton playAgainBtn = new ImageButton(greyBtn, "Play Again", btnFont, mouseClickSound, 180);
+        ImageButton exitBtn = new ImageButton(greyBtn, "Exit", btnFont, mouseClickSound, 180);
+
+        // === SỰ KIỆN NÚT ===
+        playAgainBtn.setOnAction(() -> {
             stopMusicAndClose();
             startNewGame(); // Bắt đầu game mới
         });
-        exitBtn.setOnAction(e -> {
+
+        exitBtn.setOnAction(() -> {
             stopMusicAndClose();
             Platform.exit();
             System.exit(0); // Thoát hoàn toàn
@@ -208,22 +177,21 @@ public class EndMenu {
 
     // Phát nhạc "The End" (chỉ 1 lần)
     private static void playBackgroundMusic() {
-        try {
-            URL soundURL = EndMenu.class.getClassLoader().getResource(Path.theEndMusic.substring(1));
-            Media media;
-            if (soundURL != null) {
-                media = new Media(soundURL.toString());
-                System.out.println("Phát TheEnd.wav từ classpath");
-            } else {
-                media = new Media(Path.getFileURL(Path.theEndMusic));
-                System.out.println("Phát TheEnd.wav từ: " + Path.theEndMusic);
-            }
-            mediaPlayer = new MediaPlayer(media);
-            VolumeManager.registerMediaPlayer(mediaPlayer);
-            mediaPlayer.setCycleCount(1); // Chỉ phát 1 lần
-            mediaPlayer.play();
+    try {
+        URL soundURL = EndMenu.class.getClassLoader().getResource(Path.theEndMusic.substring(1));
+        Media media = soundURL != null ? 
+            new Media(soundURL.toString()) : 
+            new Media(Path.getFileURL(Path.theEndMusic));
+        
+        mediaPlayer = new MediaPlayer(media);
+        VolumeManager.registerMediaPlayer(mediaPlayer);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Lặp vô hạn
+        mediaPlayer.setVolume(VolumeManager.getBackgroundVolume()); // Đặt volume
+        mediaPlayer.play();
+        
+        System.out.println("Đang phát nhạc kết thúc (loop)");
         } catch (Exception e) {
-            System.err.println("Không tìm thấy TheEnd.wav: " + Path.theEndMusic);
+            System.err.println("Không thể phát nhạc kết thúc: " + Path.theEndMusic);
             e.printStackTrace();
         }
     }
@@ -257,5 +225,17 @@ public class EndMenu {
             e.printStackTrace();
         }
         return backgroundImage;
+    }
+
+    // Tải ảnh từ resources (giống trong GameMenu)
+    private static Image loadImage(String name) {
+        try {
+            URL url = EndMenu.class.getClassLoader().getResource(name);
+            if (url != null) return new Image(url.toString());
+            return new Image("file:resources/" + name);
+        } catch (Exception e) {
+            System.err.println("Không tải được " + name);
+            return null;
+        }
     }
 }
