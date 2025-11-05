@@ -85,30 +85,7 @@ public class ImageButton extends StackPane {
     }
 
     // Tạo ảnh scale
-    private Image createScaledImage(Image src, double scale) {
-        int w = (int) (src.getWidth() * scale);
-        int h = (int) (src.getHeight() * scale);
-        WritableImage out = new WritableImage(w, h);
-        PixelReader reader = src.getPixelReader();
-        PixelWriter writer = out.getPixelWriter();
-
-        for (int y = 0; y < h; y++) {
-            for (int x = 0; x < w; x++) {
-                int sx = (int) (x / scale);
-                int sy = (int) (y / scale);
-                int argb = reader.getArgb(sx, sy);
-
-                //CHỈNH ĐỘ TRONG SUỐT TẠI ĐÂY
-                int alpha = (argb >> 24) & 0xFF;     
-                int newAlpha = (int) (alpha * 1); 
-    
-                int r = (argb >> 16) & 0xFF;
-                int g = (argb >> 8) & 0xFF;
-                int b = argb & 0xFF;
-
-                writer.setArgb(x, y, (newAlpha << 24) | (r << 16) | (g << 8) | b);
-            }
-        }
-        return out;
+   private Image createScaledImage(Image src, double scale) {
+    return ScaleManager.createScaledImage(src, scale);
     }
 }
