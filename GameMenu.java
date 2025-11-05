@@ -108,6 +108,14 @@ public class GameMenu extends Application {
         settingsBox.setPadding(new Insets(30));
         settingsBox.setStyle("-fx-background-color: #003200;");
 
+        bestBtn.setOnAction(() -> showBestScore());
+        exitBtn.setOnAction(() -> {
+            stopMusic();
+            Platform.exit();
+            System.exit(0);
+        });
+
+        // === THANH ÂM LƯỢNG ===
         // Background Volume
         Label bgLabel = new Label("Background Volume: " + (int)(VolumeManager.getBackgroundVolume() * 100) + "%");
         bgLabel.setFont(Font.font("Arial", 16));
