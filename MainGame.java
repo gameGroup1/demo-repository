@@ -65,28 +65,23 @@ public class MainGame {
     public static Paddle staticPaddle;
 
     public static void cleanup() {
-        System.out.println("MainGame.cleanup() started.");
-        // Dừng game loop
-        if (gameLoop != null) {
-            gameLoop.stop();
-            System.out.println("GameLoop stopped in cleanup.");
-        }
-
-        // Dừng âm thanh game
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            VolumeManager.unregisterMediaPlayer(mediaPlayer);
-            System.out.println("MediaPlayer stopped.");
-        }
-
-        // Dừng tất cả âm thanh khác
-        VolumeManager.stopAllSounds();
-        System.out.println("All sounds stopped in cleanup.");
-
-        // Lưu điểm
-        saveHighestScore();
-        System.out.println("Highest score saved. Cleanup completed.");
+    // Dừng game loop
+    if (gameLoop != null) {
+        gameLoop.stop();
     }
+    
+    // Dừng âm thanh game
+    if (mediaPlayer != null) {
+        mediaPlayer.stop();
+        VolumeManager.unregisterMediaPlayer(mediaPlayer);
+    }
+    
+    // Dừng tất cả âm thanh khác
+    VolumeManager.stopAllSounds();
+    
+    // Lưu điểm nếu cần
+    getBestScore();
+}
     // Tạo gạch và capsule (gọi lại khi qua level)
     private void genBrickAndCapsule() {
         int[] hardnessArray = {1, 2, 3, 4};
@@ -195,8 +190,7 @@ public class MainGame {
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.setOnCloseRequest(e -> {
-        System.out.println("Window close requested - calling cleanup...");
-        cleanup();
+            cleanup();
         });
 
         primaryStage.show();
@@ -216,8 +210,8 @@ public class MainGame {
         try {
             URL soundURL = getClass().getClassLoader().getResource(Path.backgroundMusic.substring(1));
             Media media = soundURL != null
-                    ? new Media(soundURL.toString())
-                    : new Media(Path.getFileURL(Path.backgroundMusic));
+                ? new Media(soundURL.toString())
+                : new Media(Path.getFileURL(Path.backgroundMusic));
 
             mediaPlayer = new MediaPlayer(media);
             VolumeManager.registerMediaPlayer(mediaPlayer);
@@ -410,40 +404,23 @@ public class MainGame {
         if (capsule != null) capsule.playSound();
         String type = capsule.getEffectType();
 
-        if (type.equals("inc10Point")) score += 10;
-        else if (type.equals("dec10Point")) score -= 10;
-        else if (type.equals("inc50Point")) score += 50;
-        else if (type.equals("dec50Point")) score -= 50;
-        else if (type.equals("inc100Point")) score += 100;
-        else if (type.equals("dec100Point")) score -= 100;
-        else if (type.equals("fastBall")) {
-            EffectManager.updateSpeed(ball, 1.5);
-        } else if (type.equals("slowBall")) {
-            EffectManager.updateSpeed(ball, 0.5);
-        } else if (type.equals("fireBall")) {
-            EffectManager.activateFireBall(ball);
-        } else if (type.equals("powerBall")) {
-            EffectManager.updatePower(ball, 3.0);
-        } else if (type.equals("expandPaddle")) {
-            EffectManager.changeWidth(paddle, 2.0);
-        } else if (type.equals("shrinkPaddle")) {
-            EffectManager.changeWidth(paddle, 0.5);
-        } else if (type.equals("health")) {
-            if (lives < 5) {
-                int newIndex = lives;
-                double newX = widthW - wallThickness - 80 - newIndex * 36;
-                ImageView newHeart = new ImageView(heartImage);
-                newHeart.setFitWidth(30);
-                newHeart.setFitHeight(30);
-                newHeart.setX(newX);
-                newHeart.setY(wallThickness + 5);
-                root.getChildren().add(newHeart);
-                heartImages.add(newHeart);
-                lives++;
-            }
-        } else if (type.equals("explosion")) {
-            showExplosion(capsule.getX(), capsule.getY());
-            loseLife();
+        switch (type) {
+            case "inc10Point": score += 10; break;
+            case "dec10Point": score -= 10; break;
+            case "inc50Point": score += 50; break;
+            case "dec50Point": score -= 50; break;
+            case "inc100Point": score += 100; break;
+            case "dec100Point": score -= 100; break;
+            case "fastBall": EffectManager.updateSpeed(ball, 1.5); break;
+            case "slowBall": EffectManager.updateSpeed(ball, 0.5); break;
+            case "fireBall": EffectManager.activateFireBall(ball); break;
+            case "powerBall": EffectManager.updatePower(ball, 3.0); break;
+            case "expandPaddle": EffectManager.changeWidth(paddle, 2.0); break;
+            case "shrinkPaddle": EffectManager.changeWidth(paddle, 0.5); break;
+            case "explosion":
+                showExplosion(capsule.getX(), capsule.getY());
+                loseLife();
+                break;
         }
 
         highestScore = Math.max(score, highestScore);
