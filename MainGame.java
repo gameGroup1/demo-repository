@@ -65,23 +65,29 @@ public class MainGame {
     public static Paddle staticPaddle;
 
     public static void cleanup() {
-    // Dừng game loop
-    if (gameLoop != null) {
-        gameLoop.stop();
+        System.out.println("MainGame.cleanup() started.");
+        // Dừng game loop
+        if (gameLoop != null) {
+            gameLoop.stop();
+            System.out.println("GameLoop stopped in cleanup.");
+        }
+
+        // Dừng âm thanh game
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            VolumeManager.unregisterMediaPlayer(mediaPlayer);
+            System.out.println("MediaPlayer stopped.");
+        }
+
+        // Dừng tất cả âm thanh khác
+        VolumeManager.stopAllSounds();
+        System.out.println("All sounds stopped in cleanup.");
+
+        // Lưu điểm
+        saveHighestScore();
+        System.out.println("Highest score saved. Cleanup completed.");
     }
-    
-    // Dừng âm thanh game
-    if (mediaPlayer != null) {
-        mediaPlayer.stop();
-        VolumeManager.unregisterMediaPlayer(mediaPlayer);
-    }
-    
-    // Dừng tất cả âm thanh khác
-    VolumeManager.stopAllSounds();
-    
-    // Lưu điểm nếu cần
-    getBestScore();
-}
+
     // Tạo gạch và capsule (gọi lại khi qua level)
     private void genBrickAndCapsule() {
         int[] hardnessArray = {1, 2, 3, 4};
@@ -102,13 +108,13 @@ public class MainGame {
                 bricks[index] = new Bricks(brickX, brickY, brickWidth, brickHeight, randomHardness);
 
                 double chance = random.nextDouble();
-                if (chance < 0.3) {
+                if (chance < 0.99) {
                     capsules[index] = EffectManager.getCapsule(brickX, brickY, brickWidth, brickHeight, speedC);
                     capsules[index].setVisible(false);
                     capsuleIndex.add(index);
                 } else {
                     chance = random.nextDouble();
-                    if (chance < 0.2) {
+                    if (chance < 0.01) {
                         capsules[index] = new Capsule(Path.explosionCapsule, Path.explosionSound);
                         capsules[index].init(brickX, brickY, brickWidth, brickHeight, speedC, "explosion");
                         capsules[index].setVisible(false);
@@ -190,6 +196,7 @@ public class MainGame {
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.setOnCloseRequest(e -> {
+            System.out.println("Window close requested - calling cleanup...");
             cleanup();
         });
 
@@ -210,8 +217,8 @@ public class MainGame {
         try {
             URL soundURL = getClass().getClassLoader().getResource(Path.backgroundMusic.substring(1));
             Media media = soundURL != null
-                ? new Media(soundURL.toString())
-                : new Media(Path.getFileURL(Path.backgroundMusic));
+                    ? new Media(soundURL.toString())
+                    : new Media(Path.getFileURL(Path.backgroundMusic));
 
             mediaPlayer = new MediaPlayer(media);
             VolumeManager.registerMediaPlayer(mediaPlayer);
@@ -405,26 +412,83 @@ public class MainGame {
         String type = capsule.getEffectType();
 
         switch (type) {
-            case "inc10Point": score += 10; break;
-            case "dec10Point": score -= 10; break;
-            case "inc50Point": score += 50; break;
-            case "dec50Point": score -= 50; break;
-            case "inc100Point": score += 100; break;
-            case "dec100Point": score -= 100; break;
-            case "fastBall": EffectManager.updateSpeed(ball, 1.5); break;
-            case "slowBall": EffectManager.updateSpeed(ball, 0.5); break;
-            case "fireBall": EffectManager.activateFireBall(ball); break;
-            case "powerBall": EffectManager.updatePower(ball, 3.0); break;
-            case "expandPaddle": EffectManager.changeWidth(paddle, 2.0); break;
-            case "shrinkPaddle": EffectManager.changeWidth(paddle, 0.5); break;
-            case "explosion":
-                showExplosion(capsule.getX(), capsule.getY());
-                loseLife();
-                break;
+    case "inc10Point":
+        score += 10;
+        break;
+
+    case "dec10Point":
+        score -= 10;
+        break;
+
+    case "inc50Point":
+        score += 50;
+        break;
+
+    case "dec50Point":
+        score -= 50;
+        break;
+
+    case "inc100Point":
+        score += 100;
+        break;
+
+    case "dec100Point":
+        score -= 100;
+        break;
+
+    case "fastBall":
+        EffectManager.updateSpeed(ball, 1.5);
+        break;
+
+    case "slowBall":
+        EffectManager.updateSpeed(ball, 0.5);
+        break;
+
+    case "fireBall":
+        EffectManager.activateFireBall(ball);
+        break;
+
+    case "powerBall":
+        EffectManager.updatePower(ball, 3.0);
+        break;
+
+    case "expandPaddle":
+        EffectManager.changeWidth(paddle, 2.0);
+        break;
+
+    case "shrinkPaddle":
+        EffectManager.changeWidth(paddle, 0.5);
+        break;
+
+    case "healthCapsule":
+        // THÊM MỚI: Hiệu ứng tăng mạng
+        if (lives < 5) {
+            int newIndex = lives;
+            double newX = widthW - wallThickness - 80 - newIndex * 36;
+            ImageView newHeart = new ImageView(heartImage);
+            newHeart.setFitWidth(30);
+            newHeart.setFitHeight(30);
+            newHeart.setX(newX);
+            newHeart.setY(wallThickness + 5);
+            root.getChildren().add(newHeart);
+            heartImages.add(newHeart);
+            lives++;
+            System.out.println("Health capsule collected! Lives: " + lives);
         }
+        break;
+
+    case "explosion":
+        showExplosion(capsule.getX(), capsule.getY());
+        loseLife();
+        break;
+
+    default:
+        System.out.println("Unknown capsule type: " + type);
+        break;
+}
+
 
         highestScore = Math.max(score, highestScore);
-        if (capsule != null) capsule.playSound();
     }
 
     // Hiệu ứng nổ lớn (capsule explosion)
