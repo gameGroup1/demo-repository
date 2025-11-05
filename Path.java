@@ -39,7 +39,6 @@ public class Path {
     public static final String gameOverImage = "/resources/gameover.png";
     public static final String greenButton = "/resources/green_button.png";
     public static final String greyButton = "/resources/grey_button.png";
-
     public static String getFileURL(String relativePath) {
         return "file:///" + System.getProperty("user.dir").replace("\\", "/") + relativePath;
     }

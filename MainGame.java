@@ -108,7 +108,7 @@ public class MainGame {
                 bricks[index] = new Bricks(brickX, brickY, brickWidth, brickHeight, randomHardness);
 
                 double chance = random.nextDouble();
-                if (chance < 0.3) {
+                if (chance < 0.7) {
                     capsules[index] = EffectManager.getCapsule(brickX, brickY, brickWidth, brickHeight, speedC);
                     capsules[index].setVisible(false);
                     capsuleIndex.add(index);
