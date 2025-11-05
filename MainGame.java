@@ -15,8 +15,10 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.File;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import java.net.URL;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
@@ -52,7 +54,11 @@ public class MainGame {
     // Điểm số, mạng, giao diện
     private int score = 0;
     private static int highestScore;
-    private static MediaPlayer mediaPlayer;
+    private static MediaPlayer mediaPlayer; // dùng cho background music (giữ nguyên)
+    // --- Thêm cho video background ---
+    private MediaPlayer bgVideoPlayer;
+    private MediaView bgMediaView;
+    // -----------------------------------
     private boolean isAttached = true;         // Bóng dính vào paddle
     private int lives = 5;
     private List<ImageView> heartImages = new ArrayList<>();
@@ -72,11 +78,22 @@ public class MainGame {
             System.out.println("GameLoop stopped in cleanup.");
         }
 
-        // Dừng âm thanh game
+        // Dừng âm thanh game (music)
         if (mediaPlayer != null) {
             mediaPlayer.stop();
             VolumeManager.unregisterMediaPlayer(mediaPlayer);
-            System.out.println("MediaPlayer stopped.");
+            System.out.println("MediaPlayer (music) stopped.");
+        }
+
+        // Dừng video background nếu có
+        // (không unregister vào VolumeManager vì video có mute)
+        try {
+            // bgVideoPlayer là non-static, không thể truy cập trực tiếp từ static method;
+            // để đơn giản, tạm gọi một hook nếu cần — nhưng chúng ta sẽ stop nó từ instance khi window close.
+            // Nếu muốn, bạn có thể chuyển bgVideoPlayer thành static và stop ở đây.
+            System.out.println("Note: bgVideoPlayer will be stopped by instance if present.");
+        } catch (Exception e) {
+            // ignore
         }
 
         // Dừng tất cả âm thanh khác
@@ -87,6 +104,7 @@ public class MainGame {
         saveHighestScore();
         System.out.println("Highest score saved. Cleanup completed.");
     }
+
     // Tạo gạch và capsule (gọi lại khi qua level)
     private void genBrickAndCapsule() {
         int[] hardnessArray = {1, 2, 3, 4};
@@ -196,8 +214,50 @@ public class MainGame {
         primaryStage.setResizable(false);
         primaryStage.setOnCloseRequest(e -> {
             System.out.println("Window close requested - calling cleanup...");
+            // Stop and dispose bgVideoPlayer (instance-level)
+            try {
+                if (bgVideoPlayer != null) {
+                    bgVideoPlayer.stop();
+                    bgVideoPlayer.dispose();
+                    System.out.println("bgVideoPlayer stopped and disposed on close.");
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
             cleanup();
         });
+
+        // --- Thiết lập video background ---
+        try {
+            // Thử load từ resource first (nếu đóng gói trong jar dưới resources root)
+            URL videoURL = getClass().getClassLoader().getResource("/resources/video_background.mp4");
+            Media bgMedia;
+            if (videoURL != null) {
+                bgMedia = new Media(videoURL.toString());
+            } else {
+                // fallback: file path relative to project
+                File f = new File("resources/video_background.mp4");
+                bgMedia = new Media(f.toURI().toString());
+            }
+
+            bgVideoPlayer = new MediaPlayer(bgMedia);
+            bgVideoPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            bgVideoPlayer.setAutoPlay(true);
+            bgVideoPlayer.setMute(true); // tắt tiếng background video (thay đổi nếu muốn âm thanh)
+            bgMediaView = new MediaView(bgVideoPlayer);
+            bgMediaView.setPreserveRatio(false); // fill toàn bộ màn hình
+            bgMediaView.setMouseTransparent(true); // để mouse event đi qua xuống các node bên dưới
+            // Bind kích thước video với scene
+            bgMediaView.fitWidthProperty().bind(scene.widthProperty());
+            bgMediaView.fitHeightProperty().bind(scene.heightProperty());
+
+            // Thêm background ở vị trí index 0 để nằm phía sau các node khác
+            root.getChildren().add(0, bgMediaView);
+        } catch (Exception e) {
+            System.err.println("Không thể load background video a.mp4");
+            e.printStackTrace();
+        }
+        // --- Kết thúc thiết lập video background ---
 
         primaryStage.show();
 
@@ -501,6 +561,16 @@ public class MainGame {
                 mediaPlayer.stop();
                 VolumeManager.unregisterMediaPlayer(mediaPlayer);
             }
+            // Stop & dispose background video player (nếu có)
+            try {
+                if (bgVideoPlayer != null) {
+                    bgVideoPlayer.stop();
+                    bgVideoPlayer.dispose();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
             saveHighestScore();
             Platform.runLater(() -> {
                 primaryStage.close();
