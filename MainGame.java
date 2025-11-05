@@ -108,13 +108,13 @@ public class MainGame {
                 bricks[index] = new Bricks(brickX, brickY, brickWidth, brickHeight, randomHardness);
 
                 double chance = random.nextDouble();
-                if (chance < 0.99) {
+                if (chance < 0.3) {
                     capsules[index] = EffectManager.getCapsule(brickX, brickY, brickWidth, brickHeight, speedC);
                     capsules[index].setVisible(false);
                     capsuleIndex.add(index);
                 } else {
                     chance = random.nextDouble();
-                    if (chance < 0.01) {
+                    if (chance < 0.3) {
                         capsules[index] = new Capsule(Path.explosionCapsule, Path.explosionSound);
                         capsules[index].init(brickX, brickY, brickWidth, brickHeight, speedC, "explosion");
                         capsules[index].setVisible(false);

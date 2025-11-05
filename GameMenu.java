@@ -108,14 +108,6 @@ public class GameMenu extends Application {
         settingsBox.setPadding(new Insets(30));
         settingsBox.setStyle("-fx-background-color: #003200;");
 
-        bestBtn.setOnAction(() -> showBestScore());
-        exitBtn.setOnAction(() -> {
-            stopMusic();
-            Platform.exit();
-            System.exit(0);
-        });
-
-        // === THANH ÂM LƯỢNG ===
         // Background Volume
         Label bgLabel = new Label("Background Volume: " + (int)(VolumeManager.getBackgroundVolume() * 100) + "%");
         bgLabel.setFont(Font.font("Arial", 16));
@@ -192,24 +184,11 @@ public class GameMenu extends Application {
     }
 
     private Image loadBackground() {
-        try {
-            URL url = getClass().getClassLoader().getResource("background.gif");
-            if (url != null) return new Image(url.toString(), true);
-            return new Image("file:resources/background.gif", true);
-        } catch (Exception e) {
-            return null;
-        }
+    return ScaleManager.loadAnimatedImage("background.gif");
     }
 
     private Image loadImage(String name) {
-        try {
-            URL url = getClass().getClassLoader().getResource(name);
-            if (url != null) return new Image(url.toString());
-            return new Image("file:resources/" + name);
-        } catch (Exception e) {
-            System.err.println("Không tải được " + name);
-            return null;
-        }
+    return ScaleManager.loadImage(name);
     }
 
     private String getFontURL() {

@@ -38,32 +38,7 @@ public class EndMenu {
 
     // Tải hình "Game Over" từ classpath hoặc file hệ thống
     private static Image loadGameOverImage() {
-        Image gameOverImage = null;
-        try {
-            // 1. Thử tải từ classpath (trong JAR)
-            URL imageURL = EndMenu.class.getClassLoader().getResource(Path.gameOverImage.substring(1));
-            if (imageURL != null) {
-                gameOverImage = new Image(imageURL.toString(), true);
-                System.out.println("Đã tải game-over.png từ classpath");
-                return gameOverImage;
-            }
-            // 2. Nếu không có → thử từ file hệ thống
-            String fileURL = Path.getFileURL(Path.gameOverImage);
-            System.out.println("Đang thử tải từ file: " + fileURL);
-            gameOverImage = new Image(fileURL, true);
-            // Bắt lỗi nếu ảnh không tải được
-            gameOverImage.errorProperty().addListener((obs, old, error) -> {
-                if (error) {
-                    System.err.println("Lỗi: Không thể tải game-over.png từ hệ thống");
-                }
-            });
-            System.out.println("Đã tải game-over.png từ file");
-            return gameOverImage;
-        } catch (Exception e) {
-            System.err.println("Không thể tải game-over.png: " + Path.gameOverImage);
-            e.printStackTrace();
-        }
-        return gameOverImage; // Trả về null nếu thất bại
+    return ScaleManager.loadImage(Path.gameOverImage.substring(1));
     }
 
     // Hiển thị màn hình Game Over
@@ -203,39 +178,12 @@ public class EndMenu {
 
     // Tải hình nền động (end.gif) từ classpath hoặc file
     private static Image loadBackgroundImage() {
-        Image backgroundImage = null;
-        try {
-            URL imageURL = EndMenu.class.getClassLoader().getResource("end.gif");
-            if (imageURL != null) {
-                backgroundImage = new Image(imageURL.toString(), true);
-                System.out.println("Đã tải end.gif từ classpath");
-                return backgroundImage;
-            }
-            String[] paths = { "resources/end.gif", "./resources/end.gif", "../resources/end.gif" };
-            for (String path : paths) {
-                File file = new File(path);
-                if (file.exists()) {
-                    backgroundImage = new Image(file.toURI().toString(), true);
-                    System.out.println("Đã tải end.gif từ: " + path);
-                    return backgroundImage;
-                }
-            }
-            System.err.println("Không tìm thấy end.gif");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return backgroundImage;
+    return ScaleManager.loadAnimatedImage("end.gif");
     }
+
 
     // Tải ảnh từ resources (giống trong GameMenu)
     private static Image loadImage(String name) {
-        try {
-            URL url = EndMenu.class.getClassLoader().getResource(name);
-            if (url != null) return new Image(url.toString());
-            return new Image("file:resources/" + name);
-        } catch (Exception e) {
-            System.err.println("Không tải được " + name);
-            return null;
-        }
+    return ScaleManager.loadImage(name);
     }
 }
