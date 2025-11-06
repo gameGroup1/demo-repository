@@ -34,6 +34,4 @@ public class GameLevel {
         gameLevel.makeBricks(arr);
         levels.add(gameLevel);
     }
-
-    public void generateMap() {};
 }

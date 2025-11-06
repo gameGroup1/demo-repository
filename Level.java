@@ -34,7 +34,7 @@ public class Level {
         capsules = new Capsule[rows * cols];
         Random random = new Random();
 
-        int[] hardnessArray = {2, 3, 4};
+        int[] hardnessArray = {1, 2, 3, 4};
         double offsetX = wallThickness + 50;  // căn giữa
         double offsetY = wallThickness + 100;
 
@@ -55,10 +55,14 @@ public class Level {
                 bricks[index] = new Bricks(brickX, brickY, brickWidth, brickHeight, hardness);
 
                 // 25% cơ hội sinh capsule
-                if (random.nextDouble() < 0.25) {
-                    capsules[index] = EffectManager.getCapsule(
-                            brickX, brickY, brickWidth, brickHeight, speedC
-                    );
+                if (random.nextDouble() < 0.3) {
+                    capsules[index] = EffectManager.getCapsule(brickX, brickY, brickWidth, brickHeight, speedC);
+                    capsules[index].setVisible(false);
+                    capsuleIndex.add(index);
+                }
+                else if (random.nextDouble() < 0.5) {
+                    capsules[index] = new Capsule(Path.explosionCapsule, Path.explosionSound);
+                    capsules[index].init(brickX, brickY, brickWidth, brickHeight, speedC, "explosion");
                     capsules[index].setVisible(false);
                     capsuleIndex.add(index);
                 }

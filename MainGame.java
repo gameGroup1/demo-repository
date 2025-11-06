@@ -39,6 +39,7 @@ public class MainGame {
     private final int wallThickness = 30;
     private int numberBrokeBrick = 0;          // Số gạch đã phá trong level hiện tại
     private int numberLevel = 1;               // Level hiện tại
+
     // Các đối tượng trong game
     private Ball ball;
     private Paddle paddle;
