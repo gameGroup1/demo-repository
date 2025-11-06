@@ -145,7 +145,6 @@ abstract public class EffectManager {
         if (ball == null) {
             return;  // Xử lý edge case: ball null
         }
-
         int originalPower = ball.getPower();
         ball.setPower(10);  // Giả sử fireball làm bóng phá gạch ngay lập tức bằng cách tăng power cao
         ball.setFireBall(true);

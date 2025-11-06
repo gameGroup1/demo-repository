@@ -13,6 +13,7 @@ public class Ball extends GameObject{
     private Image fireImage;
     private Rectangle2D normalViewport;
     private Rectangle2D fireViewport;
+    private boolean isFireBall = false;
 
     public Ball(double x, double y, double radius, double speed) {
         super(x, y,(int) radius * 2, (int) radius * 2);
@@ -40,7 +41,12 @@ public class Ball extends GameObject{
     public void setPower(int power) { this.power = power; }
     public void setSpeed(double speed) { this.speed = speed; }
 
+    public boolean isFireBall() {
+        return isFireBall; // Trả về biến boolean trực tiếp
+    }
+    
     public void setFireBall(boolean isFireBall) {
+        this.isFireBall = isFireBall; // Lưu trạng thái
         if (isFireBall) {
             imageView.setImage(fireImage);
             imageView.setViewport(fireViewport);
@@ -50,6 +56,7 @@ public class Ball extends GameObject{
             imageView.setViewport(normalViewport);
         }
     }
+
 
     @Override
     public void render() {
