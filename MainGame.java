@@ -31,39 +31,39 @@ import javafx.scene.image.ImageView;
  */
 public class MainGame {
     // Cài đặt kích thước màn hình và đối tượng
-    private final int widthW = 1080;
-    private final int heightW = 720;
-    private final int widthP = 150;
-    private final int heightP = 30;
-    private final int radiusB = 15;
-    private int speedB = 7;                    // Tốc độ bóng, tăng dần theo level
-    private final int speedC = 2;
-    private final int wallThickness = 30;
-    private int numberBrokeBrick = 0;          // Số gạch đã phá trong level hiện tại
-    private int numberLevel = 1;               // Level hiện tại
+    private static final int widthW = 1080;
+    private static final int heightW = 720;
+    private static final int widthP = 150;
+    private static final int heightP = 30;
+    private static final int radiusB = 15;
+    private static int speedB = 7;                    // Tốc độ bóng, tăng dần theo level
+    private static final int speedC = 2;
+    private static final int wallThickness = 30;
+    private static int numberBrokeBrick = 0;          // Số gạch đã phá trong level hiện tại
+    private static int numberLevel = 1;               // Level hiện tại
     // Các đối tượng trong game
-    private Ball ball;
-    private Paddle paddle;
+    private static Ball ball;
+    private static Paddle paddle;
     private Wall leftWall, rightWall, topWall;
-    private Bricks[] bricks;
-    private Capsule[] capsules;
-    private List<Integer> capsuleIndex = new ArrayList<>();
-    private Group root;
+    private static Bricks[] bricks;
+    private static Capsule[] capsules;
+    private static List<Integer> capsuleIndex = new ArrayList<>();
+    private static Group root;
     private static AnimationTimer gameLoop;
     private Stage primaryStage;
     // Điểm số, mạng, giao diện
-    private int score = 0;
+    private static int score = 0;
     private static int highestScore;
     private static MediaPlayer mediaPlayer; // dùng cho background music (giữ nguyên)
     // --- Thêm cho video background ---
     private MediaPlayer bgVideoPlayer;
     private MediaView bgMediaView;
     // -----------------------------------
-    private boolean isAttached = true;         // Bóng dính vào paddle
+    private static boolean isAttached = true;         // Bóng dính vào paddle
     private int lives = 5;
     private List<ImageView> heartImages = new ArrayList<>();
     private Text scoreText;
-    private Text levelText;
+    private static Text levelText;
     private Image heartImage;
     private Image collisionImage;
     // Trạng thái pause và paddle tĩnh để Pause truy cập
@@ -85,16 +85,16 @@ public class MainGame {
             System.out.println("MediaPlayer (music) stopped.");
         }
 
-        // Dừng video background nếu có
-        // (không unregister vào VolumeManager vì video có mute)
-        try {
-            // bgVideoPlayer là non-static, không thể truy cập trực tiếp từ static method;
-            // để đơn giản, tạm gọi một hook nếu cần — nhưng chúng ta sẽ stop nó từ instance khi window close.
-            // Nếu muốn, bạn có thể chuyển bgVideoPlayer thành static và stop ở đây.
-            System.out.println("Note: bgVideoPlayer will be stopped by instance if present.");
-        } catch (Exception e) {
-            // ignore
-        }
+//        // Dừng video background nếu có
+//        // (không unregister vào VolumeManager vì video có mute)
+//        try {
+//            // bgVideoPlayer là non-static, không thể truy cập trực tiếp từ static method;
+//            // để đơn giản, tạm gọi một hook nếu cần — nhưng chúng ta sẽ stop nó từ instance khi window close.
+//            // Nếu muốn, bạn có thể chuyển bgVideoPlayer thành static và stop ở đây.
+//            System.out.println("Note: bgVideoPlayer will be stopped by instance if present.");
+//        } catch (Exception e) {
+//            // ignore
+//        }
 
         // Dừng tất cả âm thanh khác
         VolumeManager.stopAllSounds();
@@ -106,7 +106,7 @@ public class MainGame {
     }
 
     // Tạo gạch và capsule (gọi lại khi qua level)
-    private void genBrickAndCapsule() {
+    private static void genBrickAndCapsule() {
         int[] hardnessArray = {1, 2, 3, 4};
         Random random = new Random();
         int brickWidth = 90;
@@ -228,36 +228,36 @@ public class MainGame {
         });
 
         // --- Thiết lập video background ---
-        try {
-            // Thử load từ resource first (nếu đóng gói trong jar dưới resources root)
-            URL videoURL = getClass().getClassLoader().getResource("/resources/video_background.mp4");
-            Media bgMedia;
-            if (videoURL != null) {
-                bgMedia = new Media(videoURL.toString());
-            } else {
-                // fallback: file path relative to project
-                File f = new File("resources/video_background.mp4");
-                bgMedia = new Media(f.toURI().toString());
-            }
-
-            bgVideoPlayer = new MediaPlayer(bgMedia);
-            bgVideoPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-            bgVideoPlayer.setAutoPlay(true);
-            bgVideoPlayer.setMute(true); // tắt tiếng background video (thay đổi nếu muốn âm thanh)
-            bgMediaView = new MediaView(bgVideoPlayer);
-            bgMediaView.setPreserveRatio(false); // fill toàn bộ màn hình
-            bgMediaView.setMouseTransparent(true); // để mouse event đi qua xuống các node bên dưới
-            // Bind kích thước video với scene
-            bgMediaView.fitWidthProperty().bind(scene.widthProperty());
-            bgMediaView.fitHeightProperty().bind(scene.heightProperty());
-
-            // Thêm background ở vị trí index 0 để nằm phía sau các node khác
-            root.getChildren().add(0, bgMediaView);
-        } catch (Exception e) {
-            System.err.println("Không thể load background video a.mp4");
-            e.printStackTrace();
-        }
-        // --- Kết thúc thiết lập video background ---
+//        try {
+//            // Thử load từ resource first (nếu đóng gói trong jar dưới resources root)
+//            URL videoURL = getClass().getClassLoader().getResource("/resources/video_background.mp4");
+//            Media bgMedia;
+//            if (videoURL != null) {
+//                bgMedia = new Media(videoURL.toString());
+//            } else {
+//                // fallback: file path relative to project
+//                File f = new File("resources/video_background.mp4");
+//                bgMedia = new Media(f.toURI().toString());
+//            }
+//
+//            bgVideoPlayer = new MediaPlayer(bgMedia);
+//            bgVideoPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+//            bgVideoPlayer.setAutoPlay(true);
+//            bgVideoPlayer.setMute(true); // tắt tiếng background video (thay đổi nếu muốn âm thanh)
+//            bgMediaView = new MediaView(bgVideoPlayer);
+//            bgMediaView.setPreserveRatio(false); // fill toàn bộ màn hình
+//            bgMediaView.setMouseTransparent(true); // để mouse event đi qua xuống các node bên dưới
+//            // Bind kích thước video với scene
+//            bgMediaView.fitWidthProperty().bind(scene.widthProperty());
+//            bgMediaView.fitHeightProperty().bind(scene.heightProperty());
+//
+//            // Thêm background ở vị trí index 0 để nằm phía sau các node khác
+//            root.getChildren().add(0, bgMediaView);
+//        } catch (Exception e) {
+//            System.err.println("Không thể load background video a.mp4");
+//            e.printStackTrace();
+//        }
+//        // --- Kết thúc thiết lập video background ---
 
         primaryStage.show();
 
@@ -425,11 +425,11 @@ public class MainGame {
 
                 // Qua level
                 if (numberBrokeBrick == 50) {
-                    speedB += 5;
-                    ball.setSpeed(speedB);
-                    numberLevel++;
-                    levelText.setText("Level: " + numberLevel);
-                    numberBrokeBrick = 0;
+                    isPaused = true;
+                    // dừng game loop ngay (ngăn tiếp tục animation)
+                    if (gameLoop != null) gameLoop.stop();
+                    // đưa việc hiển thị cửa sổ ra ngoài pulse hiện tại để tránh IllegalStateException
+                    Platform.runLater(() -> WinLevel.show(primaryStage, gameLoop));
 
                     // Xóa gạch cũ
                     for (int i = 0; i < bricks.length; i++) {
@@ -447,22 +447,46 @@ public class MainGame {
                         }
                     }
 
-                    capsuleIndex.clear();
-                    setPaddleDefault();
-                    setBallDefault();
-                    isAttached = true;
-                    genBrickAndCapsule();
+                    // Xóa bóng
+                    root.getChildren().remove(ball.getNode());
 
-                    // Thêm gạch mới
-                    for (Bricks brick : bricks) {
-                        if (brick != null && brick.getNode() != null) {
-                            root.getChildren().add(brick.getNode());
-                        }
-                    }
+                    capsuleIndex.clear();
+//                    setPaddleDefault();
+//                    setBallDefault();
+//                    isAttached = true;
+//                    genBrickAndCapsule();
+//
+//                    // Thêm gạch mới
+//                    for (Bricks brick : bricks) {
+//                        if (brick != null && brick.getNode() != null) {
+//                            root.getChildren().add(brick.getNode());
+//                        }
+//                    }
                 }
             }
         };
         gameLoop.start();
+    }
+
+    // Reset sau khi tiếp tục màn chơi mới
+    public static void reset() {
+        speedB += 5;
+        ball.setSpeed(speedB);
+        numberLevel++;
+        levelText.setText("Level: " + numberLevel);
+        numberBrokeBrick = 0;
+
+        setPaddleDefault();
+        setBallDefault();
+        isAttached = true;
+        genBrickAndCapsule();
+
+        // Thêm gạch mới
+        for (Bricks brick : bricks) {
+            if (brick != null && brick.getNode() != null) {
+                root.getChildren().add(brick.getNode());
+            }
+        }
     }
 
     // Áp dụng hiệu ứng capsule
@@ -511,7 +535,7 @@ public class MainGame {
     }
 
     // Hiệu ứng nổ lớn (capsule explosion)
-    private void showExplosion(double x, double y) {
+    private static void showExplosion(double x, double y) {
         Image explosionImage = new Image("file:resources/explosion.gif");
         ImageView explosionView = new ImageView(explosionImage);
         explosionView.setFitWidth(100);
@@ -526,15 +550,16 @@ public class MainGame {
     }
 
     // Reset paddle về mặc định
-    private void setPaddleDefault() {
+    private static void setPaddleDefault() {
         paddle.setWidth(widthP);
         paddle.setHeight(heightP);
     }
 
     // Reset bóng về vị trí ban đầu
-    private void setBallDefault() {
+    private static void setBallDefault() {
         double centerX = paddle.getX() + widthP / 2;
         double centerY = paddle.getY() - radiusB;
+        isAttached = true;
         ball.setDx(0);
         ball.setDy(0);
         ball.setX(centerX);
@@ -542,6 +567,7 @@ public class MainGame {
         ball.setSpeed(speedB);
         ball.setPower(1);
         ball.setFireBall(false);
+        root.getChildren().add(ball.getNode());
     }
 
     // Mất 1 mạng
