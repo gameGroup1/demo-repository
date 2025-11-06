@@ -54,12 +54,13 @@ public class MainGame {
     private static int highestScore;
     private static MediaPlayer mediaPlayer;
     private boolean isAttached = true;         // Bóng dính vào paddle
-    private int lives = 5;
+    private int lives = 10;
     private List<ImageView> heartImages = new ArrayList<>();
     private Text scoreText;
     private Text levelText;
     private Image heartImage;
     private Image collisionImage;
+    private Image fireCollisionImage;
     // Trạng thái pause và paddle tĩnh để Pause truy cập
     public static boolean isPaused = false;
     public static Paddle staticPaddle;
@@ -108,7 +109,7 @@ public class MainGame {
                 bricks[index] = new Bricks(brickX, brickY, brickWidth, brickHeight, randomHardness);
 
                 double chance = random.nextDouble();
-                if (chance < 0.3) {
+                if (chance < 0.7) {
                     capsules[index] = EffectManager.getCapsule(brickX, brickY, brickWidth, brickHeight, speedC);
                     capsules[index].setVisible(false);
                     capsuleIndex.add(index);
@@ -130,6 +131,7 @@ public class MainGame {
     // Constructor: Khởi tạo toàn bộ game
     public MainGame() {
         collisionImage = new Image("file:resources/boom_collision.gif");
+        fireCollisionImage = new Image("file:resources/fire_collision.gif");
         double paddleX = (widthW - widthP) / 2.0;
         double paddleY = heightW - heightP;
         paddle = new Paddle(paddleX, paddleY, widthP, heightP);
@@ -174,17 +176,23 @@ public class MainGame {
 
     // Hiệu ứng nổ khi bóng chạm gạch (chỉ khi không phải fireball)
     private void showBrickCollisionEffect(double x, double y) {
-        ImageView effect = new ImageView(collisionImage);
-        effect.setFitWidth(60);
-        effect.setFitHeight(60);
-        effect.setX(x - 30);
-        effect.setY(y - 30);
-        root.getChildren().add(effect);
+    boolean isFire = ball.isFireBall();
+    System.out.println("showBrickCollisionEffect called - isFireBall: " + isFire);
+    
+    Image effectImage = isFire ? fireCollisionImage : collisionImage;
+    System.out.println("Using image: " + (isFire ? "fire_collision.gif" : "boom_collision.gif"));
+    
+    ImageView effect = new ImageView(effectImage);
+    effect.setFitWidth(60);
+    effect.setFitHeight(60);
+    effect.setX(x - 30);
+    effect.setY(y - 30);
+    root.getChildren().add(effect);
 
-        PauseTransition remove = new PauseTransition(Duration.seconds(1.0));
-        remove.setOnFinished(e -> root.getChildren().remove(effect));
-        remove.play();
-    }
+    PauseTransition remove = new PauseTransition(Duration.seconds(1.0));
+    remove.setOnFinished(e -> root.getChildren().remove(effect));
+    remove.play();
+}
 
     // Khởi động game
     public void start(Stage primaryStage) {
@@ -331,7 +339,7 @@ public class MainGame {
                             double brickCenterX = brokenBrick.getX() + brokenBrick.getWidth() / 2;
                             double brickCenterY = brokenBrick.getY() + brokenBrick.getHeight() / 2;
 
-                            if (ball.getPower() == 1) {
+                            if (ball.getPower() >= 1) {
                                 showBrickCollisionEffect(brickCenterX, brickCenterY);
                             }
 
@@ -444,8 +452,9 @@ public class MainGame {
         EffectManager.updateSpeed(ball, 0.5);
         break;
 
-    case "fireBall":
+    case "fireBallCapsule":
         EffectManager.activateFireBall(ball);
+         // Tắt hiệu ứng sau 5 giây
         break;
 
     case "powerBall":
@@ -521,7 +530,7 @@ public class MainGame {
         ball.setX(centerX);
         ball.setY(centerY);
         ball.setSpeed(speedB);
-        ball.setPower(1);
+        ball.setPower(2);
         ball.setFireBall(false);
     }
 
