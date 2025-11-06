@@ -60,7 +60,7 @@ public class MainGame {
     private MediaView bgMediaView;
     // -----------------------------------
     private static boolean isAttached = true;         // Bóng dính vào paddle
-    private int lives = 5;
+    private static int lives = 5;
     private List<ImageView> heartImages = new ArrayList<>();
     private Text scoreText;
     private static Text levelText;
@@ -127,8 +127,12 @@ public class MainGame {
                 double chance = random.nextDouble();
                 if (chance < 0.3) {
                     capsules[index] = EffectManager.getCapsule(brickX, brickY, brickWidth, brickHeight, speedC);
-                    capsules[index].setVisible(false);
-                    capsuleIndex.add(index);
+                    if (capsules[index].getEffectType().equals("health") && lives == 5) {
+                        capsules[index] = null;
+                    } else {
+                        capsules[index].setVisible(false);
+                        capsuleIndex.add(index);
+                    }
                 } else {
                     chance = random.nextDouble();
                     if (chance < 0.2) {
@@ -451,17 +455,6 @@ public class MainGame {
                     root.getChildren().remove(ball.getNode());
 
                     capsuleIndex.clear();
-//                    setPaddleDefault();
-//                    setBallDefault();
-//                    isAttached = true;
-//                    genBrickAndCapsule();
-//
-//                    // Thêm gạch mới
-//                    for (Bricks brick : bricks) {
-//                        if (brick != null && brick.getNode() != null) {
-//                            root.getChildren().add(brick.getNode());
-//                        }
-//                    }
                 }
             }
         };
