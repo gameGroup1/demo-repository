@@ -5,6 +5,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
@@ -89,12 +90,7 @@ public class GameMenu extends Application {
     }
 
     private void showBestScore() {
-        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(
-            javafx.scene.control.Alert.AlertType.INFORMATION);
-        alert.setTitle("Best Score");
-        alert.setHeaderText(null);
-        alert.setContentText("Best Score: " + MainGame.getBestScore());
-        alert.showAndWait();
+    BestScoreMenu.show(); // Truyền stage hiện tại làm owner
     }
 
     private void showSettings() {

@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "BestScoreMenu",
+            "request": "launch",
+            "mainClass": "BestScoreMenu",
+            "projectName": "demo-repository_6c296484"
+        },
+        {
+            "type": "java",
             "name": "EndMenu",
             "request": "launch",
             "mainClass": "EndMenu",
