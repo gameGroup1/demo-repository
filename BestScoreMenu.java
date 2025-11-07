@@ -39,10 +39,10 @@ public class BestScoreMenu {
             background.setPreserveRatio(false);
             root.getChildren().add(background);
             System.out.println("Loaded bestScoreMenu.png successfully");
-        } else {
-            root.setStyle("-fx-background-color: #1a1a1a;");
-            System.err.println("Failed to load bestScoreMenu.png");
-        }
+            } else {
+                root.setStyle("-fx-background-color: #1a1a1a;");
+                System.err.println("Failed to load bestScoreMenu.png");
+            }
 
         // === LẤY ĐIỂM CAO NHẤT ===
         int bestScore = MainGame.getBestScore();

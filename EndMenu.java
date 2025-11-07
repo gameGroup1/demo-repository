@@ -178,12 +178,12 @@ public class EndMenu {
 
     // Tải hình nền động (end.gif) từ classpath hoặc file
     private static Image loadBackgroundImage() {
-    return ScaleManager.loadAnimatedImage("end.gif");
+        return ScaleManager.loadAnimatedImage("end.gif");
     }
 
 
     // Tải ảnh từ resources (giống trong GameMenu)
     private static Image loadImage(String name) {
-    return ScaleManager.loadImage(name);
+        return ScaleManager.loadImage(name);
     }
 }
