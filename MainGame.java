@@ -29,47 +29,46 @@ import javafx.scene.image.ImageView;
  * HIỆU ỨNG ĐUÔI BÓNG: Dùng class riêng BallTrailEffect để quản lý.
  */
 public class MainGame {
-    // ====================== CÀI ĐẶT KÍCH THƯỚC ======================
-    private final int widthW = 1080;        // Chiều rộng cửa sổ
-    private final int heightW = 720;        // Chiều cao cửa sổ
-    private final int widthP = 150;         // Chiều rộng paddle
-    private final int heightP = 30;         // Chiều cao paddle
-    private final int radiusB = 15;         // Bán kính bóng
-    private int speedB = 4;                 // Tốc độ bóng (tăng theo level)
-    private final int speedC = 2;           // Tốc độ capsule rơi
-    private final int wallThickness = 30;   // Độ dày tường
-    private int numberBrokeBrick = 0;       // Số gạch đã phá trong level
-    private int numberLevel = 1;            // Level hiện tại
+    // Cài đặt kích thước màn hình và đối tượng
+    private final int widthW = 1080;
+    private final int heightW = 720;
+    private final int widthP = 150;
+    private final int heightP = 30;
+    private final int radiusB = 15;
+    private int speedB = 7;                    // Tốc độ bóng, tăng dần theo level
+    private final int speedC = 2;
+    private final int wallThickness = 30;
+    private int numberLevel = 1;               // Level hiện tại
 
-    // ====================== ĐỐI TƯỢNG GAME ======================
-    private Ball ball;                      // Bóng
-    private Paddle paddle;                  // Thanh đỡ
-    private Wall leftWall, rightWall, topWall; // Tường
-    private Bricks[] bricks;                // Mảng gạch
-    private Capsule[] capsules;             // Mảng capsule
-    private List<Integer> capsuleIndex = new ArrayList<>(); // Chỉ số capsule đang rơi
-    private Group root;                     // Root node của Scene
-    private static AnimationTimer gameLoop; // Vòng lặp game
-    private Stage primaryStage;             // Cửa sổ chính
+    // Các đối tượng trong game
+    private Ball ball;
+    private Paddle paddle;
+    private Wall leftWall, rightWall, topWall;
+    private Bricks[] bricks;
+    private Capsule[] capsules;
+    private List<Integer> capsuleIndex = new ArrayList<>();
+    private Group root;
+    private static AnimationTimer gameLoop;
+    private Stage primaryStage;
+    // Điểm số, mạng, giao diện
+    private int score = 0;
+    private static int highestScore;
+    private static MediaPlayer mediaPlayer;
+    private boolean isAttached = true;         // Bóng dính vào paddle
+    private int lives = 10;
+    private List<ImageView> heartImages = new ArrayList<>();
+    private Text scoreText;
+    private Text levelText;
+    private Image heartImage;
+    private Image collisionImage;
+    private Image fireCollisionImage;
+    private GameLevel gameLevel;
+    // Trạng thái pause và paddle tĩnh để Pause truy cập
+    public static boolean isPaused = false;
+    public static Paddle staticPaddle;
 
-    // ====================== ĐIỂM SỐ & GIAO DIỆN ======================
-    private int score = 0;                  // Điểm hiện tại
-    private static int highestScore = 0;    // Điểm cao nhất
-    private static MediaPlayer mediaPlayer; // Nhạc nền
-    private boolean isAttached = true;      // Bóng dính vào paddle
-    private int lives = 10;                 // Số mạng
-    private List<ImageView> heartImages = new ArrayList<>(); // Hình trái tim
-    private Text scoreText;                 // Text hiển thị điểm
-    private Text levelText;                 // Text hiển thị level
-    private Image heartImage;               // Ảnh trái tim
-    private Image collisionImage;           // Hiệu ứng va chạm gạch
-    private Image fireCollisionImage;       // Hiệu ứng va chạm lửa
-
-    public static boolean isPaused = false; // Trạng thái tạm dừng
-    public static Paddle staticPaddle;      // Paddle tĩnh để Pause truy cập
-
-    private BallTrailEffect ballTrailEffect; // Quản lý hiệu ứng đuôi (class riêng)
-
+    private BallTrailEffect ballTrailEffect;
+    
     public static void cleanup() {
         System.out.println("MainGame.cleanup() started.");
 
@@ -96,47 +95,67 @@ public class MainGame {
     }
 
     private void genBrickAndCapsule() {
-        int[] hardnessArray = {1, 2, 3, 4};
-        Random random = new Random();
-        int brickWidth = 90;
-        int brickHeight = 30;
-        int spacing = 5;
-        int rowCount = 5;
-        int colCount = 10;
+        try {
+            System.out.println("genBrickAndCapsule() called. numberLevel=" + numberLevel);
+            if (gameLevel == null) {
+                System.err.println("ERROR: gameLevel is null in genBrickAndCapsule!");
+                return;
+            }
 
-        for (int row = 0; row < rowCount; row++) {
-            for (int col = 0; col < colCount; col++) {
-                double brickX = col * (brickWidth + spacing) + wallThickness + 30;
-                double brickY = row * (brickHeight + spacing) + wallThickness + 100;
-                int index = row * colCount + col;
+            gameLevel.nextLevel();
 
-                // Tạo gạch ngẫu nhiên độ bền
-                int randomHardness = hardnessArray[random.nextInt(hardnessArray.length)];
-                bricks[index] = new Bricks(brickX, brickY, brickWidth, brickHeight, randomHardness);
+            // Lấy level hiện tại
+            Level currentLevel = gameLevel.getCurrentLevel();
+            if (currentLevel == null) {
+                System.err.println("ERROR: gameLevel.getCurrentLevel() returned null");
+                return;
+            }
 
-                // 70% có capsule, 30% có thể là explosion
-                double chance = random.nextDouble();
-                if (chance < 0.7) {
-                    capsules[index] = EffectManager.getCapsule(brickX, brickY, brickWidth, brickHeight, speedC);
-                    capsules[index].setVisible(false);
-                    capsuleIndex.add(index);
-                } else {
-                    chance = random.nextDouble();
-                    if (chance < 0.3) {
-                        capsules[index] = new Capsule(Path.explosionCapsule, Path.explosionSound);
-                        capsules[index].init(brickX, brickY, brickWidth, brickHeight, speedC, "explosion");
-                        capsules[index].setVisible(false);
-                        capsuleIndex.add(index);
-                    } else {
-                        capsules[index] = null;
+            this.bricks = currentLevel.getBricks();
+            this.capsules = currentLevel.getCapsules();
+            this.capsuleIndex = currentLevel.getCapsuleIndex();
+
+            System.out.println("Loaded currentLevel. bricks=" + (bricks == null ? "null" : String.valueOf(bricks.length))
+                    + ", capsules=" + (capsules == null ? "null" : String.valueOf(capsules.length))
+                    + ", capsuleIndex=" + (capsuleIndex == null ? "null" : String.valueOf(capsuleIndex.size())));
+
+            // Thêm từng viên gạch vào scene (guard null)
+            if (bricks != null) {
+                for (Bricks brick : bricks) {
+                    if (brick != null && !brick.isBreak() && brick.getNode() != null) {
+                        if (!root.getChildren().contains(brick.getNode())) {
+                            root.getChildren().add(brick.getNode());
+                        }
                     }
                 }
+            } else {
+                System.err.println("Warning: bricks array is null for this level.");
             }
+        }
+        catch (Exception e) {
+            System.err.println("Error in generating level.");
+            e.printStackTrace();
         }
     }
 
+    private boolean isLevelCleared() {
+        if (bricks == null) {
+            // if bricks null, treat as cleared (or decide to treat as not cleared based on your logic)
+            System.err.println("isLevelCleared(): bricks array is null -> treating as cleared");
+            return true;
+        }
+        for (Bricks brick : bricks) {
+            if (brick != null && !brick.isBreak()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    // Constructor: Khởi tạo toàn bộ game
     public MainGame() {
-        // Load hiệu ứng va chạm
+        gameLevel = new GameLevel(5, wallThickness, speedC);
         collisionImage = new Image("file:resources/boom_collision.gif");
         fireCollisionImage = new Image("file:resources/fire_collision.gif");
 
@@ -158,9 +177,6 @@ public class MainGame {
         rightWall = new Wall("right", widthW - wallThickness, 0, wallThickness, heightW, wallThickness);
         topWall = new Wall("top", 0, 0, widthW, wallThickness, wallThickness);
 
-        // Khởi tạo mảng gạch và capsule
-        bricks = new Bricks[50];
-        capsules = new Capsule[50];
         genBrickAndCapsule();
 
         // Tạo trái tim (mạng)
@@ -350,7 +366,6 @@ public class MainGame {
                         if (breakIndex != -1 && bricks[breakIndex].isBreak()) {
                             score += 10;
                             highestScore = Math.max(score, highestScore);
-                            numberBrokeBrick++;
 
                             Bricks brokenBrick = bricks[breakIndex];
                             double brickCenterX = brokenBrick.getX() + brokenBrick.getWidth() / 2;
@@ -393,33 +408,31 @@ public class MainGame {
                     Update.loseLifeSound.play(VolumeManager.getEffectVolume());
                     loseLife();
                 }
-
-                // === QUA LEVEL ===
-                if (numberBrokeBrick == 50) {
-                    speedB += 5;
-                    ball.setSpeed(speedB);
+                // Qua level
+                if (isLevelCleared()) {
                     numberLevel++;
                     levelText.setText("Level: " + numberLevel);
-                    numberBrokeBrick = 0;
 
-                    // Xóa gạch và capsule cũ
-                    for (int i = 0; i < bricks.length; i++) {
-                        if (bricks[i] != null && bricks[i].getNode() != null) {
-                            root.getChildren().remove(bricks[i].getNode());
-                            bricks[i] = null;
+                    // Xóa brick cũ
+                    for(Bricks brick : bricks) {
+                        if (brick != null && brick.getNode() != null) {
+                            root.getChildren().remove(brick.getNode());
                         }
-                        if (capsules[i] != null && capsules[i].getNode() != null) {
-                            root.getChildren().remove(capsules[i].getNode());
-                            capsules[i] = null;
+                    }
+
+                    // Xóa capsule cũ
+                    for(Capsule capsule : capsules) {
+                        if (capsule != null && capsule.getNode() != null) {
+                            root.getChildren().remove(capsule.getNode());
                         }
                     }
                     capsuleIndex.clear();
 
                     // Reset paddle & bóng
+                   genBrickAndCapsule();
                     setPaddleDefault();
                     setBallDefault();
                     isAttached = true;
-                    genBrickAndCapsule();
 
                     // Xóa dư ảnh cũ
                     if (ballTrailEffect != null) {
@@ -432,6 +445,7 @@ public class MainGame {
                             root.getChildren().add(brick.getNode());
                         }
                     }
+                    
                 }
             }
         };
@@ -497,7 +511,6 @@ public class MainGame {
 
     private void setPaddleDefault() {
         paddle.setWidth(widthP);
-        paddle.setHeight(heightP);
     }
 
     private void setBallDefault() {
@@ -508,7 +521,7 @@ public class MainGame {
         ball.setX(centerX);
         ball.setY(centerY);
         ball.setSpeed(speedB);
-        ball.setPower(2);
+        ball.setPower(1);
         ball.setFireBall(false);
 
         // Xóa dư ảnh khi reset bóng
