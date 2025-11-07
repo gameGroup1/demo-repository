@@ -1,40 +1,39 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
-public abstract class GameLevel {
-    protected Bricks[] bricks;
-    protected Capsule[] capsules;
-    protected List<Integer> capsuleIndex = new ArrayList<>();
+public class GameLevel {
+    private int spacing;
+    private int wallThickness;
+    private int speedC;
+    private Integer level = 0;
+    private List<Level> levels = new ArrayList<>();
 
-    protected int rowCount;
-    protected int colCount;
-    protected int brickWidth;
-    protected int brickHeight;
-    protected int spacing;
-    protected int wallThickness;
-    protected int speedC;
-
-    public GameLevel(int rowCount, int colCount, int brickWidth, int brickHeight,
-                     int spacing, int wallThickness, int speedC) {
-        this.rowCount = rowCount;
-        this.colCount = colCount;
-        this.brickWidth = brickWidth;
-        this.brickHeight = brickHeight;
+    public GameLevel(int spacing, int wallThickness, int speedC) {
         this.spacing = spacing;
         this.wallThickness = wallThickness;
         this.speedC = speedC;
     }
 
-    public abstract void generateMap();
+    public void nextLevel() throws IOException {
+        level++;
+        String fileName = "Level" + level.toString() + ".txt";
+        String filePath = "/Levels/" + fileName;
+        Scanner scanner = new Scanner(new File(filePath));
+        int rowCount = scanner.nextInt();
+        int colCount = scanner.nextInt();
+        int brickWidth = scanner.nextInt();
+        int brickHeight = scanner.nextInt();
+        Level gameLevel = new Level(rowCount, colCount, brickWidth, brickHeight, spacing, wallThickness, speedC);
+        int[][] arr = new int[rowCount][colCount];
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < colCount; j++) arr[i][j] = scanner.nextInt();
+        }
+        gameLevel.makeBricks(arr);
+        levels.add(gameLevel);
+    }
 
-    public Bricks[] getBricks() {
-        return bricks;
-    }
-    public Capsule[] getCapsules() {
-        return capsules;
-    }
-    public List<Integer> getCapsuleIndex() {
-        return capsuleIndex;
-    }
+    public void generateMap() {};
 }

@@ -1,73 +1,112 @@
-import javafx.scene.Node;
-import javafx.scene.Group;
+// ScaleManager.java
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Scale;
-import java.util.ArrayList;
-import java.util.List;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
+import java.net.URL;
 
 public class ScaleManager {
-    private static double scale = 1.0; // Scale thống nhất mặc định
-
-    // Danh sách các node có thể scale (bao gồm root/background)
-    private static List<Node> scalableNodes = new ArrayList<>();
-
-    // Constructor: Đăng ký các nodes ban đầu
-    public static void registerScalableNode(Node node) {
-        scalableNodes.add(node);
+    
+    /**
+     * Tải hình ảnh từ resources với fallback
+     */
+    public static Image loadImage(String name) {
+        try {
+            URL url = ScaleManager.class.getClassLoader().getResource(name);
+            if (url != null) {
+                return new Image(url.toString());
+            }
+            return new Image("file:resources/" + name);
+        } catch (Exception e) {
+            System.err.println("Không tải được hình ảnh: " + name);
+            return null;
+        }
     }
-
-    public static double getScale() {
-        return scale;
+    
+    /**
+     * Tải hình ảnh động (GIF) từ resources với fallback
+     */
+    public static Image loadAnimatedImage(String name) {
+        try {
+            URL url = ScaleManager.class.getClassLoader().getResource(name);
+            if (url != null) {
+                return new Image(url.toString(), true);
+            }
+            return new Image("file:resources/" + name, true);
+        } catch (Exception e) {
+            System.err.println("Không tải được hình ảnh động: " + name);
+            return null;
+        }
     }
+    
+    /**
+     * Tạo hình ảnh scaled từ hình gốc
+     */
+    public static Image createScaledImage(Image src, double scale) {
+        if (src == null) return null;
+        
+        int w = (int) (src.getWidth() * scale);
+        int h = (int) (src.getHeight() * scale);
+        WritableImage out = new WritableImage(w, h);
+        PixelReader reader = src.getPixelReader();
+        PixelWriter writer = out.getPixelWriter();
 
-    public static void setScale(double s) {
-        if (s < 0.5) s = 0.5;
-        else if (s > 2.0) s = 2.0;
-        scale = s;
-        applyScalesToAll();
-    }
+        for (int y = 0; y < h; y++) {
+            for (int x = 0; x < w; x++) {
+                int sx = (int) (x / scale);
+                int sy = (int) (y / scale);
+                
+                if (sx < src.getWidth() && sy < src.getHeight()) {
+                    int argb = reader.getArgb(sx, sy);
+                    
+                    // Giữ nguyên độ trong suốt
+                    int alpha = (argb >> 24) & 0xFF;     
+                    int newAlpha = (int) (alpha * 1.0); 
+        
+                    int r = (argb >> 16) & 0xFF;
+                    int g = (argb >> 8) & 0xFF;
+                    int b = argb & 0xFF;
 
-    // Áp dụng scale cho tất cả nodes đã đăng ký
-    private static void applyScalesToAll() {
-        for (Node node : scalableNodes) {
-            if (node != null) {
-                applyScaleToNode(node);
+                    writer.setArgb(x, y, (newAlpha << 24) | (r << 16) | (g << 8) | b);
+                }
             }
         }
+        return out;
     }
-
-    // Áp dụng scale cho một node (hỗ trợ cả ImageView và Rectangle)
-    public static void applyScaleToNode(Node node) {
-        if (node instanceof ImageView) {
-            ImageView imageView = (ImageView) node;
-            if (imageView.getImage() != null) {
-                imageView.setFitWidth(scale * imageView.getImage().getWidth());
-                imageView.setFitHeight(scale * imageView.getImage().getHeight());
-            }
-            imageView.setX(scale * imageView.getX());
-            imageView.setY(scale * imageView.getY());
-        } else if (node instanceof Rectangle) {
-            Rectangle rect = (Rectangle) node;
-            rect.setWidth(scale * rect.getWidth());
-            rect.setHeight(scale * rect.getHeight());
-            rect.setX(scale * rect.getX());
-            rect.setY(scale * rect.getY());
-        } else if (node instanceof Group) {
-            // Scale toàn bộ group
-            Scale transform = new Scale(scale, scale);
-            node.getTransforms().clear();
-            node.getTransforms().add(transform);
-        }
-        // Có thể mở rộng cho các loại Node khác nếu cần
+    
+    /**
+     * Tải hình ảnh với kích thước mục tiêu (tự động scale)
+     */
+    public static Image loadAndScaleImage(String name, double targetWidth, double targetHeight) {
+        Image original = loadImage(name);
+        if (original == null) return null;
+        
+        double scaleX = targetWidth / original.getWidth();
+        double scaleY = targetHeight / original.getHeight();
+        double scale = Math.min(scaleX, scaleY);
+        
+        return createScaledImage(original, scale);
     }
-
-    // Áp dụng scale transform cho root node (toàn bộ scene)
-    public static void applyScaleToRoot(Node root) {
-        if (root != null) {
-            root.getTransforms().clear();
-            root.getTransforms().add(new Scale(scale, scale));
-        }
+    
+    /**
+     * Tải hình ảnh với chiều rộng mục tiêu (giữ tỷ lệ)
+     */
+    public static Image loadAndScaleImageByWidth(String name, double targetWidth) {
+        Image original = loadImage(name);
+        if (original == null) return null;
+        
+        double scale = targetWidth / original.getWidth();
+        return createScaledImage(original, scale);
+    }
+    
+    /**
+     * Tải hình ảnh với chiều cao mục tiêu (giữ tỷ lệ)
+     */
+    public static Image loadAndScaleImageByHeight(String name, double targetHeight) {
+        Image original = loadImage(name);
+        if (original == null) return null;
+        
+        double scale = targetHeight / original.getHeight();
+        return createScaledImage(original, scale);
     }
 }

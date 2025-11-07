@@ -61,11 +61,15 @@ public class MainGame {
     // -----------------------------------
     private static boolean isAttached = true;         // Bóng dính vào paddle
     private static int lives = 5;
+    private static MediaPlayer mediaPlayer;
+    private boolean isAttached = true;         // Bóng dính vào paddle
+    private int lives = 10;
     private List<ImageView> heartImages = new ArrayList<>();
     private Text scoreText;
     private static Text levelText;
     private Image heartImage;
     private Image collisionImage;
+    private Image fireCollisionImage;
     // Trạng thái pause và paddle tĩnh để Pause truy cập
     public static boolean isPaused = false;
     public static Paddle staticPaddle;
@@ -105,6 +109,7 @@ public class MainGame {
         System.out.println("Highest score saved. Cleanup completed.");
     }
 
+
     // Tạo gạch và capsule (gọi lại khi qua level)
     private static void genBrickAndCapsule() {
         int[] hardnessArray = {1, 2, 3, 4};
@@ -125,7 +130,7 @@ public class MainGame {
                 bricks[index] = new Bricks(brickX, brickY, brickWidth, brickHeight, randomHardness);
 
                 double chance = random.nextDouble();
-                if (chance < 0.3) {
+                if (chance < 0.7) {
                     capsules[index] = EffectManager.getCapsule(brickX, brickY, brickWidth, brickHeight, speedC);
                     if (capsules[index].getEffectType().equals("health") && lives == 5) {
                         capsules[index] = null;
@@ -135,7 +140,7 @@ public class MainGame {
                     }
                 } else {
                     chance = random.nextDouble();
-                    if (chance < 0.2) {
+                    if (chance < 0.3) {
                         capsules[index] = new Capsule(Path.explosionCapsule, Path.explosionSound);
                         capsules[index].init(brickX, brickY, brickWidth, brickHeight, speedC, "explosion");
                         capsules[index].setVisible(false);
@@ -151,6 +156,7 @@ public class MainGame {
     // Constructor: Khởi tạo toàn bộ game
     public MainGame() {
         collisionImage = new Image("file:resources/boom_collision.gif");
+        fireCollisionImage = new Image("file:resources/fire_collision.gif");
         double paddleX = (widthW - widthP) / 2.0;
         double paddleY = heightW - heightP;
         paddle = new Paddle(paddleX, paddleY, widthP, heightP);
@@ -195,17 +201,23 @@ public class MainGame {
 
     // Hiệu ứng nổ khi bóng chạm gạch (chỉ khi không phải fireball)
     private void showBrickCollisionEffect(double x, double y) {
-        ImageView effect = new ImageView(collisionImage);
-        effect.setFitWidth(60);
-        effect.setFitHeight(60);
-        effect.setX(x - 30);
-        effect.setY(y - 30);
-        root.getChildren().add(effect);
+    boolean isFire = ball.isFireBall();
+    System.out.println("showBrickCollisionEffect called - isFireBall: " + isFire);
+    
+    Image effectImage = isFire ? fireCollisionImage : collisionImage;
+    System.out.println("Using image: " + (isFire ? "fire_collision.gif" : "boom_collision.gif"));
+    
+    ImageView effect = new ImageView(effectImage);
+    effect.setFitWidth(60);
+    effect.setFitHeight(60);
+    effect.setX(x - 30);
+    effect.setY(y - 30);
+    root.getChildren().add(effect);
 
-        PauseTransition remove = new PauseTransition(Duration.seconds(1.0));
-        remove.setOnFinished(e -> root.getChildren().remove(effect));
-        remove.play();
-    }
+    PauseTransition remove = new PauseTransition(Duration.seconds(1.0));
+    remove.setOnFinished(e -> root.getChildren().remove(effect));
+    remove.play();
+}
 
     // Khởi động game
     public void start(Stage primaryStage) {
@@ -394,7 +406,7 @@ public class MainGame {
                             double brickCenterX = brokenBrick.getX() + brokenBrick.getWidth() / 2;
                             double brickCenterY = brokenBrick.getY() + brokenBrick.getHeight() / 2;
 
-                            if (ball.getPower() == 1) {
+                            if (ball.getPower() >= 1) {
                                 showBrickCollisionEffect(brickCenterX, brickCenterY);
                             }
 
@@ -487,44 +499,85 @@ public class MainGame {
         if (capsule != null) capsule.playSound();
         String type = capsule.getEffectType();
 
-        if (type.equals("inc10Point")) score += 10;
-        else if (type.equals("dec10Point")) score -= 10;
-        else if (type.equals("inc50Point")) score += 50;
-        else if (type.equals("dec50Point")) score -= 50;
-        else if (type.equals("inc100Point")) score += 100;
-        else if (type.equals("dec100Point")) score -= 100;
-        else if (type.equals("fastBall")) {
-            EffectManager.updateSpeed(ball, 1.5);
-        } else if (type.equals("slowBall")) {
-            EffectManager.updateSpeed(ball, 0.5);
-        } else if (type.equals("fireBall")) {
-            EffectManager.activateFireBall(ball);
-        } else if (type.equals("powerBall")) {
-            EffectManager.updatePower(ball, 3.0);
-        } else if (type.equals("expandPaddle")) {
-            EffectManager.changeWidth(paddle, 2.0);
-        } else if (type.equals("shrinkPaddle")) {
-            EffectManager.changeWidth(paddle, 0.5);
-        } else if (type.equals("health")) {
-            if (lives < 5) {
-                int newIndex = lives;
-                double newX = widthW - wallThickness - 80 - newIndex * 36;
-                ImageView newHeart = new ImageView(heartImage);
-                newHeart.setFitWidth(30);
-                newHeart.setFitHeight(30);
-                newHeart.setX(newX);
-                newHeart.setY(wallThickness + 5);
-                root.getChildren().add(newHeart);
-                heartImages.add(newHeart);
-                lives++;
-            }
-        } else if (type.equals("explosion")) {
-            showExplosion(capsule.getX(), capsule.getY());
-            loseLife();
+        switch (type) {
+    case "inc10Point":
+        score += 10;
+        break;
+
+    case "dec10Point":
+        score -= 10;
+        break;
+
+    case "inc50Point":
+        score += 50;
+        break;
+
+    case "dec50Point":
+        score -= 50;
+        break;
+
+    case "inc100Point":
+        score += 100;
+        break;
+
+    case "dec100Point":
+        score -= 100;
+        break;
+
+    case "fastBall":
+        EffectManager.updateSpeed(ball, 1.5);
+        break;
+
+    case "slowBall":
+        EffectManager.updateSpeed(ball, 0.5);
+        break;
+
+    case "fireBallCapsule":
+        EffectManager.activateFireBall(ball);
+         // Tắt hiệu ứng sau 5 giây
+        break;
+
+    case "powerBall":
+        EffectManager.updatePower(ball, 3.0);
+        break;
+
+    case "expandPaddle":
+        EffectManager.changeWidth(paddle, 2.0);
+        break;
+
+    case "shrinkPaddle":
+        EffectManager.changeWidth(paddle, 0.5);
+        break;
+
+    case "healthCapsule":
+        // THÊM MỚI: Hiệu ứng tăng mạng
+        if (lives < 5) {
+            int newIndex = lives;
+            double newX = widthW - wallThickness - 80 - newIndex * 36;
+            ImageView newHeart = new ImageView(heartImage);
+            newHeart.setFitWidth(30);
+            newHeart.setFitHeight(30);
+            newHeart.setX(newX);
+            newHeart.setY(wallThickness + 5);
+            root.getChildren().add(newHeart);
+            heartImages.add(newHeart);
+            lives++;
+            System.out.println("Health capsule collected! Lives: " + lives);
         }
+        break;
+
+    case "explosion":
+        showExplosion(capsule.getX(), capsule.getY());
+        loseLife();
+        break;
+
+    default:
+        System.out.println("Unknown capsule type: " + type);
+        break;
+}
+
 
         highestScore = Math.max(score, highestScore);
-        if (capsule != null) capsule.playSound();
     }
 
     // Hiệu ứng nổ lớn (capsule explosion)
@@ -558,7 +611,7 @@ public class MainGame {
         ball.setX(centerX);
         ball.setY(centerY);
         ball.setSpeed(speedB);
-        ball.setPower(1);
+        ball.setPower(2);
         ball.setFireBall(false);
         root.getChildren().add(ball.getNode());
     }

@@ -5,6 +5,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
@@ -62,6 +63,7 @@ public class GameMenu extends Application {
 
         ImageButton startBtn = new ImageButton(greenBtn, "Start", btnFont, mouseClickSound, 270);
         ImageButton bestBtn = new ImageButton(greenBtn, "Best Score", btnFont, mouseClickSound, 270);
+        ImageButton settingBtn = new ImageButton(greenBtn, "Settings", btnFont, mouseClickSound, 270);
         ImageButton exitBtn = new ImageButton(greenBtn, "Exit", btnFont, mouseClickSound, 270);
 
         startBtn.setOnAction(() -> {
@@ -71,20 +73,44 @@ public class GameMenu extends Application {
         });
 
         bestBtn.setOnAction(() -> showBestScore());
+        settingBtn.setOnAction(() -> showSettings());
         exitBtn.setOnAction(() -> {
             stopMusic();
             Platform.exit();
             System.exit(0);
         });
 
-        // === THANH ÂM LƯỢNG ===
+        content.getChildren().addAll(title, startBtn, bestBtn, settingBtn, exitBtn);
+        root.getChildren().add(content);
+
+        Scene scene = new Scene(root, 1100, 500);
+        stage.setScene(scene);
+        playBackgroundMusic();
+        stage.show();
+    }
+
+    private void showBestScore() {
+    BestScoreMenu.show(); // Truyền stage hiện tại làm owner
+    }
+
+    private void showSettings() {
+        Stage settingsStage = new Stage();
+        settingsStage.initOwner(stage);
+        settingsStage.setTitle("Settings");
+        settingsStage.setResizable(false);
+
+        VBox settingsBox = new VBox(20);
+        settingsBox.setAlignment(Pos.CENTER);
+        settingsBox.setPadding(new Insets(30));
+        settingsBox.setStyle("-fx-background-color: #003200;");
+
         // Background Volume
         Label bgLabel = new Label("Background Volume: " + (int)(VolumeManager.getBackgroundVolume() * 100) + "%");
         bgLabel.setFont(Font.font("Arial", 16));
-        bgLabel.setTextFill(Color.web("#9acd32"));
+        bgLabel.setTextFill(Color.WHITE);
 
         Slider bgSlider = new Slider(0, 100, VolumeManager.getBackgroundVolume() * 100);
-        bgSlider.setPrefWidth(200);
+        bgSlider.setPrefWidth(300);
         bgSlider.setMajorTickUnit(25);
         bgSlider.setShowTickMarks(true);
         bgSlider.setStyle("-fx-control-inner-background: #1a1a1a; -fx-accent: #9acd32;");
@@ -100,38 +126,36 @@ public class GameMenu extends Application {
         // Effect Volume
         Label effectLabel = new Label("Effect Volume: " + (int)(VolumeManager.getEffectVolume() * 100) + "%");
         effectLabel.setFont(Font.font("Arial", 16));
-        effectLabel.setTextFill(Color.web("#9acd32"));
+        effectLabel.setTextFill(Color.WHITE);
 
         Slider effectSlider = new Slider(0, 100, VolumeManager.getEffectVolume() * 100);
-        effectSlider.setPrefWidth(200);
+        effectSlider.setPrefWidth(300);
         effectSlider.setMajorTickUnit(25);
         effectSlider.setShowTickMarks(true);
-        effectSlider.setStyle("-fx-control-inner-background: #1a1a1a; -fx-accent: #abde46ff;");
+        effectSlider.setStyle("-fx-control-inner-background: #1a1a1a; -fx-accent: #9acd32;");
         effectSlider.valueProperty().addListener((obs, old, val) -> {
             double volume = val.doubleValue() / 100.0;
             VolumeManager.setEffectVolume(volume);
             effectLabel.setText("Effect Volume: " + val.intValue() + "%");
         });
 
-        VBox controls = new VBox(10, bgLabel, bgSlider, effectLabel, effectSlider);
-        controls.setAlignment(Pos.CENTER);
+        // Close Button
+        javafx.scene.control.Button closeBtn = new javafx.scene.control.Button("Close");
+        closeBtn.setFont(Font.font("Arial", 18));
+        closeBtn.setStyle("-fx-background-color: #9acd32; -fx-text-fill: black; -fx-padding: 10 30;");
+        closeBtn.setOnAction(e -> settingsStage.close());
 
-        content.getChildren().addAll(title, startBtn, bestBtn, exitBtn, controls);
-        root.getChildren().add(content);
+        VBox bgVolumeBox = new VBox(10, bgLabel, bgSlider);
+        bgVolumeBox.setAlignment(Pos.CENTER);
+        
+        VBox effectVolumeBox = new VBox(10, effectLabel, effectSlider);
+        effectVolumeBox.setAlignment(Pos.CENTER);
 
-        Scene scene = new Scene(root, 1100, 500);
-        stage.setScene(scene);
-        playBackgroundMusic();
-        stage.show();
-    }
+        settingsBox.getChildren().addAll(bgVolumeBox, effectVolumeBox, closeBtn);
 
-    private void showBestScore() {
-        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(
-            javafx.scene.control.Alert.AlertType.INFORMATION);
-        alert.setTitle("Best Score");
-        alert.setHeaderText(null);
-        alert.setContentText("Best Score: " + MainGame.getBestScore());
-        alert.showAndWait();
+        Scene settingsScene = new Scene(settingsBox, 400, 300);
+        settingsStage.setScene(settingsScene);
+        settingsStage.showAndWait();
     }
 
     private void playBackgroundMusic() {
@@ -156,24 +180,11 @@ public class GameMenu extends Application {
     }
 
     private Image loadBackground() {
-        try {
-            URL url = getClass().getClassLoader().getResource("background.gif");
-            if (url != null) return new Image(url.toString(), true);
-            return new Image("file:resources/background.gif", true);
-        } catch (Exception e) {
-            return null;
-        }
+    return ScaleManager.loadAnimatedImage("background.gif");
     }
 
     private Image loadImage(String name) {
-        try {
-            URL url = getClass().getClassLoader().getResource(name);
-            if (url != null) return new Image(url.toString());
-            return new Image("file:resources/" + name);
-        } catch (Exception e) {
-            System.err.println("Không tải được " + name);
-            return null;
-        }
+    return ScaleManager.loadImage(name);
     }
 
     private String getFontURL() {

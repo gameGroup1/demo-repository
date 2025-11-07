@@ -8,7 +8,7 @@ import javafx.util.Duration;
 abstract public class EffectManager {
     private static final List<String> effectTypes = new ArrayList<>(List.of(
             "inc10Point", "dec10Point", "inc50Point", "dec50Point", "inc100Point", "dec100Point",
-            "fastBall", "slowBall", "fireBall", "powerBall", "expandPaddle", "shrinkPaddle", "health"
+            "fastBall", "slowBall", "fireBallCapsule", "powerBall", "expandPaddle", "shrinkPaddle", "healthCapsule"
     ));
 
     public static Capsule getCapsule(double x, double y, int width, int height, double speed) {
@@ -41,7 +41,7 @@ abstract public class EffectManager {
             return Path.fastBallCapsule;
         } else if (type.equals("slowBall")) {
             return Path.slowBallCapsule;
-        } else if (type.equals("fireBall")) {
+        } else if (type.equals("fireBallCapsule")) {
             return Path.fireBallCapsule;
         } else if (type.equals("powerBall")) {
             return Path.powerBallCapsule;
@@ -49,7 +49,7 @@ abstract public class EffectManager {
             return Path.expandPaddleCapsule;
         } else if (type.equals("shrinkPaddle")) {
             return Path.shrinkPaddleCapsule;
-        } else if (type.equals("health")) {
+        } else if (type.equals("healthCapsule")) {
             return Path.healthCapsule;
         } else {
             return null; // Or a default path
@@ -65,13 +65,13 @@ abstract public class EffectManager {
             return Path.fastSound;
         } else if (type.equals("slowBall")) {
             return Path.slowSound;
-        } else if (type.equals("fireBall")) {
+        } else if (type.equals("fireBallCapsule")) {
             return Path.fireSound;
-        } else if (type.equals("powerBall") || type.equals("health")) {
+        } else if (type.equals("powerBall") ) {
             return Path.powerUpSound;
         } else if (type.equals("expandPaddle") || type.equals("shrinkPaddle")) {
             return Path.transformSound;
-        } else if (type.equals("health")){
+        } else if (type.equals("healthCapsule")){
             return Path.healingSound;
         } else {
             return null;
@@ -145,7 +145,6 @@ abstract public class EffectManager {
         if (ball == null) {
             return;  // Xử lý edge case: ball null
         }
-
         int originalPower = ball.getPower();
         ball.setPower(10);  // Giả sử fireball làm bóng phá gạch ngay lập tức bằng cách tăng power cao
         ball.setFireBall(true);
