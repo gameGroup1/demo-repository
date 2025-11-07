@@ -37,7 +37,6 @@ public class MainGame {
     private int speedB = 7;                    // Tốc độ bóng, tăng dần theo level
     private final int speedC = 2;
     private final int wallThickness = 30;
-    private int numberBrokeBrick = 0;          // Số gạch đã phá trong level hiện tại
     private int numberLevel = 1;               // Level hiện tại
 
     // Các đối tượng trong game
@@ -62,6 +61,7 @@ public class MainGame {
     private Image heartImage;
     private Image collisionImage;
     private Image fireCollisionImage;
+    private GameLevel gameLevel;
     // Trạng thái pause và paddle tĩnh để Pause truy cập
     public static boolean isPaused = false;
     public static Paddle staticPaddle;
@@ -92,41 +92,38 @@ public class MainGame {
 
     // Tạo gạch và capsule (gọi lại khi qua level)
     private void genBrickAndCapsule() {
-        int[] hardnessArray = {1, 2, 3, 4};
-        Random random = new Random();
-        int brickWidth = 90;
-        int brickHeight = 30;
-        int spacing = 5;
-        int rowCount = 5;
-        int colCount = 10;
+        gameLevel = new GameLevel(5,wallThickness,speedC);
+        try {
+            gameLevel.nextLevel();
 
-        for (int row = 0; row < rowCount; row++) {
-            for (int col = 0; col < colCount; col++) {
-                double brickX = col * (brickWidth + spacing) + wallThickness + 30;
-                double brickY = row * (brickHeight + spacing) + wallThickness + 100;
-                int index = row * colCount + col;
+            // Lấy level hiện tại
+            Level currentLevel = gameLevel.getCurrentLevel();
 
-                int randomHardness = hardnessArray[random.nextInt(hardnessArray.length)];
-                bricks[index] = new Bricks(brickX, brickY, brickWidth, brickHeight, randomHardness);
+            this.bricks = currentLevel.getBricks();
+            this.capsules = currentLevel.getCapsules();
+            this.capsuleIndex = currentLevel.getCapsuleIndex();
 
-                double chance = random.nextDouble();
-                if (chance < 0.7) {
-                    capsules[index] = EffectManager.getCapsule(brickX, brickY, brickWidth, brickHeight, speedC);
-                    capsules[index].setVisible(false);
-                    capsuleIndex.add(index);
-                } else {
-                    chance = random.nextDouble();
-                    if (chance < 0.3) {
-                        capsules[index] = new Capsule(Path.explosionCapsule, Path.explosionSound);
-                        capsules[index].init(brickX, brickY, brickWidth, brickHeight, speedC, "explosion");
-                        capsules[index].setVisible(false);
-                        capsuleIndex.add(index);
-                    } else {
-                        capsules[index] = null;
-                    }
-                }
+            // Thêm từng viên gạch vào scene
+            for (Bricks brick : bricks) {
+                root.getChildren().add(brick.getNode());
+            }
+            for (Capsule capsule : capsules) {
+                root.getChildren().add(capsule.getNode());
             }
         }
+        catch (Exception e) {
+            System.err.println("Error in generating level.");
+            e.printStackTrace();
+        }
+    }
+
+    private boolean isLevelCleared() {
+        for (Bricks brick : bricks) {
+            if(brick != null && !brick.isBreak()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     // Constructor: Khởi tạo toàn bộ game
@@ -148,8 +145,6 @@ public class MainGame {
         rightWall = new Wall("right", widthW - wallThickness, 0, wallThickness, heightW, wallThickness);
         topWall = new Wall("top", 0, 0, widthW, wallThickness, wallThickness);
 
-        bricks = new Bricks[50];
-        capsules = new Capsule[50];
         genBrickAndCapsule();
 
         heartImage = new Image("file:resources/heart.png");
@@ -334,7 +329,6 @@ public class MainGame {
                         if (breakIndex != -1 && bricks[breakIndex].isBreak()) {
                             score += 10;
                             highestScore = Math.max(score, highestScore);
-                            numberBrokeBrick++;
 
                             Bricks brokenBrick = bricks[breakIndex];
                             double brickCenterX = brokenBrick.getX() + brokenBrick.getWidth() / 2;
@@ -372,28 +366,22 @@ public class MainGame {
                     Update.loseLifeSound.play(VolumeManager.getEffectVolume());
                     loseLife();
                 }
-
                 // Qua level
-                if (numberBrokeBrick == 50) {
-                    speedB += 5;
-                    ball.setSpeed(speedB);
+                if (isLevelCleared()) {
                     numberLevel++;
                     levelText.setText("Level: " + numberLevel);
-                    numberBrokeBrick = 0;
 
-                    // Xóa gạch cũ
-                    for (int i = 0; i < bricks.length; i++) {
-                        if (bricks[i] != null && bricks[i].getNode() != null) {
-                            root.getChildren().remove(bricks[i].getNode());
-                            bricks[i] = null;
+                    // Xóa brick cũ
+                    for(Bricks brick : bricks) {
+                        if (brick != null && !brick.isBreak()) {
+                            root.getChildren().remove(brick.getNode());
                         }
                     }
 
                     // Xóa capsule cũ
-                    for (int i = 0; i < capsules.length; i++) {
-                        if (capsules[i] != null && capsules[i].getNode() != null) {
-                            root.getChildren().remove(capsules[i].getNode());
-                            capsules[i] = null;
+                    for(Capsule cap : capsules) {
+                        if (cap != null && !cap.isVisible()) {
+                            root.getChildren().remove(cap.getNode());
                         }
                     }
 
@@ -402,13 +390,6 @@ public class MainGame {
                     setBallDefault();
                     isAttached = true;
                     genBrickAndCapsule();
-
-                    // Thêm gạch mới
-                    for (Bricks brick : bricks) {
-                        if (brick != null && brick.getNode() != null) {
-                            root.getChildren().add(brick.getNode());
-                        }
-                    }
                 }
             }
         };

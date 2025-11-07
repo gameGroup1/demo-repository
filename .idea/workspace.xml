@@ -7,20 +7,16 @@
     <list default="true" id="298f754b-cf25-4f8f-828d-d0f0673088c6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GameLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameLevel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Level.java" beforeDir="false" afterPath="$PROJECT_DIR$/Level.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/MainGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/runConfigurations/Run_MainGame.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/runConfigurations/Run_MainGame.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Ball.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Ball.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/EffectManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/EffectManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/EndMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/EndMenu.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameLevel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/GameLevel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/GameMenu.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/ImageButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/ImageButton.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Level1.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/MainGame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/MainGame$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/MainGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/MainGame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Path.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Path.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Pause.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Pause.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/ScaleManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/ScaleManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/gameOver.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/highest_score.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/highest_score.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,18 +55,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Run MainGame.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;#41 on main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Run MainGame.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "#41 on main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
