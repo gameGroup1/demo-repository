@@ -91,24 +91,43 @@ public class MainGame {
     }
 
     // Tạo gạch và capsule (gọi lại khi qua level)
+    // Tạo gạch và capsule (gọi lại khi qua level)
     private void genBrickAndCapsule() {
-        gameLevel = new GameLevel(5,wallThickness,speedC);
         try {
+            System.out.println("genBrickAndCapsule() called. numberLevel=" + numberLevel);
+            if (gameLevel == null) {
+                System.err.println("ERROR: gameLevel is null in genBrickAndCapsule!");
+                return;
+            }
+
             gameLevel.nextLevel();
 
             // Lấy level hiện tại
             Level currentLevel = gameLevel.getCurrentLevel();
+            if (currentLevel == null) {
+                System.err.println("ERROR: gameLevel.getCurrentLevel() returned null");
+                return;
+            }
 
             this.bricks = currentLevel.getBricks();
             this.capsules = currentLevel.getCapsules();
             this.capsuleIndex = currentLevel.getCapsuleIndex();
 
-            // Thêm từng viên gạch vào scene
-            for (Bricks brick : bricks) {
-                root.getChildren().add(brick.getNode());
-            }
-            for (Capsule capsule : capsules) {
-                root.getChildren().add(capsule.getNode());
+            System.out.println("Loaded currentLevel. bricks=" + (bricks == null ? "null" : String.valueOf(bricks.length))
+                    + ", capsules=" + (capsules == null ? "null" : String.valueOf(capsules.length))
+                    + ", capsuleIndex=" + (capsuleIndex == null ? "null" : String.valueOf(capsuleIndex.size())));
+
+            // Thêm từng viên gạch vào scene (guard null)
+            if (bricks != null) {
+                for (Bricks brick : bricks) {
+                    if (brick != null && !brick.isBreak() && brick.getNode() != null) {
+                        if (!root.getChildren().contains(brick.getNode())) {
+                            root.getChildren().add(brick.getNode());
+                        }
+                    }
+                }
+            } else {
+                System.err.println("Warning: bricks array is null for this level.");
             }
         }
         catch (Exception e) {
@@ -118,16 +137,23 @@ public class MainGame {
     }
 
     private boolean isLevelCleared() {
+        if (bricks == null) {
+            // if bricks null, treat as cleared (or decide to treat as not cleared based on your logic)
+            System.err.println("isLevelCleared(): bricks array is null -> treating as cleared");
+            return true;
+        }
         for (Bricks brick : bricks) {
-            if(brick != null && !brick.isBreak()) {
+            if (brick != null && !brick.isBreak()) {
                 return false;
             }
         }
         return true;
     }
 
+
     // Constructor: Khởi tạo toàn bộ game
     public MainGame() {
+        gameLevel = new GameLevel(5, wallThickness, speedC);
         collisionImage = new Image("file:resources/boom_collision.gif");
         fireCollisionImage = new Image("file:resources/fire_collision.gif");
         double paddleX = (widthW - widthP) / 2.0;
@@ -373,23 +399,23 @@ public class MainGame {
 
                     // Xóa brick cũ
                     for(Bricks brick : bricks) {
-                        if (brick != null && !brick.isBreak()) {
+                        if (brick != null && brick.getNode() != null) {
                             root.getChildren().remove(brick.getNode());
                         }
                     }
 
                     // Xóa capsule cũ
-                    for(Capsule cap : capsules) {
-                        if (cap != null && !cap.isVisible()) {
-                            root.getChildren().remove(cap.getNode());
+                    for(Capsule capsule : capsules) {
+                        if (capsule != null && capsule.getNode() != null) {
+                            root.getChildren().remove(capsule.getNode());
                         }
                     }
 
                     capsuleIndex.clear();
+                    genBrickAndCapsule();
                     setPaddleDefault();
                     setBallDefault();
                     isAttached = true;
-                    genBrickAndCapsule();
                 }
             }
         };
@@ -500,7 +526,6 @@ public class MainGame {
     // Reset paddle về mặc định
     private void setPaddleDefault() {
         paddle.setWidth(widthP);
-        paddle.setHeight(heightP);
     }
 
     // Reset bóng về vị trí ban đầu
@@ -512,7 +537,7 @@ public class MainGame {
         ball.setX(centerX);
         ball.setY(centerY);
         ball.setSpeed(speedB);
-        ball.setPower(2);
+        ball.setPower(1);
         ball.setFireBall(false);
     }
 

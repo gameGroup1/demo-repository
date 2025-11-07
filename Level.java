@@ -60,7 +60,7 @@ public class Level {
                     capsules[index].setVisible(false);
                     capsuleIndex.add(index);
                 }
-                else if (random.nextDouble() < 0.5) {
+                else if (random.nextDouble() < 0.2) {
                     capsules[index] = new Capsule(Path.explosionCapsule, Path.explosionSound);
                     capsules[index].init(brickX, brickY, brickWidth, brickHeight, speedC, "explosion");
                     capsules[index].setVisible(false);
