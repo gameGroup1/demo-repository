@@ -5,11 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="298f754b-cf25-4f8f-828d-d0f0673088c6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameLevel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Level1.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/MainGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/GameMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Level.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Level.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/MainGame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/MainGame$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/MainGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/MainGame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Path.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Path.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,21 +30,21 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;DaiTaTuong&quot;
-  }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/gameGroup1/demo-repository.git",
-    "accountId": "2cd69f60-9660-482d-9f0c-98a51e3fa03e"
-  }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 8
-}]]></component>
+        &quot;lastFilter&quot;: {
+        &quot;state&quot;: &quot;OPEN&quot;,
+        &quot;assignee&quot;: &quot;DaiTaTuong&quot;
+        }
+        }</component>
+  <component name="GithubPullRequestsUISettings">{
+        &quot;selectedUrlAndAccountId&quot;: {
+        &quot;url&quot;: &quot;https://github.com/gameGroup1/demo-repository.git&quot;,
+        &quot;accountId&quot;: &quot;2cd69f60-9660-482d-9f0c-98a51e3fa03e&quot;
+        }
+        }</component>
+  <component name="ProjectColorInfo">{
+        &quot;customColor&quot;: &quot;&quot;,
+        &quot;associatedIndex&quot;: 8
+        }</component>
   <component name="ProjectId" id="353PH49EyKrReCmAXfi0T2OosLP" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -49,21 +52,27 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.MainGame.executor": "Run",
     "Application.Run MainGame.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "#41 on main",
+    "git-widget-placeholder": "tung__again",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
       </set>
     </attachedChunks>
   </component>
@@ -74,7 +83,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762333119048</updated>
-      <workItem from="1762568624725" duration="3072000" />
     </task>
     <servers />
   </component>
