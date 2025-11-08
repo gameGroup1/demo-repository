@@ -39,7 +39,7 @@ public class MainGame {
     private static int speedB = 7;                    // Tốc độ bóng, tăng dần theo level
     private static final int speedC = 2;
     private static final int wallThickness = 30;
-    private static int numberBrokeBrick = 0;          // Số gạch đã phá trong level hiện tại
+    private static int numberBrokeBrick = 49;          // Số gạch đã phá trong level hiện tại
     private static int numberLevel = 1;               // Level hiện tại
     // Các đối tượng trong game
     private static Ball ball;
@@ -60,10 +60,7 @@ public class MainGame {
     private MediaView bgMediaView;
     // -----------------------------------
     private static boolean isAttached = true;         // Bóng dính vào paddle
-    private static int lives = 5;
-    private static MediaPlayer mediaPlayer;
-    private boolean isAttached = true;         // Bóng dính vào paddle
-    private int lives = 10;
+    private static int lives = 10;
     private List<ImageView> heartImages = new ArrayList<>();
     private Text scoreText;
     private static Text levelText;
@@ -73,6 +70,7 @@ public class MainGame {
     // Trạng thái pause và paddle tĩnh để Pause truy cập
     public static boolean isPaused = false;
     public static Paddle staticPaddle;
+    private Scene scene;
 
     public static void cleanup() {
         System.out.println("MainGame.cleanup() started.");
@@ -91,14 +89,14 @@ public class MainGame {
 
 //        // Dừng video background nếu có
 //        // (không unregister vào VolumeManager vì video có mute)
-//        try {
-//            // bgVideoPlayer là non-static, không thể truy cập trực tiếp từ static method;
-//            // để đơn giản, tạm gọi một hook nếu cần — nhưng chúng ta sẽ stop nó từ instance khi window close.
-//            // Nếu muốn, bạn có thể chuyển bgVideoPlayer thành static và stop ở đây.
-//            System.out.println("Note: bgVideoPlayer will be stopped by instance if present.");
-//        } catch (Exception e) {
-//            // ignore
-//        }
+        try {
+            // bgVideoPlayer là non-static, không thể truy cập trực tiếp từ static method;
+            // để đơn giản, tạm gọi một hook nếu cần — nhưng chúng ta sẽ stop nó từ instance khi window close.
+            // Nếu muốn, bạn có thể chuyển bgVideoPlayer thành static và stop ở đây.
+            System.out.println("Note: bgVideoPlayer will be stopped by instance if present.");
+        } catch (Exception e) {
+            // ignore
+        }
 
         // Dừng tất cả âm thanh khác
         VolumeManager.stopAllSounds();
@@ -176,6 +174,7 @@ public class MainGame {
         capsules = new Capsule[50];
         genBrickAndCapsule();
 
+        lives = 10;
         heartImage = new Image("file:resources/heart.png");
         for (int i = 0; i < lives; i++) {
             ImageView iv = new ImageView(heartImage);
@@ -186,17 +185,23 @@ public class MainGame {
             heartImages.add(iv);
         }
 
+        score = 0;
         scoreText = new Text("Score: " + score);
         scoreText.setFill(Color.WHITE);
         scoreText.setFont(new Font(36));
         scoreText.setX(widthW - wallThickness - 200);
         scoreText.setY(wallThickness + 64);
 
+        numberLevel = 1;
         levelText = new Text("Level " + numberLevel);
         levelText.setFill(Color.WHITE);
         levelText.setFont(new Font(36));
         levelText.setX(wallThickness + 20);
         levelText.setY(wallThickness + 64);
+
+        isAttached = true; //Bóng luôn ở giữa paddle khi bắt đầu
+        speedB = 7; //Đặt lại tốc độ của bóng khi bắt đầu
+        ball.setSpeed(speedB);
     }
 
     // Hiệu ứng nổ khi bóng chạm gạch (chỉ khi không phải fireball)
@@ -223,7 +228,7 @@ public class MainGame {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         root = new Group();
-        Scene scene = new Scene(root, widthW, heightW, Color.BLACK);
+        scene = new Scene(root, widthW, heightW, Color.BLACK);
 
         primaryStage.setTitle("Arkanoid Game");
         primaryStage.setScene(scene);
@@ -243,7 +248,7 @@ public class MainGame {
             cleanup();
         });
 
-        // --- Thiết lập video background ---
+//        // --- Thiết lập video background ---
 //        try {
 //            // Thử load từ resource first (nếu đóng gói trong jar dưới resources root)
 //            URL videoURL = getClass().getClassLoader().getResource("/resources/video_background.mp4");
@@ -279,12 +284,46 @@ public class MainGame {
 
         PauseTransition delay = new PauseTransition(Duration.seconds(3));
         delay.setOnFinished(event -> {
+            playBackgroundVideo();
             addGameElementsToRoot();
             setupInput(scene);
             startGameLoop();
             playBackgroundMusic();
         });
         delay.play();
+    }
+
+    // Phát video background
+    private void playBackgroundVideo() {
+        try {
+            // Thử load từ resource first (nếu đóng gói trong jar dưới resources root)
+            URL videoURL = getClass().getClassLoader().getResource("/resources/video_background.mp4");
+            Media bgMedia;
+            if (videoURL != null) {
+                bgMedia = new Media(videoURL.toString());
+            } else {
+                // fallback: file path relative to project
+                File f = new File("resources/video_background.mp4");
+                bgMedia = new Media(f.toURI().toString());
+            }
+
+            bgVideoPlayer = new MediaPlayer(bgMedia);
+            bgVideoPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            bgVideoPlayer.setAutoPlay(true);
+            bgVideoPlayer.setMute(true); // tắt tiếng background video (thay đổi nếu muốn âm thanh)
+            bgMediaView = new MediaView(bgVideoPlayer);
+            bgMediaView.setPreserveRatio(false); // fill toàn bộ màn hình
+            bgMediaView.setMouseTransparent(true); // để mouse event đi qua xuống các node bên dưới
+            // Bind kích thước video với scene
+            bgMediaView.fitWidthProperty().bind(scene.widthProperty());
+            bgMediaView.fitHeightProperty().bind(scene.heightProperty());
+
+            // Thêm background ở vị trí index 0 để nằm phía sau các node khác
+            root.getChildren().add(bgMediaView);
+        } catch (Exception e) {
+            System.err.println("Không thể load background video a.mp4");
+            e.printStackTrace();
+        }
     }
 
     // Phát nhạc nền
@@ -500,82 +539,81 @@ public class MainGame {
         String type = capsule.getEffectType();
 
         switch (type) {
-    case "inc10Point":
-        score += 10;
-        break;
+            case "inc10Point":
+                score += 10;
+                break;
 
-    case "dec10Point":
-        score -= 10;
-        break;
+            case "dec10Point":
+                score -= 10;
+                break;
 
-    case "inc50Point":
-        score += 50;
-        break;
+            case "inc50Point":
+                score += 50;
+                break;
 
-    case "dec50Point":
-        score -= 50;
-        break;
+            case "dec50Point":
+                score -= 50;
+                break;
 
-    case "inc100Point":
-        score += 100;
-        break;
+            case "inc100Point":
+                score += 100;
+                break;
 
-    case "dec100Point":
-        score -= 100;
-        break;
+            case "dec100Point":
+                score -= 100;
+                break;
 
-    case "fastBall":
-        EffectManager.updateSpeed(ball, 1.5);
-        break;
+            case "fastBall":
+                EffectManager.updateSpeed(ball, 1.5);
+                break;
 
-    case "slowBall":
-        EffectManager.updateSpeed(ball, 0.5);
-        break;
+            case "slowBall":
+                EffectManager.updateSpeed(ball, 0.5);
+                break;
 
-    case "fireBallCapsule":
-        EffectManager.activateFireBall(ball);
-         // Tắt hiệu ứng sau 5 giây
-        break;
+            case "fireBallCapsule":
+                EffectManager.activateFireBall(ball);
+                 // Tắt hiệu ứng sau 5 giây
+                break;
 
-    case "powerBall":
-        EffectManager.updatePower(ball, 3.0);
-        break;
+            case "powerBall":
+                EffectManager.updatePower(ball, 3.0);
+                break;
 
-    case "expandPaddle":
-        EffectManager.changeWidth(paddle, 2.0);
-        break;
+            case "expandPaddle":
+                EffectManager.changeWidth(paddle, 2.0);
+                break;
 
-    case "shrinkPaddle":
-        EffectManager.changeWidth(paddle, 0.5);
-        break;
+            case "shrinkPaddle":
+                EffectManager.changeWidth(paddle, 0.5);
+                break;
 
-    case "healthCapsule":
-        // THÊM MỚI: Hiệu ứng tăng mạng
-        if (lives < 5) {
-            int newIndex = lives;
-            double newX = widthW - wallThickness - 80 - newIndex * 36;
-            ImageView newHeart = new ImageView(heartImage);
-            newHeart.setFitWidth(30);
-            newHeart.setFitHeight(30);
-            newHeart.setX(newX);
-            newHeart.setY(wallThickness + 5);
-            root.getChildren().add(newHeart);
-            heartImages.add(newHeart);
-            lives++;
-            System.out.println("Health capsule collected! Lives: " + lives);
+            case "healthCapsule":
+                // THÊM MỚI: Hiệu ứng tăng mạng
+                if (lives < 5) {
+                    int newIndex = lives;
+                    double newX = widthW - wallThickness - 80 - newIndex * 36;
+                    ImageView newHeart = new ImageView(heartImage);
+                    newHeart.setFitWidth(30);
+                    newHeart.setFitHeight(30);
+                    newHeart.setX(newX);
+                    newHeart.setY(wallThickness + 5);
+                    root.getChildren().add(newHeart);
+                    heartImages.add(newHeart);
+                    lives++;
+                    System.out.println("Health capsule collected! Lives: " + lives);
+                }
+                break;
+
+            case "explosion":
+                showExplosion(capsule.getX(), capsule.getY());
+                loseLife();
+                break;
+
+            default:
+                System.out.println("Unknown capsule type: " + type);
+                break;
         }
-        break;
-
-    case "explosion":
-        showExplosion(capsule.getX(), capsule.getY());
-        loseLife();
-        break;
-
-    default:
-        System.out.println("Unknown capsule type: " + type);
-        break;
-}
-
 
         highestScore = Math.max(score, highestScore);
     }
@@ -611,7 +649,7 @@ public class MainGame {
         ball.setX(centerX);
         ball.setY(centerY);
         ball.setSpeed(speedB);
-        ball.setPower(2);
+        ball.setPower(1);
         ball.setFireBall(false);
         root.getChildren().add(ball.getNode());
     }
