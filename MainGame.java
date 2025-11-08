@@ -507,24 +507,12 @@ public class MainGame {
 
                     capsuleIndex.clear();
 
-                    // Reset paddle & bóng
-                    genBrickAndCapsule();
-                    setPaddleDefault();
-                    setBallDefault();
-                    isAttached = true;
-
                     // Xóa dư ảnh cũ
                     if (ballTrailEffect != null) {
                         ballTrailEffect.clear();
                     }
 
-                    // Thêm gạch mới
-                    for (Bricks brick : bricks) {
-                        if (brick != null && brick.getNode() != null) {
-                            root.getChildren().add(brick.getNode());
-                        }
-                    }
-
+                    reset();
                 }
             }
         };
