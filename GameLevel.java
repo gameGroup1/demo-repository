@@ -9,6 +9,7 @@ public class GameLevel {
     private int wallThickness;
     private int speedC;
     private Integer level = 0;
+    private Level gameLevel;
     private List<Level> levels = new ArrayList<>();
 
     public GameLevel(int spacing, int wallThickness, int speedC) {
@@ -19,21 +20,28 @@ public class GameLevel {
 
     public void nextLevel() throws IOException {
         level++;
+
         String fileName = "Level" + level.toString() + ".txt";
-        String filePath = "/Levels/" + fileName;
+        String filePath = "Levels/" + fileName;
         Scanner scanner = new Scanner(new File(filePath));
+
         int rowCount = scanner.nextInt();
         int colCount = scanner.nextInt();
         int brickWidth = scanner.nextInt();
         int brickHeight = scanner.nextInt();
-        Level gameLevel = new Level(rowCount, colCount, brickWidth, brickHeight, spacing, wallThickness, speedC);
+
+        gameLevel = new Level(rowCount, colCount, brickWidth, brickHeight, spacing, wallThickness, speedC);
         int[][] arr = new int[rowCount][colCount];
+
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < colCount; j++) arr[i][j] = scanner.nextInt();
         }
+
         gameLevel.makeBricks(arr);
         levels.add(gameLevel);
     }
 
-    public void generateMap() {};
+    public Level getCurrentLevel() {
+        return gameLevel;
+    }
 }
