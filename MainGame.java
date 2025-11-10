@@ -207,7 +207,7 @@ public class MainGame {
         scoreText.setX(widthW - wallThickness - 200);
         scoreText.setY(wallThickness + 64);
         levelText = new Text("Level " + lastLevel);
-        levelText.setFill(new Color(255, 255, 255, 0.95)); // Màu xanh dương cho level để thể hiện tiến bộ
+        levelText.setFill(Color.rgb(255, 255, 255, 0.95)); // Màu xanh dương cho level để thể hiện tiến bộ
         levelText.setFont(new Font(36));
         levelText.setStyle(glowShadowStyle);
         levelText.setX(wallThickness + 20);
