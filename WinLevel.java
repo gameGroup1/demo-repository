@@ -49,7 +49,7 @@ public class WinLevel {
                 return backgroundImage;
             }
             // 2. Nếu không có → thử từ file hệ thống
-            String[] paths = { "ImageMenu/resources/WinLevel.gif", "./resources/WinLevel.gif", "../resources/WinLevel.gif" };
+            String[] paths = { "ImageGame/resources/WinLevel.gif", "./resources/WinLevel.gif", "../resources/WinLevel.gif" };
             for (String path : paths) {
                 File file = new File(path);
                 if (file.exists()) {
