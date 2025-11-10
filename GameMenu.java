@@ -61,18 +61,34 @@ public class GameMenu extends Application {
         Image greenBtn = loadImage("green_button.png");
         Font btnFont = Font.font("Arial", 32);
 
-        ImageButton startBtn = new ImageButton(greenBtn, "Start", btnFont, mouseClickSound, 270);
-        ImageButton bestBtn = new ImageButton(greenBtn, "Best Score", btnFont, mouseClickSound, 270);
+        ImageButton newGameBtn = new ImageButton(greenBtn, "New Game", btnFont, mouseClickSound, 270);
+        ImageButton continueBtn = new ImageButton(greenBtn, "Continue", btnFont, mouseClickSound, 270);
+        ImageButton bestBtn = new ImageButton(greenBtn, "Best Level", btnFont, mouseClickSound, 270);
         ImageButton settingBtn = new ImageButton(greenBtn, "Settings", btnFont, mouseClickSound, 270);
         ImageButton exitBtn = new ImageButton(greenBtn, "Exit", btnFont, mouseClickSound, 270);
 
-        startBtn.setOnAction(() -> {
+        newGameBtn.setOnAction(() -> {
             stopMusic();
             stage.close();
-            MainGame.createAndShowGame();
+            MainGame.createAndShowGame(1);
         });
 
-        bestBtn.setOnAction(() -> showBestScore());
+        continueBtn.setOnAction(() -> {
+            int last = MainGame.getLastLevel();
+            if (last > 5) { // Giả sử max level là 5
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("You are done, please click New Game");
+                alert.showAndWait();
+            } else {
+                stopMusic();
+                stage.close();
+                MainGame.createAndShowGame(last);
+            }
+        });
+
+        bestBtn.setOnAction(() -> BestLevelMenu.show());
         settingBtn.setOnAction(() -> showSettings());
         exitBtn.setOnAction(() -> {
             stopMusic();
@@ -80,7 +96,7 @@ public class GameMenu extends Application {
             System.exit(0);
         });
 
-        content.getChildren().addAll(title, startBtn, bestBtn, settingBtn, exitBtn);
+        content.getChildren().addAll(title, newGameBtn, continueBtn, bestBtn, settingBtn, exitBtn);
         root.getChildren().add(content);
 
         Scene scene = new Scene(root, 1100, 500);
@@ -89,73 +105,8 @@ public class GameMenu extends Application {
         stage.show();
     }
 
-    private void showBestScore() {
-    BestScoreMenu.show(); // Truyền stage hiện tại làm owner
-    }
-
     private void showSettings() {
-        Stage settingsStage = new Stage();
-        settingsStage.initOwner(stage);
-        settingsStage.setTitle("Settings");
-        settingsStage.setResizable(false);
-
-        VBox settingsBox = new VBox(20);
-        settingsBox.setAlignment(Pos.CENTER);
-        settingsBox.setPadding(new Insets(30));
-        settingsBox.setStyle("-fx-background-color: #003200;");
-
-        // Background Volume
-        Label bgLabel = new Label("Background Volume: " + (int)(VolumeManager.getBackgroundVolume() * 100) + "%");
-        bgLabel.setFont(Font.font("Arial", 16));
-        bgLabel.setTextFill(Color.WHITE);
-
-        Slider bgSlider = new Slider(0, 100, VolumeManager.getBackgroundVolume() * 100);
-        bgSlider.setPrefWidth(300);
-        bgSlider.setMajorTickUnit(25);
-        bgSlider.setShowTickMarks(true);
-        bgSlider.setStyle("-fx-control-inner-background: #1a1a1a; -fx-accent: #9acd32;");
-        bgSlider.valueProperty().addListener((obs, old, val) -> {
-            double volume = val.doubleValue() / 100.0;
-            VolumeManager.setBackgroundVolume(volume);
-            bgLabel.setText("Background Volume: " + val.intValue() + "%");
-            if (mediaPlayer != null) {
-                mediaPlayer.setVolume(volume);
-            }
-        });
-
-        // Effect Volume
-        Label effectLabel = new Label("Effect Volume: " + (int)(VolumeManager.getEffectVolume() * 100) + "%");
-        effectLabel.setFont(Font.font("Arial", 16));
-        effectLabel.setTextFill(Color.WHITE);
-
-        Slider effectSlider = new Slider(0, 100, VolumeManager.getEffectVolume() * 100);
-        effectSlider.setPrefWidth(300);
-        effectSlider.setMajorTickUnit(25);
-        effectSlider.setShowTickMarks(true);
-        effectSlider.setStyle("-fx-control-inner-background: #1a1a1a; -fx-accent: #9acd32;");
-        effectSlider.valueProperty().addListener((obs, old, val) -> {
-            double volume = val.doubleValue() / 100.0;
-            VolumeManager.setEffectVolume(volume);
-            effectLabel.setText("Effect Volume: " + val.intValue() + "%");
-        });
-
-        // Close Button
-        javafx.scene.control.Button closeBtn = new javafx.scene.control.Button("Close");
-        closeBtn.setFont(Font.font("Arial", 18));
-        closeBtn.setStyle("-fx-background-color: #9acd32; -fx-text-fill: black; -fx-padding: 10 30;");
-        closeBtn.setOnAction(e -> settingsStage.close());
-
-        VBox bgVolumeBox = new VBox(10, bgLabel, bgSlider);
-        bgVolumeBox.setAlignment(Pos.CENTER);
-        
-        VBox effectVolumeBox = new VBox(10, effectLabel, effectSlider);
-        effectVolumeBox.setAlignment(Pos.CENTER);
-
-        settingsBox.getChildren().addAll(bgVolumeBox, effectVolumeBox, closeBtn);
-
-        Scene settingsScene = new Scene(settingsBox, 400, 300);
-        settingsStage.setScene(settingsScene);
-        settingsStage.showAndWait();
+        SettingMenu.show(stage);
     }
 
     private void playBackgroundMusic() {
@@ -180,11 +131,11 @@ public class GameMenu extends Application {
     }
 
     private Image loadBackground() {
-    return ScaleManager.loadAnimatedImage("background.gif");
+        return ScaleManager.loadAnimatedImage("background.gif");
     }
 
     private Image loadImage(String name) {
-    return ScaleManager.loadImage(name);
+        return ScaleManager.loadImage(name);
     }
 
     private String getFontURL() {

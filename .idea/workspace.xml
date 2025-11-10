@@ -4,17 +4,74 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="298f754b-cf25-4f8f-828d-d0f0673088c6" name="Changes" comment="">
+    <list default="true" id="a78fd025-fc38-4a9b-be44-a58a1e865e2d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Run_MainGame.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Run_MainGame.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/MainGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ball.java" beforeDir="false" afterPath="$PROJECT_DIR$/Ball.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BestScoreMenu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/EffectManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/EffectManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EndMenu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/GameLevel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameMenu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ImageButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/ImageButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainGame.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Path.java" beforeDir="false" afterPath="$PROJECT_DIR$/Path.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pause.java" beforeDir="false" afterPath="$PROJECT_DIR$/Pause.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScaleManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/ScaleManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WinLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/WinLevel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/highest_score.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid11140.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid17252.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid17768.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid2208.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid22156.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid25560.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid31144.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid31964.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid4424.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid6276.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid7460.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/runConfigurations/Run_MainGame.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/runConfigurations/Run_MainGame.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/workspace.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Ball.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Ball.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/BallTrailEffect.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/BallTrailEffect.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/BestScoreMenu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Block.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Block.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/BrickImage.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/BrickImage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Bricks.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Bricks.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Capsule.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Capsule.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Collision.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Collision.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/EffectManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/EffectManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/EndMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/EndMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameLevel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/GameLevel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameMenu.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/GameMenu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/GameObject.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/GameObject.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/ImageButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/ImageButton.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Level.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Level.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/MainGame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/MainGame$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/MainGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/MainGame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Paddle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Paddle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Path.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Path.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Pause.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Pause.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/ScaleManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/ScaleManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Update.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Update.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/VolumeManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/VolumeManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Wall.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Wall.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/WinLevel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/WinLevel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/highest_score.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/hs_err_pid11140.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/hs_err_pid17252.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/hs_err_pid17768.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/hs_err_pid2208.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/hs_err_pid22156.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/hs_err_pid25560.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/hs_err_pid31144.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/hs_err_pid31964.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/hs_err_pid4424.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/hs_err_pid6276.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/hs_err_pid7460.log" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,70 +85,14 @@
       </list>
     </option>
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "DaiTaTuong"
-  }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/gameGroup1/demo-repository.git",
-    "accountId": "ce734915-c094-43ca-90a3-d12c32fc0eff"
-  }
-}]]></component>
-  <component name="ProjectColorInfo">{
-        &quot;customColor&quot;: &quot;&quot;,
-        &quot;associatedIndex&quot;: 8
-        }</component>
-  <component name="ProjectId" id="353PH49EyKrReCmAXfi0T2OosLP" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.MainGame.executor": "Run",
     "Application.Run MainGame.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "tung__again",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "vue.rearranger.settings.migration": "true"
+    "git-widget-placeholder": "main",
+    "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="298f754b-cf25-4f8f-828d-d0f0673088c6" name="Changes" comment="" />
-      <created>1762333119048</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1762333119048</updated>
-      <workItem from="1762731254074" duration="2691000" />
-    </task>
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
   </component>
 </project>

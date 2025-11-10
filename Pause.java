@@ -101,8 +101,8 @@ public class Pause {
 
         // === HIỆU ỨNG GLOW + SHADOW CHO TEXT (NHƯ BESTSCORE) ===
         String glowShadowStyle = "-fx-font-weight: bold; " +
-            "-fx-effect: dropshadow(gaussian, #565c4cff, 10, 0.8, 0, 0), " +
-            "dropshadow(gaussian, black, 10, 0.5, 2, 2);";
+                "-fx-effect: dropshadow(gaussian, #565c4cff, 10, 0.8, 0, 0), " +
+                "dropshadow(gaussian, black, 10, 0.5, 2, 2);";
 
         // === TIÊU ĐỀ: PAUSED ===
         Text titleText = new Text("PAUSED");
@@ -129,12 +129,12 @@ public class Pause {
         backgroundSlider.setMaxWidth(280);
         backgroundSlider.setPrefWidth(280);
         backgroundSlider.setStyle(
-            "-fx-pref-width: 280 !important; " +
-            "-fx-min-width: 280 !important; " +
-            "-fx-max-width: 280 !important; " +
-            "-fx-background-color: #666; " +
-            "-fx-background-radius: 14; " +
-            "-fx-padding: 10;"
+                "-fx-pref-width: 280 !important; " +
+                        "-fx-min-width: 280 !important; " +
+                        "-fx-max-width: 280 !important; " +
+                        "-fx-background-color: #666; " +
+                        "-fx-background-radius: 14; " +
+                        "-fx-padding: 10;"
         );
 
         backgroundSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
@@ -154,12 +154,12 @@ public class Pause {
         effectSlider.setMaxWidth(280);
         effectSlider.setPrefWidth(280);
         effectSlider.setStyle(
-            "-fx-pref-width: 280 !important; " +
-            "-fx-min-width: 280 !important; " +
-            "-fx-max-width: 280 !important; " +
-            "-fx-background-color: #666; " +
-            "-fx-background-radius: 14; " +
-            "-fx-padding: 10;"
+                "-fx-pref-width: 280 !important; " +
+                        "-fx-min-width: 280 !important; " +
+                        "-fx-max-width: 280 !important; " +
+                        "-fx-background-color: #666; " +
+                        "-fx-background-radius: 14; " +
+                        "-fx-padding: 10;"
         );
 
         effectSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
@@ -216,7 +216,7 @@ public class Pause {
         // === HIỂN THỊ ===
         Scene scene = new Scene(stackRoot, WIDTH_PAUSE, HEIGHT_PAUSE);
         String css = Pause.class.getResource("/styles.css") != null ?
-            Pause.class.getResource("/styles.css").toExternalForm() : "";
+                Pause.class.getResource("/styles.css").toExternalForm() : "";
         if (!css.isEmpty()) scene.getStylesheets().add(css);
 
         pauseStage.setScene(scene);
