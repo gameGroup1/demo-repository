@@ -143,50 +143,7 @@ public class WinLevel {
                 .filter(node -> node instanceof javafx.scene.text.Text)
                 .map(node -> (javafx.scene.text.Text) node)
                 .forEach(text -> text.setFill(Color.rgb(206, 245, 129, 0.8)));
-
-//        Slider backgroundSlider = new Slider(0, 100, VolumeManager.getBackgroundVolume() * 100);
-//        backgroundSlider.setPrefWidth(320);
-//        backgroundSlider.setStyle("-fx-background-color: #444; -fx-background-radius: 10;");
-
-        // Cập nhật label khi thay đổi slider
-//        backgroundSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-//            double volume = newVal.doubleValue() / 100.0;
-//            VolumeManager.setBackgroundVolume(volume);
-//            backgroundLabelBtn.getChildren().stream()
-//                    .filter(node -> node instanceof javafx.scene.text.Text)
-//                    .map(node -> (javafx.scene.text.Text) node)
-//                    .findFirst()
-//                    .ifPresent(text -> text.setText("Background Volume: " + newVal.intValue() + "%"));
-//        });
-//
-//        // Nhãn Effect Volume (dùng green_button)
-//        ImageButton effectLabelBtn = new ImageButton(greenBtnImage,
-//                "Effect Volume: " + (int)(VolumeManager.getEffectVolume() * 100) + "%",
-//                Font.font("Arial", 16), null, 340);
-//        effectLabelBtn.setMouseTransparent(true);
-//        effectLabelBtn.setOnAction(() -> {});
-//        effectLabelBtn.getChildren().stream()
-//                .filter(node -> node instanceof javafx.scene.text.Text)
-//                .map(node -> (javafx.scene.text.Text) node)
-//                .forEach(text -> text.setFill(Color.rgb(206, 245, 129, 0.8)));
-//
-//        Slider effectSlider = new Slider(0, 100, VolumeManager.getEffectVolume() * 100);
-//        effectSlider.setPrefWidth(320);
-//        effectSlider.setStyle("-fx-background-color: #444; -fx-background-radius: 10;");
-//
-//        effectSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-//            double volume = newVal.doubleValue() / 100.0;
-//            VolumeManager.setEffectVolume(volume);
-//            effectLabelBtn.getChildren().stream()
-//                    .filter(node -> node instanceof javafx.scene.text.Text)
-//                    .map(node -> (javafx.scene.text.Text) node)
-//                    .findFirst()
-//                    .ifPresent(text -> text.setText("Effect Volume: " + newVal.intValue() + "%"));
-//        });
-//
-//        centerBox.getChildren().addAll(backgroundLabelBtn, backgroundSlider, effectLabelBtn, effectSlider);
-
-        // === PHẦN DƯỚI: NÚT BẤM ===
+        // === NÚT BẤM ===
         VBox bottomBox = new VBox(15);
         bottomBox.setAlignment(Pos.CENTER);
         bottomBox.setStyle("-fx-padding: 15;");
