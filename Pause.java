@@ -2,16 +2,15 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.animation.AnimationTimer;
@@ -26,39 +25,31 @@ public class Pause {
     public static final int WIDTH_PAUSE = 800;
     public static final int HEIGHT_PAUSE = 500;
 
-    // Khởi tạo âm thanh click chuột
     static {
         mouseClickSound = new AudioClip(Path.getFileURL(Path.mouseClick));
         VolumeManager.registerAudioClip(mouseClickSound);
     }
 
-    // Tải ảnh từ resources sử dụng ScaleManager
     private static Image loadImage(String name) {
         return ScaleManager.loadImage(name);
     }
 
-    // Tải hình nền GIF cho pause menu
     private static Image loadBackgroundImage() {
         Image backgroundImage = null;
         try {
-            // 1. Thử tải từ classpath (trong JAR)
             URL imageURL = Pause.class.getClassLoader().getResource("PauseMenu.gif");
             if (imageURL != null) {
                 backgroundImage = new Image(imageURL.toString(), true);
-                System.out.println("Đã tải PauseMenu.gif từ classpath");
                 return backgroundImage;
             }
-            // 2. Nếu không có → thử từ file hệ thống
             String[] paths = { "resources/PauseMenu.gif", "./resources/PauseMenu.gif", "../resources/PauseMenu.gif" };
             for (String path : paths) {
                 File file = new File(path);
                 if (file.exists()) {
                     backgroundImage = new Image(file.toURI().toString(), true);
-                    System.out.println("Đã tải PauseMenu.gif từ: " + path);
                     return backgroundImage;
                 }
             }
-            System.err.println("Không tìm thấy PauseMenu.gif");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,13 +57,11 @@ public class Pause {
     }
 
     public static void show(Stage parentStage, AnimationTimer gameLoop) {
-        // Đảm bảo chạy trên luồng JavaFX
         if (!Platform.isFxApplicationThread()) {
             Platform.runLater(() -> show(parentStage, gameLoop));
             return;
         }
 
-        // Tạm dừng game loop
         if (gameLoop != null) {
             gameLoop.stop();
         }
@@ -83,7 +72,7 @@ public class Pause {
         pauseStage.initOwner(parentStage);
         pauseStage.setResizable(false);
 
-        // === LAYER 1: Hình nền (GIF) ===
+        // === LAYER 1: HÌNH NỀN GIF ===
         StackPane stackRoot = new StackPane();
         Image backgroundImage = loadBackgroundImage();
         if (backgroundImage != null) {
@@ -96,156 +85,140 @@ public class Pause {
             stackRoot.setStyle("-fx-background-color: #2b2b2b;");
         }
 
-        // === LAYER 2: Nội dung (trên nền) ===
-        VBox contentBox = new VBox(20);
+        // === LAYER 2: NỘI DUNG TRONG SUỐT ===
+        VBox contentBox = new VBox(38);
         contentBox.setAlignment(Pos.CENTER);
-        contentBox.setStyle("-fx-background-color: transparent; -fx-padding: 30;");
+        contentBox.setStyle("-fx-background-color: transparent;");
         contentBox.setPrefSize(WIDTH_PAUSE, HEIGHT_PAUSE);
 
-        // === TẢI ẢNH NÚT ===
+        // === NÚT CHO CONTINUE & EXIT ===
         Image greyBtnImage = loadImage("grey_button.png");
         if (greyBtnImage == null) {
-            System.err.println("Lỗi: Không tải được grey_button.png");
             greyBtnImage = new Image("file:resources/grey_button.png");
-        }
-
-        Image greenBtnImage = loadImage("green_button.png");
-        if (greenBtnImage == null) {
-            System.err.println("Lỗi: Không tải được green_button.png");
-            greenBtnImage = new Image("file:resources/green_button.png");
         }
 
         Font btnFont = Font.font("Arial", 20);
 
-        // === TIÊU ĐỀ: PAUSED (dùng green_button.png) ===
-        ImageButton titleButton = new ImageButton(greenBtnImage, "PAUSED", Font.font("Arial", 43), null, 400);
-        titleButton.setMouseTransparent(true);
-        titleButton.setOnAction(() -> {});
-        titleButton.getChildren().stream()
-            .filter(node -> node instanceof javafx.scene.text.Text)
-            .map(node -> (javafx.scene.text.Text) node)
-            .forEach(text -> text.setFill(Color.rgb(206, 245, 129, 0.8)));
-        VBox.setMargin(titleButton, new Insets(0, 0, 30, 0));
+        // === HIỆU ỨNG GLOW + SHADOW CHO TEXT (NHƯ BESTSCORE) ===
+        String glowShadowStyle = "-fx-font-weight: bold; " +
+            "-fx-effect: dropshadow(gaussian, #565c4cff, 10, 0.8, 0, 0), " +
+            "dropshadow(gaussian, black, 10, 0.5, 2, 2);";
 
-        // === PHẦN GIỮA: SLIDER ÂM THANH ===
-        VBox centerBox = new VBox(18);
-        centerBox.setAlignment(Pos.CENTER);
-        centerBox.setPrefWidth(400);
-        centerBox.setStyle("-fx-background-color: rgba(0, 0, 0, 0.3); -fx-background-radius: 15; -fx-padding: 20;");
+        // === TIÊU ĐỀ: PAUSED ===
+        Text titleText = new Text("PAUSED");
+        titleText.setFont(Font.font("Arial", 50));
+        titleText.setFill(Color.rgb(206, 245, 129));
+        titleText.setStyle(glowShadowStyle);
+        VBox.setMargin(titleText, new Insets(0, 0, 50, 0));
 
-        // Nhãn Background Volume (dùng green_button)
-        ImageButton backgroundLabelBtn = new ImageButton(greenBtnImage,
-            "Background Volume: " + (int)(VolumeManager.getBackgroundVolume() * 100) + "%",
-            Font.font("Arial", 16), null, 340);
-        backgroundLabelBtn.setMouseTransparent(true);
-        backgroundLabelBtn.setOnAction(() -> {});
-        backgroundLabelBtn.getChildren().stream()
-            .filter(node -> node instanceof javafx.scene.text.Text)
-            .map(node -> (javafx.scene.text.Text) node)
-            .forEach(text -> text.setFill(Color.rgb(206, 245, 129, 0.8)));
+        // === VOLUME CONTROLS – TRONG SUỐT, CÓ GLOW + SHADOW ===
+        VBox volumeBox = new VBox(20);
+        volumeBox.setAlignment(Pos.CENTER);
+        volumeBox.setMaxWidth(360);
+        volumeBox.setFillWidth(false);
+        volumeBox.setStyle("-fx-background-color: transparent;");
+
+        // Background Volume Label
+        Text bgLabel = new Text("Background Volume: " + (int)(VolumeManager.getBackgroundVolume() * 100) + "%");
+        bgLabel.setFont(Font.font("Arial", 18));
+        bgLabel.setFill(Color.rgb(206, 245, 129, 0.95));
+        bgLabel.setStyle(glowShadowStyle);
 
         Slider backgroundSlider = new Slider(0, 100, VolumeManager.getBackgroundVolume() * 100);
-        backgroundSlider.setPrefWidth(320);
-        backgroundSlider.setStyle("-fx-background-color: #444; -fx-background-radius: 10;");
+        backgroundSlider.setMinWidth(280);
+        backgroundSlider.setMaxWidth(280);
+        backgroundSlider.setPrefWidth(280);
+        backgroundSlider.setStyle(
+            "-fx-pref-width: 280 !important; " +
+            "-fx-min-width: 280 !important; " +
+            "-fx-max-width: 280 !important; " +
+            "-fx-background-color: #666; " +
+            "-fx-background-radius: 14; " +
+            "-fx-padding: 10;"
+        );
 
-        // Cập nhật label khi thay đổi slider
         backgroundSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
             double volume = newVal.doubleValue() / 100.0;
             VolumeManager.setBackgroundVolume(volume);
-            backgroundLabelBtn.getChildren().stream()
-                .filter(node -> node instanceof javafx.scene.text.Text)
-                .map(node -> (javafx.scene.text.Text) node)
-                .findFirst()
-                .ifPresent(text -> text.setText("Background Volume: " + newVal.intValue() + "%"));
+            bgLabel.setText("Background Volume: " + newVal.intValue() + "%");
         });
 
-        // Nhãn Effect Volume (dùng green_button)
-        ImageButton effectLabelBtn = new ImageButton(greenBtnImage,
-            "Effect Volume: " + (int)(VolumeManager.getEffectVolume() * 100) + "%",
-            Font.font("Arial", 16), null, 340);
-        effectLabelBtn.setMouseTransparent(true);
-        effectLabelBtn.setOnAction(() -> {});
-        effectLabelBtn.getChildren().stream()
-            .filter(node -> node instanceof javafx.scene.text.Text)
-            .map(node -> (javafx.scene.text.Text) node)
-            .forEach(text -> text.setFill(Color.rgb(206, 245, 129, 0.8)));
+        // Effect Volume Label
+        Text effectLabel = new Text("Effect Volume: " + (int)(VolumeManager.getEffectVolume() * 100) + "%");
+        effectLabel.setFont(Font.font("Arial", 18));
+        effectLabel.setFill(Color.rgb(206, 245, 129, 0.95));
+        effectLabel.setStyle(glowShadowStyle);
 
         Slider effectSlider = new Slider(0, 100, VolumeManager.getEffectVolume() * 100);
-        effectSlider.setPrefWidth(320);
-        effectSlider.setStyle("-fx-background-color: #444; -fx-background-radius: 10;");
+        effectSlider.setMinWidth(280);
+        effectSlider.setMaxWidth(280);
+        effectSlider.setPrefWidth(280);
+        effectSlider.setStyle(
+            "-fx-pref-width: 280 !important; " +
+            "-fx-min-width: 280 !important; " +
+            "-fx-max-width: 280 !important; " +
+            "-fx-background-color: #666; " +
+            "-fx-background-radius: 14; " +
+            "-fx-padding: 10;"
+        );
 
         effectSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
             double volume = newVal.doubleValue() / 100.0;
             VolumeManager.setEffectVolume(volume);
-            effectLabelBtn.getChildren().stream()
-                .filter(node -> node instanceof javafx.scene.text.Text)
-                .map(node -> (javafx.scene.text.Text) node)
-                .findFirst()
-                .ifPresent(text -> text.setText("Effect Volume: " + newVal.intValue() + "%"));
+            effectLabel.setText("Effect Volume: " + newVal.intValue() + "%");
         });
 
-        centerBox.getChildren().addAll(backgroundLabelBtn, backgroundSlider, effectLabelBtn, effectSlider);
+        volumeBox.getChildren().addAll(bgLabel, backgroundSlider, effectLabel, effectSlider);
 
-        // === PHẦN DƯỚI: NÚT BẤM ===
-        VBox bottomBox = new VBox(15);
+        // === NÚT CONTINUE & EXIT ===
+        VBox bottomBox = new VBox(20);
         bottomBox.setAlignment(Pos.CENTER);
-        bottomBox.setStyle("-fx-padding: 15;");
 
-        // Tạo nút Continue & Exit (dùng grey_button)
-        ImageButton continueBtn = new ImageButton(greyBtnImage, "Continue", btnFont, mouseClickSound, 170);
-        ImageButton exitBtn = new ImageButton(greyBtnImage, "Exit", btnFont, mouseClickSound, 170);
+        ImageButton continueBtn = new ImageButton(greyBtnImage, "Continue", btnFont, mouseClickSound, 180);
+        ImageButton exitBtn = new ImageButton(greyBtnImage, "Exit", btnFont, mouseClickSound, 180);
 
-        // Hành động nút Continue
         continueBtn.setOnAction(() -> {
-            if (gameLoop != null) {
-                gameLoop.start();
-            }
-
+            if (gameLoop != null) gameLoop.start();
             Platform.runLater(() -> {
                 MainGame.isPaused = false;
                 parentStage.getScene().setCursor(javafx.scene.Cursor.DEFAULT);
-
                 Paddle paddle = MainGame.staticPaddle;
                 if (paddle != null) {
-                    double paddleCenterX = paddle.getX();
-                    double screenX = parentStage.getX() + paddleCenterX + 8;
+                    double screenX = parentStage.getX() + paddle.getX() + 8;
                     double screenY = parentStage.getY() + paddle.getY() + 50;
-
                     try {
                         java.awt.Robot robot = new java.awt.Robot();
                         robot.mouseMove((int) screenX, (int) screenY);
                     } catch (Exception ex) {
-                        System.out.println("Không thể di chuyển chuột tự động: " + ex.getMessage());
+                        System.out.println("Không thể di chuyển chuột: " + ex.getMessage());
                     }
                 }
             });
-
             pauseStage.close();
         });
 
-        // Hành động nút Exit
         exitBtn.setOnAction(() -> {
             MainGame.cleanup();
             pauseStage.close();
-            if (parentStage != null) {
-                parentStage.close();
-            }
+            if (parentStage != null) parentStage.close();
             Platform.exit();
             System.exit(0);
         });
 
-        HBox buttonBox = new HBox(25, continueBtn, exitBtn);
+        HBox buttonBox = new HBox(40, continueBtn, exitBtn);
         buttonBox.setAlignment(Pos.CENTER);
         bottomBox.getChildren().add(buttonBox);
 
         // === GỘP TẤT CẢ ===
-        contentBox.getChildren().addAll(titleButton, centerBox, bottomBox);
+        contentBox.getChildren().addAll(titleText, volumeBox, bottomBox);
         stackRoot.getChildren().add(contentBox);
 
-        // === TẠO SCENE ===
+        // === HIỂN THỊ ===
         Scene scene = new Scene(stackRoot, WIDTH_PAUSE, HEIGHT_PAUSE);
-        scene.getStylesheets().add(Pause.class.getResource("/styles.css") != null ?
-            Pause.class.getResource("/styles.css").toExternalForm() : "");
+        String css = Pause.class.getResource("/styles.css") != null ?
+            Pause.class.getResource("/styles.css").toExternalForm() : "";
+        if (!css.isEmpty()) scene.getStylesheets().add(css);
+
         pauseStage.setScene(scene);
         pauseStage.showAndWait();
     }

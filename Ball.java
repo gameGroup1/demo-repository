@@ -57,7 +57,6 @@ public class Ball extends GameObject{
         }
     }
 
-
     @Override
     public void render() {
         if (imageView != null) {
