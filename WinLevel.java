@@ -42,23 +42,23 @@ public class WinLevel {
         Image backgroundImage = null;
         try {
             // 1. Thử tải từ classpath (trong JAR)
-            URL imageURL = Pause.class.getClassLoader().getResource("PauseMenu.gif");
+            URL imageURL = Pause.class.getClassLoader().getResource("WinLevel.gif");
             if (imageURL != null) {
                 backgroundImage = new Image(imageURL.toString(), true);
-                System.out.println("Đã tải PauseMenu.gif từ classpath");
+                System.out.println("Đã tải WinLevel.gif từ classpath");
                 return backgroundImage;
             }
             // 2. Nếu không có → thử từ file hệ thống
-            String[] paths = { "resources/PauseMenu.gif", "./resources/PauseMenu.gif", "../resources/PauseMenu.gif" };
+            String[] paths = { "resources/WinLevel.gif", "./resources/WinLevel.gif", "../resources/WinLevel.gif" };
             for (String path : paths) {
                 File file = new File(path);
                 if (file.exists()) {
                     backgroundImage = new Image(file.toURI().toString(), true);
-                    System.out.println("Đã tải PauseMenu.gif từ: " + path);
+                    System.out.println("Đã tải WinLevel.gif từ: " + path);
                     return backgroundImage;
                 }
             }
-            System.err.println("Không tìm thấy PauseMenu.gif");
+            System.err.println("Không tìm thấy WinLevel.gif");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -144,47 +144,47 @@ public class WinLevel {
                 .map(node -> (javafx.scene.text.Text) node)
                 .forEach(text -> text.setFill(Color.rgb(206, 245, 129, 0.8)));
 
-        Slider backgroundSlider = new Slider(0, 100, VolumeManager.getBackgroundVolume() * 100);
-        backgroundSlider.setPrefWidth(320);
-        backgroundSlider.setStyle("-fx-background-color: #444; -fx-background-radius: 10;");
+//        Slider backgroundSlider = new Slider(0, 100, VolumeManager.getBackgroundVolume() * 100);
+//        backgroundSlider.setPrefWidth(320);
+//        backgroundSlider.setStyle("-fx-background-color: #444; -fx-background-radius: 10;");
 
         // Cập nhật label khi thay đổi slider
-        backgroundSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-            double volume = newVal.doubleValue() / 100.0;
-            VolumeManager.setBackgroundVolume(volume);
-            backgroundLabelBtn.getChildren().stream()
-                    .filter(node -> node instanceof javafx.scene.text.Text)
-                    .map(node -> (javafx.scene.text.Text) node)
-                    .findFirst()
-                    .ifPresent(text -> text.setText("Background Volume: " + newVal.intValue() + "%"));
-        });
-
-        // Nhãn Effect Volume (dùng green_button)
-        ImageButton effectLabelBtn = new ImageButton(greenBtnImage,
-                "Effect Volume: " + (int)(VolumeManager.getEffectVolume() * 100) + "%",
-                Font.font("Arial", 16), null, 340);
-        effectLabelBtn.setMouseTransparent(true);
-        effectLabelBtn.setOnAction(() -> {});
-        effectLabelBtn.getChildren().stream()
-                .filter(node -> node instanceof javafx.scene.text.Text)
-                .map(node -> (javafx.scene.text.Text) node)
-                .forEach(text -> text.setFill(Color.rgb(206, 245, 129, 0.8)));
-
-        Slider effectSlider = new Slider(0, 100, VolumeManager.getEffectVolume() * 100);
-        effectSlider.setPrefWidth(320);
-        effectSlider.setStyle("-fx-background-color: #444; -fx-background-radius: 10;");
-
-        effectSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-            double volume = newVal.doubleValue() / 100.0;
-            VolumeManager.setEffectVolume(volume);
-            effectLabelBtn.getChildren().stream()
-                    .filter(node -> node instanceof javafx.scene.text.Text)
-                    .map(node -> (javafx.scene.text.Text) node)
-                    .findFirst()
-                    .ifPresent(text -> text.setText("Effect Volume: " + newVal.intValue() + "%"));
-        });
-
-        centerBox.getChildren().addAll(backgroundLabelBtn, backgroundSlider, effectLabelBtn, effectSlider);
+//        backgroundSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+//            double volume = newVal.doubleValue() / 100.0;
+//            VolumeManager.setBackgroundVolume(volume);
+//            backgroundLabelBtn.getChildren().stream()
+//                    .filter(node -> node instanceof javafx.scene.text.Text)
+//                    .map(node -> (javafx.scene.text.Text) node)
+//                    .findFirst()
+//                    .ifPresent(text -> text.setText("Background Volume: " + newVal.intValue() + "%"));
+//        });
+//
+//        // Nhãn Effect Volume (dùng green_button)
+//        ImageButton effectLabelBtn = new ImageButton(greenBtnImage,
+//                "Effect Volume: " + (int)(VolumeManager.getEffectVolume() * 100) + "%",
+//                Font.font("Arial", 16), null, 340);
+//        effectLabelBtn.setMouseTransparent(true);
+//        effectLabelBtn.setOnAction(() -> {});
+//        effectLabelBtn.getChildren().stream()
+//                .filter(node -> node instanceof javafx.scene.text.Text)
+//                .map(node -> (javafx.scene.text.Text) node)
+//                .forEach(text -> text.setFill(Color.rgb(206, 245, 129, 0.8)));
+//
+//        Slider effectSlider = new Slider(0, 100, VolumeManager.getEffectVolume() * 100);
+//        effectSlider.setPrefWidth(320);
+//        effectSlider.setStyle("-fx-background-color: #444; -fx-background-radius: 10;");
+//
+//        effectSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+//            double volume = newVal.doubleValue() / 100.0;
+//            VolumeManager.setEffectVolume(volume);
+//            effectLabelBtn.getChildren().stream()
+//                    .filter(node -> node instanceof javafx.scene.text.Text)
+//                    .map(node -> (javafx.scene.text.Text) node)
+//                    .findFirst()
+//                    .ifPresent(text -> text.setText("Effect Volume: " + newVal.intValue() + "%"));
+//        });
+//
+//        centerBox.getChildren().addAll(backgroundLabelBtn, backgroundSlider, effectLabelBtn, effectSlider);
 
         // === PHẦN DƯỚI: NÚT BẤM ===
         VBox bottomBox = new VBox(15);
@@ -192,7 +192,7 @@ public class WinLevel {
         bottomBox.setStyle("-fx-padding: 15;");
 
         // Tạo nút Continue & Exit (dùng grey_button)
-        ImageButton continueBtn = new ImageButton(greyBtnImage, "Continue", btnFont, mouseClickSound, 170);
+        ImageButton continueBtn = new ImageButton(greyBtnImage, "Next Level", btnFont, mouseClickSound, 170);
         ImageButton exitBtn = new ImageButton(greyBtnImage, "Exit", btnFont, mouseClickSound, 170);
 
         // Hành động nút Continue
