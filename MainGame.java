@@ -60,7 +60,7 @@ public class MainGame {
     private static MediaView bgMediaView;
     // -----------------------------------
     private boolean isAttached = true;         // Bóng dính vào paddle
-    private int lives = 10;
+    private int lives = 1;
     private List<ImageView> heartImages = new ArrayList<>();
     private Text scoreText;
     private Text levelText;
