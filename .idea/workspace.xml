@@ -5,32 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="298f754b-cf25-4f8f-828d-d0f0673088c6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ball.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BallTrailEffect.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BestScoreMenu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Block.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BrickImage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Bricks.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Capsule.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Collision.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EffectManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EndMenu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameLevel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameMenu.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameObject.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ImageButton.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Level.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainGame.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Paddle.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Path.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pause.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ScaleManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Update.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VolumeManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Wall.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WinLevel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid11140.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid17252.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid17768.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid2208.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid22156.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid25560.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid31144.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid31964.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid4424.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid6276.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid7460.log" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +91,7 @@
       <updated>1762333119048</updated>
       <workItem from="1762731254074" duration="3411000" />
       <workItem from="1762758294343" duration="1877000" />
-      <workItem from="1762786554131" duration="3016000" />
+      <workItem from="1762786554131" duration="3560000" />
     </task>
     <servers />
   </component>
