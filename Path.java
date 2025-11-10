@@ -40,7 +40,7 @@ public class Path {
     public static final String greenButton = "/resources/green_button.png";
     public static final String greyButton = "/resources/grey_button.png";
     public static final String bestScore = "/resources/bestScoreMenu.png";
-    
+    //public static final String settingMenu = "/resources/SettingMenu.gif";
     public static String getFileURL(String relativePath) {
         return "file:///" + System.getProperty("user.dir").replace("\\", "/") + relativePath;
     }

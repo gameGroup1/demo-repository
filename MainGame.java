@@ -192,10 +192,9 @@ public class MainGame {
         leftWall = new Wall("left", 0, 0, wallThickness, heightW, wallThickness);
         rightWall = new Wall("right", widthW - wallThickness, 0, wallThickness, heightW, wallThickness);
         topWall = new Wall("top", 0, 0, widthW, wallThickness, wallThickness);
-
+        
         genBrickAndCapsule();
 
-        lives = 10;
         heartImage = new Image("file:resources/heart.png");
         for (int i = 0; i < lives; i++) {
             ImageView iv = new ImageView(heartImage);

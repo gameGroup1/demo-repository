@@ -60,8 +60,8 @@ public class BestScoreMenu {
         scoreText.setStyle("-fx-font-weight: bold; -fx-effect: dropshadow(gaussian, #FFD700, 15, 0.8, 0, 0);");
 
         // === LOAD NÚT XANH ===
-        Image greenBtn = ScaleManager.loadImage(Path.greenButton.substring(1)); // "/resources/green_button.png"
-        if (greenBtn == null || greenBtn.isError()) {
+        Image greyBtn = ScaleManager.loadImage(Path.greyButton.substring(1)); // "/resources/green_button.png"
+        if (greyBtn == null || greyBtn.isError()) {
             System.err.println("Không load được green_button.png");
             // Fallback: dùng Button cũ
             javafx.scene.control.Button fallback = new javafx.scene.control.Button("EXIT TO MENU");
@@ -81,7 +81,7 @@ public class BestScoreMenu {
 
         // === TẠO IMAGEBUTTON ===
         Font btnFont = Font.font("Arial", 27);
-        ImageButton backButton = new ImageButton(greenBtn, "EXIT TO MENU", btnFont, mouseClickSound, 300);
+        ImageButton backButton = new ImageButton(greyBtn, "BACK TO MENU", btnFont, mouseClickSound, 300);
         backButton.setOnAction(() -> stage.close());
 
         // === LAYOUT ===
