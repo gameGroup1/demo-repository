@@ -35,7 +35,7 @@ public class MainGame {
     private final int widthP = 150;
     private final int heightP = 30;
     private final int radiusB = 15;
-    private int speedB = 7;                    // Tốc độ bóng, tăng dần theo level
+    private int speedB = 5;                    // Tốc độ bóng, tăng dần theo level
     private final int speedC = 2;
     private final int wallThickness = 30;
     private int numberLevel = 1;               // Level hiện tại

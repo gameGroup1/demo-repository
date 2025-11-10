@@ -57,61 +57,55 @@ public class Update {
 
     // Xử lý va chạm giữa bóng và vật thể chung (tường, gạch,...)
     public static void position(Ball ball, GameObject object) {
-        if (!Collision.check(ball, object)) {
-            return;
-        }
+        if (!Collision.check(ball, object)) return;
 
-        // Xác định va chạm theo chiều dọc (trên/dưới) hay ngang (trái/phải)
-        boolean hitVertical = false, hitHorizontal = false;
-
-        if (ball.getY() < object.getY() || ball.getY() > object.getY() + object.getHeight()) {
-            hitVertical = true; // Va chạm trên hoặc dưới
-        }
-
-        if (ball.getX() < object.getX() || ball.getX() > object.getX() + object.getWidth()) {
-            hitHorizontal = true; // Va chạm trái hoặc phải
-        }
-
-        double epsilon = 0.01; // Khoảng cách nhỏ để tránh dính vào vật thể
         double radius = ball.getRadius();
+        double bx = ball.getX();
+        double by = ball.getY();
+        double ox = object.getX();
+        double oy = object.getY();
+        double ow = object.getWidth();
+        double oh = object.getHeight();
 
-        // Điều chỉnh vị trí bóng để không xuyên qua vật thể
-        if (hitVertical) {
-            if (ball.getY() < object.getY()) {
-                ball.setY(object.getY() - radius - epsilon); // Bóng ở trên
-            } else {
-                ball.setY(object.getY() + object.getHeight() + radius + epsilon); // Bóng ở dưới
-            }
-        }
+        // Tính khoảng cách từ tâm bóng đến 4 cạnh
+        double distLeft   = Math.abs((bx + radius) - ox);
+        double distRight  = Math.abs((ox + ow) - (bx - radius));
+        double distTop    = Math.abs((by + radius) - oy);
+        double distBottom = Math.abs((oy + oh) - (by - radius));
 
-        if (hitHorizontal) {
-            if (ball.getX() < object.getX()) {
-                ball.setX(object.getX() - radius - epsilon); // Bóng ở trái
-            } else {
-                ball.setX(object.getX() + object.getWidth() + radius + epsilon); // Bóng ở phải
-            }
-        }
+        // Tìm khoảng cách nhỏ nhất (cạnh nào bị chạm trước)
+        double minDist = Math.min(Math.min(distLeft, distRight), Math.min(distTop, distBottom));
 
-        // Đảo chiều vận tốc tùy theo hướng va chạm
-        if (hitVertical && hitHorizontal) {
-            ball.setDx(-ball.getDx());
-            ball.setDy(-ball.getDy()); // Va chạm góc
-        } else if (hitVertical) {
-            ball.setDy(-ball.getDy()); // Va chạm trên/dưới
-        } else if (hitHorizontal) {
-            ball.setDx(-ball.getDx()); // Va chạm trái/phải
-        } else {
-            ball.setDy(-ball.getDy()); // Mặc định: nảy lên
-        }
+        double epsilon = 0.01;
 
-        // Chuẩn hóa lại vận tốc để giữ tốc độ không đổi
-        double vectorSpeed = Math.sqrt(ball.getDx() * ball.getDx() + ball.getDy() * ball.getDy());
-        if (vectorSpeed != 0) {
-            ball.setDx(ball.getDx() / vectorSpeed * ball.getSpeed());
-            ball.setDy(ball.getDy() / vectorSpeed * ball.getSpeed());
+        if (minDist == distLeft) {
+            // Chạm cạnh trái
+            ball.setX(ox - radius - epsilon);
+            ball.setDx(-Math.abs(ball.getDx())); // Đảo X sang trái
+            } 
+            else if (minDist == distRight) {
+                    // Chạm cạnh phải
+                    ball.setX(ox + ow + radius + epsilon);
+                    ball.setDx(Math.abs(ball.getDx())); // Đảo X sang phải
+                } 
+                else if (minDist == distTop) {
+                        // Chạm cạnh trên
+                        ball.setY(oy - radius - epsilon);
+                        ball.setDy(-Math.abs(ball.getDy())); // Bay lên
+                    } 
+                    else if (minDist == distBottom) {
+                            // Chạm cạnh dưới
+                            ball.setY(oy + oh + radius + epsilon);
+                            ball.setDy(Math.abs(ball.getDy())); // Bay xuống
+                        }
+        // Chuẩn hóa lại vận tốc (đảm bảo tốc độ không đổi)
+        double speed = ball.getSpeed();
+        double v = Math.sqrt(ball.getDx() * ball.getDx() + ball.getDy() * ball.getDy());
+        if (v != 0) {
+            ball.setDx(ball.getDx() / v * speed);
+            ball.setDy(ball.getDy() / v * speed);
         }
     }
-
     // Xử lý va chạm bóng với toàn bộ mảng gạch
     // Trả về chỉ số gạch bị va chạm, hoặc -1 nếu không có
     public static int position(Ball ball, Bricks[] bricks) {

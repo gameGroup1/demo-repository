@@ -6,7 +6,7 @@ public class Wall extends GameObject {
     private String direction;
     private Group blockGroup;// Group để chứa tất cả ImageView của các block
 
-    public Wall(String direction, double x, double y, int width, int height, int blockSize) {
+    public Wall(String direction, float x, float y, int width, int height, int blockSize) {
         super(x, y, width, height);
         this.direction = direction;
         int blockLength = direction.equals("top") ? width / blockSize : height / blockSize;
