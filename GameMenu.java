@@ -5,6 +5,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -58,18 +59,34 @@ public class GameMenu extends Application {
         Image greenBtn = loadImage("green_button.png");
         Font btnFont = Font.font("Arial", 32);
 
-        ImageButton startBtn = new ImageButton(greenBtn, "Start", btnFont, mouseClickSound, 270);
-        ImageButton bestBtn = new ImageButton(greenBtn, "Best Score", btnFont, mouseClickSound, 270);
+        ImageButton newGameBtn = new ImageButton(greenBtn, "New Game", btnFont, mouseClickSound, 270);
+        ImageButton continueBtn = new ImageButton(greenBtn, "Continue", btnFont, mouseClickSound, 270);
+        ImageButton bestBtn = new ImageButton(greenBtn, "Best Level", btnFont, mouseClickSound, 270);
         ImageButton settingBtn = new ImageButton(greenBtn, "Settings", btnFont, mouseClickSound, 270);
         ImageButton exitBtn = new ImageButton(greenBtn, "Exit", btnFont, mouseClickSound, 270);
 
-        startBtn.setOnAction(() -> {
+        newGameBtn.setOnAction(() -> {
             stopMusic();
             stage.close();
-            MainGame.createAndShowGame();
+            MainGame.createAndShowGame(1);
         });
 
-        bestBtn.setOnAction(() -> showBestScore());
+        continueBtn.setOnAction(() -> {
+            int last = MainGame.getLastLevel();
+            if (last > 5) { // Giả sử max level là 5
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("You are done, please click New Game");
+                alert.showAndWait();
+            } else {
+                stopMusic();
+                stage.close();
+                MainGame.createAndShowGame(last);
+            }
+        });
+
+        bestBtn.setOnAction(() -> BestLevelMenu.show());
         settingBtn.setOnAction(() -> showSettings());
         exitBtn.setOnAction(() -> {
             stopMusic();
@@ -77,7 +94,7 @@ public class GameMenu extends Application {
             System.exit(0);
         });
 
-        content.getChildren().addAll(title, startBtn, bestBtn, settingBtn, exitBtn);
+        content.getChildren().addAll(title, newGameBtn, continueBtn, bestBtn, settingBtn, exitBtn);
         root.getChildren().add(content);
 
         Scene scene = new Scene(root, 1100, 500);
@@ -86,12 +103,7 @@ public class GameMenu extends Application {
         stage.show();
     }
 
-    private void showBestScore() {
-        BestScoreMenu.show();
-    }
-
     private void showSettings() {
-        // Sử dụng SettingMenu mới
         SettingMenu.show(stage);
     }
 

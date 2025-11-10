@@ -82,7 +82,7 @@ public class ImageButton extends StackPane {
     }
 
     // Tạo ảnh scale
-   private Image createScaledImage(Image src, double scale) {
-    return ScaleManager.createScaledImage(src, scale);
+    private Image createScaledImage(Image src, double scale) {
+        return ScaleManager.createScaledImage(src, scale);
     }
 }

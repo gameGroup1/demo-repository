@@ -41,6 +41,12 @@ public class GameLevel {
         levels.add(gameLevel);
     }
 
+    // Tải level cụ thể (không phụ thuộc vào thứ tự nextLevel)
+    public void loadLevel(int targetLevel) throws IOException {
+        level = targetLevel - 1;
+        nextLevel();
+    }
+
     public Level getCurrentLevel() {
         return gameLevel;
     }
