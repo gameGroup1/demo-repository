@@ -6,9 +6,31 @@
   <component name="ChangeListManager">
     <list default="true" id="298f754b-cf25-4f8f-828d-d0f0673088c6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ball.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BallTrailEffect.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BestScoreMenu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Block.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BrickImage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bricks.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Capsule.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Collision.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/EffectManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/EndMenu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameLevel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameMenu.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameObject.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ImageButton.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Level.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainGame.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Paddle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Path.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pause.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScaleManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Update.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VolumeManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Wall.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WinLevel.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/MainGame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/MainGame$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/MainGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/MainGame.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,27 +68,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.MainGame.executor": "Run",
-    "Application.Run MainGame.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "tung__again",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/HP/Documents/GitHub/demo-repository",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Facets",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.MainGame.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Run MainGame.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;tung__again&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/HP/Documents/GitHub/demo-repository&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Facets&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -84,6 +106,7 @@
       <updated>1762333119048</updated>
       <workItem from="1762731254074" duration="3411000" />
       <workItem from="1762758294343" duration="1877000" />
+      <workItem from="1762786554131" duration="3016000" />
     </task>
     <servers />
   </component>
