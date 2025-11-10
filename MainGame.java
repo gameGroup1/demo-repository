@@ -687,39 +687,12 @@ public class MainGame {
     }
 
     public static void createAndShowGame() {
-    Platform.runLater(() -> {
-        Stage stage = new Stage();
-        MainGame game = new MainGame();
-        game.start(stage);
-
-        // === THÊM SAU KHI SHOW STAGE ===
-        stage.showingProperty().addListener((obs, wasShowing, isNowShowing) -> {
-            if (isNowShowing) {
-                Platform.runLater(() -> {
-                    Scene scene = stage.getScene();
-                    if (scene != null) {
-                        scene.getRoot().requestFocus();
-                        stage.toFront();
-
-                        // Di chuyển chuột về giữa paddle để "kích hoạt" mouse move
-                        Paddle paddle = MainGame.staticPaddle;
-                        if (paddle != null) {
-                            double screenX = stage.getX() + paddle.getX() + paddle.getWidth() / 2;
-                            double screenY = stage.getY() + paddle.getY() + 15;
-                            try {
-                                java.awt.Robot robot = new java.awt.Robot();
-                                robot.mouseMove((int) screenX, (int) screenY);
-                            } catch (Exception ex) {
-                                System.out.println("Robot mouse move failed: " + ex.getMessage());
-                            }
-                        }
-                    }
-                });
-            }
+        Platform.runLater(() -> {
+            Stage stage = new Stage();
+            MainGame game = new MainGame();
+            game.start(stage);
         });
-        // ================================
-    });
-}
+    }
 
     public static int getBestScore() {
         return highestScore;

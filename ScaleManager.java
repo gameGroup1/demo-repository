@@ -73,40 +73,4 @@ public class ScaleManager {
         }
         return out;
     }
-    
-    /**
-     * Tải hình ảnh với kích thước mục tiêu (tự động scale)
-     */
-    public static Image loadAndScaleImage(String name, double targetWidth, double targetHeight) {
-        Image original = loadImage(name);
-        if (original == null) return null;
-        
-        double scaleX = targetWidth / original.getWidth();
-        double scaleY = targetHeight / original.getHeight();
-        double scale = Math.min(scaleX, scaleY);
-        
-        return createScaledImage(original, scale);
-    }
-    
-    /**
-     * Tải hình ảnh với chiều rộng mục tiêu (giữ tỷ lệ)
-     */
-    public static Image loadAndScaleImageByWidth(String name, double targetWidth) {
-        Image original = loadImage(name);
-        if (original == null) return null;
-        
-        double scale = targetWidth / original.getWidth();
-        return createScaledImage(original, scale);
-    }
-    
-    /**
-     * Tải hình ảnh với chiều cao mục tiêu (giữ tỷ lệ)
-     */
-    public static Image loadAndScaleImageByHeight(String name, double targetHeight) {
-        Image original = loadImage(name);
-        if (original == null) return null;
-        
-        double scale = targetHeight / original.getHeight();
-        return createScaledImage(original, scale);
-    }
 }

@@ -46,7 +46,7 @@ public class Pause {
                 backgroundImage = new Image(imageURL.toString(), true);
                 return backgroundImage;
             }
-            String[] paths = { "resources/PauseMenu.gif", "./resources/PauseMenu.gif", "../resources/PauseMenu.gif" };
+            String[] paths = { "ImageGame/resources/PauseMenu.gif", "./resources/PauseMenu.gif", "../resources/PauseMenu.gif" };
             for (String path : paths) {
                 File file = new File(path);
                 if (file.exists()) {
