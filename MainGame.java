@@ -152,7 +152,6 @@ public class MainGame {
         return true;
     }
 
-
     // Constructor: Khởi tạo toàn bộ game
     public MainGame() {
         gameLevel = new GameLevel(5, wallThickness, speedC);
@@ -190,17 +189,25 @@ public class MainGame {
             heartImages.add(iv);
         }
 
-        // Text điểm số
+        // === TEXT ĐIỂM SỐ + LEVEL (GIỐNG HỆT PAUSE) ===
+        // HIỆU ỨNG GLOW + SHADOW (COPY 100% TỪ PAUSE)
+        String glowShadowStyle = "-fx-font-weight: bold; " +
+            "-fx-effect: dropshadow(gaussian, #565c4cff, 10, 0.8, 0, 0), " +
+            "dropshadow(gaussian, black, 10, 0.5, 2, 2);";
+
+        // Score Text
         scoreText = new Text("Score: " + score);
-        scoreText.setFill(Color.WHITE);
+        scoreText.setFill(Color.rgb(206, 245, 129, 0.95));
         scoreText.setFont(new Font(36));
+        scoreText.setStyle(glowShadowStyle);
         scoreText.setX(widthW - wallThickness - 200);
         scoreText.setY(wallThickness + 64);
 
-        // Text level
+        // Level Text
         levelText = new Text("Level " + numberLevel);
-        levelText.setFill(Color.WHITE);
+        levelText.setFill(Color.rgb(206, 245, 129, 0.95));
         levelText.setFont(new Font(36));
+        levelText.setStyle(glowShadowStyle);
         levelText.setX(wallThickness + 20);
         levelText.setY(wallThickness + 64);
     }
@@ -401,6 +408,7 @@ public class MainGame {
                     if (brick != null && !brick.isBreak()) brick.render();
                 }
 
+                // CẬP NHẬT TEXT SCORE VỚI HIỆU ỨNG GIỮ NGUYÊN
                 scoreText.setText("Score: " + score);
 
                 // === MẤT MẠNG ===
@@ -411,7 +419,8 @@ public class MainGame {
                 // Qua level
                 if (isLevelCleared()) {
                     numberLevel++;
-                    levelText.setText("Level: " + numberLevel);
+                    // CẬP NHẬT LEVEL TEXT VỚI HIỆU ỨNG GIỮ NGUYÊN
+                    levelText.setText("Level " + numberLevel);
 
                     // Xóa brick cũ
                     for(Bricks brick : bricks) {
