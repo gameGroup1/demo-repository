@@ -141,7 +141,7 @@ public class SettingMenu {
         Image greyBtnNormal = loadImage("grey_button.png");
         if (greyBtnNormal == null) {
             System.err.println("Không tải được grey_button.png");
-            greyBtnNormal = new Image("file:resources/grey_button.png");
+            greyBtnNormal = new Image("file:ImageGame/resources/grey_button.png");
         }
 
         Font btnFont = Font.font("Arial", 20);

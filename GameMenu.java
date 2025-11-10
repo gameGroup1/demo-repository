@@ -5,9 +5,6 @@ import javafx.embed.swing.JFXPanel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -131,7 +128,7 @@ public class GameMenu extends Application {
         try {
             URL url = getClass().getClassLoader().getResource("Monotype_corsiva.ttf");
             if (url != null) return url.toString();
-            return "file:resources/Monotype_corsiva.ttf";
+            return "file:ImageGame/resources/Monotype_corsiva.ttf";
         } catch (Exception e) {
             return null;
         }

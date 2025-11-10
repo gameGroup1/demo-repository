@@ -31,7 +31,7 @@ public class BestScoreMenu {
         StackPane root = new StackPane();
 
         // === LOAD BACKGROUND ===
-        Image bgImage = ScaleManager.loadImage(Path.bestScore.substring(1)); // "/resources/bestScoreMenu.png" → "resources/..."
+        Image bgImage = ScaleManager.loadImage(Path.bestScore.substring(1));
         if (bgImage != null && !bgImage.isError()) {
             ImageView background = new ImageView(bgImage);
             background.setFitWidth(WIDTH);
@@ -60,7 +60,7 @@ public class BestScoreMenu {
         scoreText.setStyle("-fx-font-weight: bold; -fx-effect: dropshadow(gaussian, #FFD700, 15, 0.8, 0, 0);");
 
         // === LOAD NÚT XANH ===
-        Image greyBtn = ScaleManager.loadImage(Path.greyButton.substring(1)); // "/resources/green_button.png"
+        Image greyBtn = ScaleManager.loadImage(Path.greyButton.substring(1)); 
         if (greyBtn == null || greyBtn.isError()) {
             System.err.println("Không load được green_button.png");
             // Fallback: dùng Button cũ

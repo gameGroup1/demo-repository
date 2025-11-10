@@ -172,8 +172,8 @@ public class MainGame {
     // Constructor: Khởi tạo toàn bộ game
     public MainGame() {
         gameLevel = new GameLevel(5, wallThickness, speedC);
-        collisionImage = new Image("file:resources/boom_collision.gif");
-        fireCollisionImage = new Image("file:resources/fire_collision.gif");
+        collisionImage = new Image("file:ImageGame/resources/boom_collision.gif");
+        fireCollisionImage = new Image("file:ImageGame/resources/fire_collision.gif");
 
         // Tạo paddle
         double paddleX = (widthW - widthP) / 2.0;
@@ -195,7 +195,7 @@ public class MainGame {
         
         genBrickAndCapsule();
 
-        heartImage = new Image("file:resources/heart.png");
+        heartImage = new Image("file:ImageGame/resources/heart.png");
         for (int i = 0; i < lives; i++) {
             ImageView iv = new ImageView(heartImage);
             iv.setFitWidth(30);
@@ -289,13 +289,13 @@ public class MainGame {
     private void playBackgroundVideo() {
         try {
             // Thử load từ resource first (nếu đóng gói trong jar dưới resources root)
-            URL videoURL = getClass().getClassLoader().getResource("/resources/video_background.mp4");
+            URL videoURL = getClass().getClassLoader().getResource("/ImageGame/resources/video_background.mp4");
             Media bgMedia;
             if (videoURL != null) {
                 bgMedia = new Media(videoURL.toString());
             } else {
                 // fallback: file path relative to project
-                File f = new File("resources/video_background.mp4");
+                File f = new File("ImageGame/resources/video_background.mp4");
                 bgMedia = new Media(f.toURI().toString());
             }
 
@@ -606,7 +606,7 @@ public class MainGame {
     }
     // Hiệu ứng nổ lớn (capsule explosion)
     private void showExplosion(double x, double y) {
-        Image explosionImage = new Image("file:resources/explosion.gif");
+        Image explosionImage = new Image("file:ImageGame/resources/explosion.gif");
         ImageView explosionView = new ImageView(explosionImage);
         explosionView.setFitWidth(100);
         explosionView.setFitHeight(100);
@@ -687,12 +687,39 @@ public class MainGame {
     }
 
     public static void createAndShowGame() {
-        Platform.runLater(() -> {
-            Stage stage = new Stage();
-            MainGame game = new MainGame();
-            game.start(stage);
+    Platform.runLater(() -> {
+        Stage stage = new Stage();
+        MainGame game = new MainGame();
+        game.start(stage);
+
+        // === THÊM SAU KHI SHOW STAGE ===
+        stage.showingProperty().addListener((obs, wasShowing, isNowShowing) -> {
+            if (isNowShowing) {
+                Platform.runLater(() -> {
+                    Scene scene = stage.getScene();
+                    if (scene != null) {
+                        scene.getRoot().requestFocus();
+                        stage.toFront();
+
+                        // Di chuyển chuột về giữa paddle để "kích hoạt" mouse move
+                        Paddle paddle = MainGame.staticPaddle;
+                        if (paddle != null) {
+                            double screenX = stage.getX() + paddle.getX() + paddle.getWidth() / 2;
+                            double screenY = stage.getY() + paddle.getY() + 15;
+                            try {
+                                java.awt.Robot robot = new java.awt.Robot();
+                                robot.mouseMove((int) screenX, (int) screenY);
+                            } catch (Exception ex) {
+                                System.out.println("Robot mouse move failed: " + ex.getMessage());
+                            }
+                        }
+                    }
+                });
+            }
         });
-    }
+        // ================================
+    });
+}
 
     public static int getBestScore() {
         return highestScore;

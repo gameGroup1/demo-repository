@@ -49,7 +49,7 @@ public class WinLevel {
                 return backgroundImage;
             }
             // 2. Nếu không có → thử từ file hệ thống
-            String[] paths = { "resources/WinLevel.gif", "./resources/WinLevel.gif", "../resources/WinLevel.gif" };
+            String[] paths = { "ImageMenu/resources/WinLevel.gif", "./resources/WinLevel.gif", "../resources/WinLevel.gif" };
             for (String path : paths) {
                 File file = new File(path);
                 if (file.exists()) {
@@ -106,13 +106,13 @@ public class WinLevel {
         Image greyBtnImage = loadImage("grey_button.png");
         if (greyBtnImage == null) {
             System.err.println("Lỗi: Không tải được grey_button.png");
-            greyBtnImage = new Image("file:resources/grey_button.png");
+            greyBtnImage = new Image("file:ImageGame/resources/grey_button.png");
         }
 
         Image greenBtnImage = loadImage("green_button.png");
         if (greenBtnImage == null) {
             System.err.println("Lỗi: Không tải được green_button.png");
-            greenBtnImage = new Image("file:resources/green_button.png");
+            greenBtnImage = new Image("file:ImageGame/resources/green_button.png");
         }
 
         Font btnFont = Font.font("Arial", 20);

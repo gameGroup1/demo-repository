@@ -7,7 +7,7 @@ import javafx.scene.effect.BoxBlur;
 public class Block extends GameObject {
     private Image image;
     private ImageView imageView;
-    private static final String imagePath = "file:resources/block.png";
+    private static final String imagePath = "file:ImageGame/resources/block.png";
     private BoxBlur blurEffect;
 
     public Block(double x, double y, int width, int height) {

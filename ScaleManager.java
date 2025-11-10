@@ -16,7 +16,7 @@ public class ScaleManager {
             if (url != null) {
                 return new Image(url.toString());
             }
-            return new Image("file:resources/" + name);
+            return new Image("file:ImageGame/resources/" + name);
         } catch (Exception e) {
             System.err.println("Không tải được hình ảnh: " + name);
             return null;
@@ -32,7 +32,7 @@ public class ScaleManager {
             if (url != null) {
                 return new Image(url.toString(), true);
             }
-            return new Image("file:resources/" + name, true);
+            return new Image("file:ImageGame/resources/" + name, true);
         } catch (Exception e) {
             System.err.println("Không tải được hình ảnh động: " + name);
             return null;
