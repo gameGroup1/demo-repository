@@ -205,11 +205,6 @@ public class WinAllLevels {
             // 2. Đóng cửa sổ Pause
             winStage.close();
 
-            // 3. Đóng cửa sổ MainGame (chính là parentStage)
-            if (parentStage != null) {
-                parentStage.close();
-            }
-
             // 4. Hiển thị lại Menu chính
             // Phải chạy trên Platform.runLater để đảm bảo an toàn luồng FX
             Platform.runLater(() -> GameMenu.showMenu());
