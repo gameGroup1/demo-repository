@@ -5,23 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a78fd025-fc38-4a9b-be44-a58a1e865e2d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/code_for_menu/WinAllLevels.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Run_MainGame.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Run_MainGame.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Levels/Level3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Levels/Level3.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Levels/Level6.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Levels/Level6.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/best_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/best_level.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code_for_levels/GameLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/code_for_levels/GameLevel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code_for_levels/Level.java" beforeDir="false" afterPath="$PROJECT_DIR$/code_for_levels/Level.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code_for_mainGame/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/code_for_mainGame/MainGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code_for_menu/EndMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/code_for_menu/EndMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code_for_menu/GameMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/code_for_menu/GameMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code_for_menu/Pause.java" beforeDir="false" afterPath="$PROJECT_DIR$/code_for_menu/Pause.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/last_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/last_level.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/runConfigurations/Run_MainGame.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/runConfigurations/Run_MainGame.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Levels/Level3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Levels/Level3.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/Levels/Level6.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/Levels/Level6.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/best_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/best_level.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_def_path/Path.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_def_path/Path.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_button/ImageButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_button/ImageButton.class" afterDir="false" />
@@ -49,7 +39,6 @@
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_object/Paddle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_object/Paddle.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_object/Wall.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_object/Wall.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_update/Update.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_update/Update.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/last_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/last_level.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,32 +76,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.MainGame.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Run MainGame.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/HP/Documents/GitHub/demo-repository&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.GameMenu.executor": "Run",
+    "Application.MainGame.executor": "Run",
+    "Application.Run MainGame.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "#41 on main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/HP/Documents/GitHub/demo-repository",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
       </set>
     </attachedChunks>
   </component>
@@ -128,6 +118,7 @@
       <workItem from="1762856662721" duration="1586000" />
       <workItem from="1762864324343" duration="5257000" />
       <workItem from="1762869670205" duration="696000" />
+      <workItem from="1762870943500" duration="4788000" />
     </task>
     <servers />
   </component>

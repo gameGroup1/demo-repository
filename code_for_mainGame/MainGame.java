@@ -437,26 +437,51 @@ public class MainGame {
                     lastLevel++;
                     levelText.setText("Level: " + lastLevel);
                     isPaused = true;
-                    // dừng game loop ngay (ngăn tiếp tục animation)
+                    // Dừng game loop ngay (ngăn tiếp tục animation)
                     if (gameLoop != null) gameLoop.stop();
-                    // đưa việc hiển thị cửa sổ ra ngoài pulse hiện tại để tránh IllegalStateException
-                    Platform.runLater(() -> WinLevel.show(primaryStage, gameLoop));
+
+                    // Đưa việc hiển thị cửa sổ ra ngoài pulse hiện tại để tránh IllegalStateException
+                    if (lastLevel < 8) Platform.runLater(() -> WinLevel.show(primaryStage, gameLoop));
+                    else {
+                        gameLoop.stop();
+                        if (mediaPlayer != null) {
+                            mediaPlayer.stop();
+                            VolumeManager.unregisterMediaPlayer(mediaPlayer);
+                        }
+                        // Stop & dispose background video player (nếu có)
+                        try {
+                            if (bgVideoPlayer != null) {
+                                bgVideoPlayer.stop();
+                                bgVideoPlayer.dispose();
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                        Platform.runLater(() -> {
+                            primaryStage.close();
+                            WinAllLevels.show(primaryStage, gameLoop);
+                        });
+                    }
+
                     // Xóa brick cũ
                     for (Bricks brick : bricks) {
                         if (brick != null && brick.getNode() != null) {
                             root.getChildren().remove(brick.getNode());
                         }
                     }
+
                     // Xóa capsule cũ
                     for (Capsule capsule : capsules) {
                         if (capsule != null && capsule.getNode() != null) {
                             root.getChildren().remove(capsule.getNode());
                         }
                     }
+
                     // Xóa bóng
                     if (root.getChildren().contains(ball.getNode()))
                         root.getChildren().remove(ball.getNode());
                     capsuleIndex.clear();
+
                     // Xóa dư ảnh cũ
                     if (ballTrailEffect != null) {
                         ballTrailEffect.clear();
