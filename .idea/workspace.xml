@@ -5,21 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a78fd025-fc38-4a9b-be44-a58a1e865e2d" name="Changes" comment="">
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/code_for_menu/WinAllLevels.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+=======
+>>>>>>> d577e7da6bca460189568bd9bb51b4f4cfe6af30
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/best_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/best_level.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code_for_mainGame/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/code_for_mainGame/MainGame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/last_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/last_level.txt" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/.idea/misc.xml" afterDir="false" />
+=======
+>>>>>>> d577e7da6bca460189568bd9bb51b4f4cfe6af30
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/best_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/best_level.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_def_path/Path.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_def_path/Path.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_button/ImageButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_button/ImageButton.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_collision/Collision.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_collision/Collision.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_levels/GameLevel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_levels/GameLevel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_levels/Level.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_levels/Level.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_mainGame/MainGame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_mainGame/MainGame$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_mainGame/MainGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_mainGame/MainGame.class" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_manager/EffectManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_manager/EffectManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_manager/ScaleManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_manager/ScaleManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_manager/VolumeManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_manager/VolumeManager.class" afterDir="false" />
@@ -39,6 +41,9 @@
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_object/Paddle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_object/Paddle.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_object/Wall.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_object/Wall.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_update/Update.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_update/Update.class" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/last_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/last_level.txt" afterDir="false" />
+>>>>>>> d577e7da6bca460189568bd9bb51b4f4cfe6af30
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,8 +122,12 @@
       <workItem from="1762856644138" duration="2000" />
       <workItem from="1762856662721" duration="1586000" />
       <workItem from="1762864324343" duration="5257000" />
+<<<<<<< HEAD
       <workItem from="1762869670205" duration="696000" />
       <workItem from="1762870943500" duration="4788000" />
+=======
+      <workItem from="1762869670205" duration="1471000" />
+>>>>>>> d577e7da6bca460189568bd9bb51b4f4cfe6af30
     </task>
     <servers />
   </component>

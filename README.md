@@ -11,7 +11,7 @@
 <ul>
   <li><b>Video demo game: </b><a href="https://www.youtube.com/watch?v=DJcHESalCps">Video</a></li>
   <li><b>Ngôn ngữ lập trình:</b> Java có kết hợp JavaFX library</li>
-  <li><b>Tóm tắt:</b> Người chơi điều khiển paddle bằng chắn bóng sao cho bóng phá vỡ hết tất cả brick. Có 5 mạng, mỗi lần để rơi bóng thì sẽ mất 1 mạng. Nếu để rơi bóng 5 lần thì sẽ <b>thua cuộc</b>. Nếu phá hết tất cả brick thì <b>thắng cuộc</b>. Người chơi chỉ cần di chuột để điều khiển paddle.</li>
+  <li><b>Tóm tắt:</b> Trò chơi có 7 levels. Ở mỗi level, người chơi dùng chuột điều khiển paddle hứng bóng sao cho bóng phá hết tất cả bricks. Nếu để bóng rơi xuống hố thì sẽ bị mất 1 mạng, nếu hết mạng thì thua cuộc.</li>
 </ul>
 
 <h2>III. Object</h2>
@@ -53,7 +53,15 @@ Có tất cả 18 loại. Capsule có tác dụng khi paddle <b>hứng được<
   <p align="center"><img src="https://github.com/gameGroup1/demo-repository/blob/main/Image_Capsules/fire_ball_capsule.png" width=150></p></li>
   <li>Power ball: Mức độ damage của bóng tăng lên 2 lần (Jewel brick và Wood brick cần 1 lần chạm, Rock brick và Metal Brick cần 2 lần chạm)
   <p align="center"><img src="https://github.com/gameGroup1/demo-repository/blob/main/Image_Capsules/power_ball_capsule.png" width=150></p></li>
+  <li>Health: Thêm 1 mạng (Nếu đã có 10 mạng rồi thì thôi)
+  <p align="center"><img src="https://github.com/gameGroup1/demo-repository/blob/main/Image_Capsules/health_capsule.png" width=150></p></li>
 </ul>
 
-<h2>IV. Cách tính điểm</h2>
+<h2>IV. Giao diện Menu</h2>
+Có 5 button. Bao gồm
+<h3>1. New Game</h3>
+Ấn ô này sẽ bắt đầu lượt chơi mới.
+<h3>2. Continue</h3>
+<h3>3. 
+<h2>V. Cách tính điểm</h2>
 Cứ phá được 1 brick thì điểm sẽ tăng thêm 10. Khi paddle hứng được capsule có chức năng cộng/trừ điểm thì điểm sẽ thay đổi một lượng được ghi trên capsule (điểm có thể âm). Điểm chính thức của trò chơi là điểm sau khi thua cuộc.

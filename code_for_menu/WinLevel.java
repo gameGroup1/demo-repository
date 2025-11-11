@@ -235,7 +235,7 @@ public class WinLevel {
 
         // Hành động nút Exit
         exitBtn.setOnAction(() -> {
-            MainGame.cleanup();
+            MainGame.exitMainGame();
             winStage.close();
             if (parentStage != null) {
                 parentStage.close();

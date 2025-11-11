@@ -36,6 +36,10 @@ public class Pause {
     public static final int WIDTH_PAUSE = 800;
     public static final int HEIGHT_PAUSE = 500;
 
+    // CHỈNH ĐỘ TRONG SUỐT
+    private static final double TRACK_OPACITY = 0.75;
+    private static final double THUMB_OPACITY = 0.95; // Nút kéo
+
     static {
         mouseClickSound = new AudioClip(Path.getFileURL(Path.mouseClick));
         VolumeManager.registerAudioClip(mouseClickSound);
@@ -139,14 +143,7 @@ public class Pause {
         backgroundSlider.setMinWidth(280);
         backgroundSlider.setMaxWidth(280);
         backgroundSlider.setPrefWidth(280);
-        backgroundSlider.setStyle(
-                "-fx-pref-width: 280 !important; " +
-                        "-fx-min-width: 280 !important; " +
-                        "-fx-max-width: 280 !important; " +
-                        "-fx-background-color: #666; " +
-                        "-fx-background-radius: 14; " +
-                        "-fx-padding: 10;"
-        );
+        backgroundSlider.setStyle("-fx-background-color: transparent; -fx-padding: 10;");
 
         backgroundSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
             double volume = newVal.doubleValue() / 100.0;
@@ -164,20 +161,43 @@ public class Pause {
         effectSlider.setMinWidth(280);
         effectSlider.setMaxWidth(280);
         effectSlider.setPrefWidth(280);
-        effectSlider.setStyle(
-                "-fx-pref-width: 280 !important; " +
-                        "-fx-min-width: 280 !important; " +
-                        "-fx-max-width: 280 !important; " +
-                        "-fx-background-color: #666; " +
-                        "-fx-background-radius: 14; " +
-                        "-fx-padding: 10;"
-        );
+        effectSlider.setStyle("-fx-background-color: transparent; -fx-padding: 10;");
 
         effectSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
             double volume = newVal.doubleValue() / 100.0;
             VolumeManager.setEffectVolume(volume);
             effectLabel.setText("Effect Volume: " + newVal.intValue() + "%");
         });
+
+        // === ÁP DỤNG TRONG SUỐT CHO SLIDER (SAU KHI HIỂN THỊ) ===
+        Runnable applyTransparency = () -> {
+            String trackStyle = String.format(
+                    "-fx-background-color: rgba(80, 80, 80, %.2f); " +
+                            "-fx-background-radius: 14; " +
+                            "-fx-pref-height: 10;",
+                    TRACK_OPACITY
+            );
+            String thumbStyle = String.format(
+                    "-fx-background-color: rgba(206, 245, 129, %.2f); " +
+                            "-fx-background-radius: 12; " +
+                            "-fx-pref-width: 22; " +
+                            "-fx-pref-height: 22; " +
+                            "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 6, 0.6, 0, 1);",
+                    THUMB_OPACITY
+            );
+            // Áp dụng cho background slider
+            var bgTrack = backgroundSlider.lookup(".track");
+            var bgThumb = backgroundSlider.lookup(".thumb");
+            if (bgTrack != null) bgTrack.setStyle(trackStyle);
+            if (bgThumb != null) bgThumb.setStyle(thumbStyle);
+            // Áp dụng cho effect slider
+            var efTrack = effectSlider.lookup(".track");
+            var efThumb = effectSlider.lookup(".thumb");
+            if (efTrack != null) efTrack.setStyle(trackStyle);
+            if (efThumb != null) efThumb.setStyle(thumbStyle);
+        };
+        // Chạy sau khi scene hiển thị
+        pauseStage.setOnShown(e -> Platform.runLater(applyTransparency));
 
         volumeBox.getChildren().addAll(bgLabel, backgroundSlider, effectLabel, effectSlider);
 
