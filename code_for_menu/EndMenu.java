@@ -1,4 +1,3 @@
-// File: EndMenu.java
 package code_for_menu;
 
 import code_def_path.*;
@@ -34,7 +33,6 @@ import java.io.File;
 
 public class EndMenu {
     private static Stage stage; // Cửa sổ Game Over
-    private static int score; // Điểm hiện tại
     private static int currentLevel; // Level hiện tại
     private static MediaPlayer mediaPlayer; // Phát nhạc kết thúc
     private static AudioClip mouseClickSound; // Âm thanh khi di chuột vào nút
@@ -54,7 +52,6 @@ public class EndMenu {
 
     // Hiển thị màn hình Game Over
     public static void show(int score, int currentLevel) {
-        EndMenu.score = score;
         EndMenu.currentLevel = currentLevel;
         // Đảm bảo chạy trên luồng JavaFX
         if (!Platform.isFxApplicationThread()) {
@@ -135,18 +132,37 @@ public class EndMenu {
         ImageButton playAgainBtn = new ImageButton(greyBtn, "Play Again", btnFont, mouseClickSound, 180);
         ImageButton exitBtn = new ImageButton(greyBtn, "Exit", btnFont, mouseClickSound, 180);
 
+        // ===== BẮT ĐẦU CODE THÊM (1/3) =====
+        ImageButton backToMenuBtn = new ImageButton(greyBtn, "Back to Menu", btnFont, mouseClickSound, 180);
+        // ===== KẾT THÚC CODE THÊM (1/3) =====
+
+
         // === SỰ KIỆN NÚT (BẮT ĐẦU TỪ LEVEL 1) ===
         playAgainBtn.setOnAction(() -> {
             stopMusicAndClose();
             MainGame.createAndShowGame(1); // Bắt đầu game mới từ level 1
         });
 
+        // ===== BẮT ĐẦU CODE THÊM (2/3) =====
+        backToMenuBtn.setOnAction(() -> {
+            // Dừng nhạc/đóng cửa sổ EndMenu
+            stopMusicAndClose();
+
+            // Hiển thị lại Menu chính
+            Platform.runLater(() -> GameMenu.showMenu());
+        });
+        // ===== KẾT THÚC CODE THÊM (2/3) =====
+
         exitBtn.setOnAction(() -> {
             stopMusicAndClose();
             Platform.exit();
             System.exit(0); // Thoát hoàn toàn
         });
-        HBox buttonBox = new HBox(15, playAgainBtn, exitBtn);
+
+        // ===== SỬA DÒNG SAU (3/3) =====
+        HBox buttonBox = new HBox(15, playAgainBtn, backToMenuBtn, exitBtn);
+        // ===== KẾT THÚC SỬA (3/3) =====
+
         buttonBox.setAlignment(Pos.CENTER);
         bottomBox.getChildren().add(buttonBox);
         contentPane.setBottom(bottomBox);

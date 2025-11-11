@@ -84,8 +84,8 @@ public class GameMenu extends Application {
         });
 
         continueBtn.setOnAction(() -> {
-            int last = MainGame.getLastLevel();
-            if (last > 5) { // Giả sử max level là 5
+            int lastLevel = MainGame.getLastLevel();
+            if (lastLevel > 7) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information");
                 alert.setHeaderText(null);
@@ -94,7 +94,7 @@ public class GameMenu extends Application {
             } else {
                 stopMusic();
                 stage.close();
-                MainGame.createAndShowGame(last);
+                MainGame.createAndShowGame(lastLevel);
             }
         });
 

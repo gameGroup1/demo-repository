@@ -24,7 +24,6 @@ public class Level {
     protected int spacing;
     protected int wallThickness;
     protected int speedC;
-    private Integer level = 0;
 
     public Level(int rowCount, int colCount, int brickWidth, int brickHeight, int spacing, int wallThickness, int speedC) {
         this.rowCount = rowCount;

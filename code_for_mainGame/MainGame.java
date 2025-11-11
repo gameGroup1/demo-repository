@@ -49,8 +49,6 @@ public class MainGame {
     private int speedB = 10; // Tốc độ bóng, tăng dần theo level
     private final int speedC = 2;
     private final int wallThickness = 30;
-     // Level hiện tại
-    // Các đối tượng trong game
     private Ball ball;
     private Paddle paddle;
     private Wall leftWall, rightWall, topWall;
@@ -83,10 +81,56 @@ public class MainGame {
     public static boolean isPaused = false;
     public static Paddle staticPaddle;
     private Scene scene;
-    // Trạng thái xem có phải reset không
     private boolean needToReset = false;
-    // Hiệu ứng bóng
     private BallTrailEffect ballTrailEffect;
+
+    // Constructor: Khởi tạo toàn bộ game
+    public MainGame(int startLevel) {
+        isPaused = false;
+        lastLevel = startLevel;
+        saveBestAndLastLevel();
+        gameLevel = new GameLevel(5, wallThickness, speedC);
+        collisionImage = new Image("file:resources/boom_collision.gif");
+        fireCollisionImage = new Image("file:resources/fire_collision.gif");
+        // Tạo paddle
+        double paddleX = (widthW - widthP) / 2.0;
+        double paddleY = heightW - heightP;
+        paddle = new Paddle(paddleX, paddleY, widthP, heightP);
+        MainGame.staticPaddle = paddle;
+        // Tạo bóng (dính vào paddle)
+        double centerX = paddleX + widthP / 2;
+        double centerY = paddleY - radiusB;
+        ball = new Ball(centerX, centerY, radiusB, speedB);
+        ball.setDx(0);
+        ball.setDy(0);
+        // Tạo tường
+        leftWall = new Wall("left", 0, 0, wallThickness, heightW, wallThickness);
+        rightWall = new Wall("right", widthW - wallThickness, 0, wallThickness, heightW, wallThickness);
+        topWall = new Wall("top", 0, 0, widthW, wallThickness, wallThickness);
+        genBrickAndCapsule();
+        lives = 10;
+        heartImage = new Image("file:resources/heart.png");
+        for (int i = 0; i < lives; i++) {
+            ImageView iv = new ImageView(heartImage);
+            iv.setFitWidth(30);
+            iv.setFitHeight(30);
+            iv.setX(widthW - wallThickness - 80 - i * 36);
+            iv.setY(wallThickness + 5);
+            heartImages.add(iv);
+        }
+        score = 0;
+        scoreText = new Text("Score: " + score);
+        scoreText.setFill(Color.GOLD); // Màu vàng cho score để nổi bật
+        scoreText.setFont(new Font(36));
+        scoreText.setX(widthW - wallThickness - 200);
+        scoreText.setY(wallThickness + 64);
+        levelText = new Text("Level " + lastLevel);
+        levelText.setFill(Color.DODGERBLUE); // Màu xanh dương cho level để thể hiện tiến bộ
+        levelText.setFont(new Font(36));
+        levelText.setX(wallThickness + 20);
+        levelText.setY(wallThickness + 64);
+        isAttached = true; //Bóng luôn ở giữa paddle khi bắt đầu
+    }
 
     public static void cleanup() {
         System.out.println("MainGame.cleanup() started.");
@@ -168,52 +212,6 @@ public class MainGame {
         return true;
     }
 
-    // Constructor: Khởi tạo toàn bộ game
-    public MainGame(int startLevel) {
-        lastLevel = startLevel;
-        gameLevel = new GameLevel(5, wallThickness, speedC);
-        collisionImage = new Image("file:resources/boom_collision.gif");
-        fireCollisionImage = new Image("file:resources/fire_collision.gif");
-        // Tạo paddle
-        double paddleX = (widthW - widthP) / 2.0;
-        double paddleY = heightW - heightP;
-        paddle = new Paddle(paddleX, paddleY, widthP, heightP);
-        MainGame.staticPaddle = paddle;
-        // Tạo bóng (dính vào paddle)
-        double centerX = paddleX + widthP / 2;
-        double centerY = paddleY - radiusB;
-        ball = new Ball(centerX, centerY, radiusB, speedB);
-        ball.setDx(0);
-        ball.setDy(0);
-        // Tạo tường
-        leftWall = new Wall("left", 0, 0, wallThickness, heightW, wallThickness);
-        rightWall = new Wall("right", widthW - wallThickness, 0, wallThickness, heightW, wallThickness);
-        topWall = new Wall("top", 0, 0, widthW, wallThickness, wallThickness);
-        genBrickAndCapsule();
-        lives = 10;
-        heartImage = new Image("file:resources/heart.png");
-        for (int i = 0; i < lives; i++) {
-            ImageView iv = new ImageView(heartImage);
-            iv.setFitWidth(30);
-            iv.setFitHeight(30);
-            iv.setX(widthW - wallThickness - 80 - i * 36);
-            iv.setY(wallThickness + 5);
-            heartImages.add(iv);
-        }
-        score = 0;
-        scoreText = new Text("Score: " + score);
-        scoreText.setFill(Color.GOLD); // Màu vàng cho score để nổi bật
-        scoreText.setFont(new Font(36));
-        scoreText.setX(widthW - wallThickness - 200);
-        scoreText.setY(wallThickness + 64);
-        levelText = new Text("Level " + lastLevel);
-        levelText.setFill(Color.DODGERBLUE); // Màu xanh dương cho level để thể hiện tiến bộ
-        levelText.setFont(new Font(36));
-        levelText.setX(wallThickness + 20);
-        levelText.setY(wallThickness + 64);
-        isAttached = true; //Bóng luôn ở giữa paddle khi bắt đầu
-    }
-
     private void showBrickCollisionEffect(double x, double y) {
         boolean isFire = ball.isFireBall();
         Image effectImage = isFire ? fireCollisionImage : collisionImage;
@@ -249,17 +247,13 @@ public class MainGame {
             }
             cleanup();
         });
+
         primaryStage.show();
-        // Delay 3 giây trước khi bắt đầu
-        PauseTransition delay = new PauseTransition(Duration.seconds(3));
-        delay.setOnFinished(event -> {
-            playBackgroundVideo();
-            addGameElementsToRoot();
-            setupInput(scene);
-            startGameLoop();
-            playBackgroundMusic();
-        });
-        delay.play();
+        playBackgroundVideo();
+        addGameElementsToRoot();
+        setupInput(scene);
+        startGameLoop();
+        playBackgroundMusic();
     }
 
     // Phát video background
@@ -628,6 +622,11 @@ public class MainGame {
 
     public static int getLastLevel() {
         return lastLevel;
+    }
+
+    public static void exitMainGame() {
+        cleanup();
+        System.exit(0);
     }
 
     public static void main(String[] args) {

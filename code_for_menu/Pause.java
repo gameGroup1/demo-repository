@@ -8,6 +8,7 @@ import code_for_mainGame.*;
 import code_for_manager.*;
 import code_for_object.*;
 import code_for_update.*;
+import com.sun.tools.javac.Main;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -187,6 +188,11 @@ public class Pause {
         ImageButton continueBtn = new ImageButton(greyBtnImage, "Continue", btnFont, mouseClickSound, 180);
         ImageButton exitBtn = new ImageButton(greyBtnImage, "Exit", btnFont, mouseClickSound, 180);
 
+        // ===== BẮT ĐẦU CODE THÊM (1/2) =====
+        // Thêm nút "Back to Menu"
+        ImageButton backToMenuBtn = new ImageButton(greyBtnImage, "Back to Menu", btnFont, mouseClickSound, 180);
+        // ===== KẾT THÚC CODE THÊM (1/2) =====
+
         continueBtn.setOnAction(() -> {
             if (gameLoop != null) gameLoop.start();
             Platform.runLater(() -> {
@@ -207,15 +213,37 @@ public class Pause {
             pauseStage.close();
         });
 
-        exitBtn.setOnAction(() -> {
+        // ===== BẮT ĐẦU CODE THÊM (2/2) =====
+        backToMenuBtn.setOnAction(() -> {
+            // 1. Dọn dẹp game hiện tại (dừng game loop, nhạc, video...)
             MainGame.cleanup();
+
+            // 2. Đóng cửa sổ Pause
+            pauseStage.close();
+
+            // 3. Đóng cửa sổ MainGame (chính là parentStage)
+            if (parentStage != null) {
+                parentStage.close();
+            }
+
+            // 4. Hiển thị lại Menu chính
+            // Phải chạy trên Platform.runLater để đảm bảo an toàn luồng FX
+            Platform.runLater(() -> GameMenu.showMenu());
+        });
+        // ===== KẾT THÚC CODE THÊM (2/2) =====
+
+        exitBtn.setOnAction(() -> {
+            MainGame.exitMainGame();
             pauseStage.close();
             if (parentStage != null) parentStage.close();
             Platform.exit();
             System.exit(0);
         });
 
-        HBox buttonBox = new HBox(40, continueBtn, exitBtn);
+        // ===== SỬA DÒNG SAU =====
+        HBox buttonBox = new HBox(40, continueBtn, backToMenuBtn, exitBtn);
+        // ===== KẾT THÚC SỬA =====
+
         buttonBox.setAlignment(Pos.CENTER);
         bottomBox.getChildren().add(buttonBox);
 
@@ -230,6 +258,32 @@ public class Pause {
         if (!css.isEmpty()) scene.getStylesheets().add(css);
 
         pauseStage.setScene(scene);
+
+        // ===== BẮT ĐẦU CODE THÊM (TRƯỚC ĐÓ) =====
+        // Tích hợp nút X với nút Continue
+        pauseStage.setOnCloseRequest(event -> {
+            // Lấy logic y hệt như nút continueBtn
+            if (gameLoop != null) gameLoop.start();
+            Platform.runLater(() -> {
+                MainGame.isPaused = false;
+                parentStage.getScene().setCursor(javafx.scene.Cursor.DEFAULT);
+                Paddle paddle = MainGame.staticPaddle;
+                if (paddle != null) {
+                    double screenX = parentStage.getX() + paddle.getX() + 8;
+                    double screenY = parentStage.getY() + paddle.getY() + 50;
+                    try {
+                        java.awt.Robot robot = new java.awt.Robot();
+                        robot.mouseMove((int) screenX, (int) screenY);
+                    } catch (Exception ex) {
+                        System.out.println("Không thể di chuyển chuột: " + ex.getMessage());
+                    }
+                }
+            });
+            // Không cần gọi pauseStage.close()
+            // vì hành động mặc định của sự kiện này là đã tự đóng cửa sổ
+        });
+        // ===== KẾT THÚC CODE THÊM (TRƯỚC ĐÓ) =====
+
         pauseStage.showAndWait();
     }
 }
