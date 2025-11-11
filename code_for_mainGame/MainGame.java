@@ -119,17 +119,25 @@ public class MainGame {
             heartImages.add(iv);
         }
         score = 0;
+
+        String glowShadowStyle = "-fx-font-weight: bold; " +
+                "-fx-effect: dropshadow(gaussian, #565c4cff, 10, 0.8, 0, 0), " +
+                "dropshadow(gaussian, black, 10, 0.5, 2, 2);";
+
+        // Score Text
         scoreText = new Text("Score: " + score);
-        scoreText.setFill(Color.GOLD); // Màu vàng cho score để nổi bật
+        scoreText.setFill(Color.rgb(255, 255, 255, 0.95));
         scoreText.setFont(new Font(36));
+        scoreText.setStyle(glowShadowStyle);
         scoreText.setX(widthW - wallThickness - 200);
         scoreText.setY(wallThickness + 64);
         levelText = new Text("Level " + lastLevel);
-        levelText.setFill(Color.DODGERBLUE); // Màu xanh dương cho level để thể hiện tiến bộ
+        levelText.setFill(Color.rgb(255, 255, 255, 0.95)); // Màu xanh dương cho level để thể hiện tiến bộ
         levelText.setFont(new Font(36));
+        levelText.setStyle(glowShadowStyle);
         levelText.setX(wallThickness + 20);
         levelText.setY(wallThickness + 64);
-        isAttached = true; //Bóng luôn ở giữa paddle khi bắt đầu
+        isAttached = true;
     }
 
     public static void cleanup() {
