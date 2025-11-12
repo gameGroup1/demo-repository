@@ -207,11 +207,7 @@ public class Pause {
 
         ImageButton continueBtn = new ImageButton(greyBtnImage, "Continue", btnFont, mouseClickSound, 180);
         ImageButton exitBtn = new ImageButton(greyBtnImage, "Exit", btnFont, mouseClickSound, 180);
-
-        // ===== BẮT ĐẦU CODE THÊM (1/2) =====
-        // Thêm nút "Back to Menu"
-        ImageButton backToMenuBtn = new ImageButton(greyBtnImage, "Back to Menu", btnFont, mouseClickSound, 180);
-        // ===== KẾT THÚC CODE THÊM (1/2) =====
+        ImageButton backToMenuBtn = new ImageButton(greyBtnImage, "Back to Menu", btnFont, mouseClickSound, 190);
 
         continueBtn.setOnAction(() -> {
             if (gameLoop != null) gameLoop.start();
@@ -235,22 +231,13 @@ public class Pause {
 
         // ===== BẮT ĐẦU CODE THÊM (2/2) =====
         backToMenuBtn.setOnAction(() -> {
-            // 1. Dọn dẹp game hiện tại (dừng game loop, nhạc, video...)
             MainGame.cleanup();
-
-            // 2. Đóng cửa sổ Pause
             pauseStage.close();
-
-            // 3. Đóng cửa sổ MainGame (chính là parentStage)
             if (parentStage != null) {
                 parentStage.close();
             }
-
-            // 4. Hiển thị lại Menu chính
-            // Phải chạy trên Platform.runLater để đảm bảo an toàn luồng FX
             Platform.runLater(() -> GameMenu.showMenu());
         });
-        // ===== KẾT THÚC CODE THÊM (2/2) =====
 
         exitBtn.setOnAction(() -> {
             MainGame.exitMainGame();
@@ -259,19 +246,14 @@ public class Pause {
             Platform.exit();
             System.exit(0);
         });
-
-        // ===== SỬA DÒNG SAU =====
         HBox buttonBox = new HBox(40, continueBtn, backToMenuBtn, exitBtn);
-        // ===== KẾT THÚC SỬA =====
 
         buttonBox.setAlignment(Pos.CENTER);
         bottomBox.getChildren().add(buttonBox);
 
-        // === GỘP TẤT CẢ ===
         contentBox.getChildren().addAll(titleText, volumeBox, bottomBox);
         stackRoot.getChildren().add(contentBox);
 
-        // === HIỂN THỊ ===
         Scene scene = new Scene(stackRoot, WIDTH_PAUSE, HEIGHT_PAUSE);
         String css = Pause.class.getResource("/styles.css") != null ?
                 Pause.class.getResource("/styles.css").toExternalForm() : "";
@@ -279,8 +261,6 @@ public class Pause {
 
         pauseStage.setScene(scene);
 
-        // ===== BẮT ĐẦU CODE THÊM (TRƯỚC ĐÓ) =====
-        // Tích hợp nút X với nút Continue
         pauseStage.setOnCloseRequest(event -> {
             // Lấy logic y hệt như nút continueBtn
             if (gameLoop != null) gameLoop.start();
@@ -299,10 +279,7 @@ public class Pause {
                     }
                 }
             });
-            // Không cần gọi pauseStage.close()
-            // vì hành động mặc định của sự kiện này là đã tự đóng cửa sổ
         });
-        // ===== KẾT THÚC CODE THÊM (TRƯỚC ĐÓ) =====
 
         pauseStage.showAndWait();
     }

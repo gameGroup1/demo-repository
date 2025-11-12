@@ -22,6 +22,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.animation.AnimationTimer;
@@ -127,15 +128,17 @@ public class WinLevel {
 
         Font btnFont = Font.font("Arial", 20);
 
-        // === TIÊU ĐỀ: PAUSED (dùng green_button.png) ===
-        ImageButton titleButton = new ImageButton(greenBtnImage, "WIN LEVEL", Font.font("Arial", 43), null, 400);
-        titleButton.setMouseTransparent(true);
-        titleButton.setOnAction(() -> {});
-        titleButton.getChildren().stream()
-                .filter(node -> node instanceof javafx.scene.text.Text)
-                .map(node -> (javafx.scene.text.Text) node)
-                .forEach(text -> text.setFill(Color.rgb(206, 245, 129, 0.8)));
-        VBox.setMargin(titleButton, new Insets(0, 0, 30, 0));
+        // === HIỆU ỨNG GLOW + SHADOW CHO TEXT (NHƯ BESTSCORE) ===
+        String glowShadowStyle = "-fx-font-weight: bold; " +
+                "-fx-effect: dropshadow(gaussian, #565c4cff, 10, 0.8, 0, 0), " +
+                "dropshadow(gaussian, black, 10, 0.5, 2, 2);";
+
+        // === TIÊU ĐỀ: PAUSED ===
+        Text titleText = new Text("YOU WIN LEVEL " + (MainGame.getLastLevel() - 1));
+        titleText.setFont(Font.font("Arial", 50));
+        titleText.setFill(Color.rgb(206, 245, 129));
+        titleText.setStyle(glowShadowStyle);
+        VBox.setMargin(titleText, new Insets(0, 0, 50, 0));
 
         // === PHẦN GIỮA: SLIDER ÂM THANH ===
         VBox centerBox = new VBox(18);
@@ -154,56 +157,13 @@ public class WinLevel {
                 .map(node -> (javafx.scene.text.Text) node)
                 .forEach(text -> text.setFill(Color.rgb(206, 245, 129, 0.8)));
 
-//        Slider backgroundSlider = new Slider(0, 100, VolumeManager.getBackgroundVolume() * 100);
-//        backgroundSlider.setPrefWidth(320);
-//        backgroundSlider.setStyle("-fx-background-color: #444; -fx-background-radius: 10;");
-
-        // Cập nhật label khi thay đổi slider
-//        backgroundSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-//            double volume = newVal.doubleValue() / 100.0;
-//            VolumeManager.setBackgroundVolume(volume);
-//            backgroundLabelBtn.getChildren().stream()
-//                    .filter(node -> node instanceof javafx.scene.text.Text)
-//                    .map(node -> (javafx.scene.text.Text) node)
-//                    .findFirst()
-//                    .ifPresent(text -> text.setText("Background Volume: " + newVal.intValue() + "%"));
-//        });
-//
-//        // Nhãn Effect Volume (dùng green_button)
-//        ImageButton effectLabelBtn = new ImageButton(greenBtnImage,
-//                "Effect Volume: " + (int)(VolumeManager.getEffectVolume() * 100) + "%",
-//                Font.font("Arial", 16), null, 340);
-//        effectLabelBtn.setMouseTransparent(true);
-//        effectLabelBtn.setOnAction(() -> {});
-//        effectLabelBtn.getChildren().stream()
-//                .filter(node -> node instanceof javafx.scene.text.Text)
-//                .map(node -> (javafx.scene.text.Text) node)
-//                .forEach(text -> text.setFill(Color.rgb(206, 245, 129, 0.8)));
-//
-//        Slider effectSlider = new Slider(0, 100, VolumeManager.getEffectVolume() * 100);
-//        effectSlider.setPrefWidth(320);
-//        effectSlider.setStyle("-fx-background-color: #444; -fx-background-radius: 10;");
-//
-//        effectSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-//            double volume = newVal.doubleValue() / 100.0;
-//            VolumeManager.setEffectVolume(volume);
-//            effectLabelBtn.getChildren().stream()
-//                    .filter(node -> node instanceof javafx.scene.text.Text)
-//                    .map(node -> (javafx.scene.text.Text) node)
-//                    .findFirst()
-//                    .ifPresent(text -> text.setText("Effect Volume: " + newVal.intValue() + "%"));
-//        });
-//
-//        centerBox.getChildren().addAll(backgroundLabelBtn, backgroundSlider, effectLabelBtn, effectSlider);
-
-        // === PHẦN DƯỚI: NÚT BẤM ===
         VBox bottomBox = new VBox(15);
         bottomBox.setAlignment(Pos.CENTER);
         bottomBox.setStyle("-fx-padding: 15;");
 
-        // Tạo nút Continue & Exit (dùng grey_button)
-        ImageButton continueBtn = new ImageButton(greyBtnImage, "Next Level", btnFont, mouseClickSound, 170);
-        ImageButton exitBtn = new ImageButton(greyBtnImage, "Exit", btnFont, mouseClickSound, 170);
+        ImageButton continueBtn = new ImageButton(greyBtnImage, "Next Level", btnFont, mouseClickSound, 180);
+        ImageButton exitBtn = new ImageButton(greyBtnImage, "Exit", btnFont, mouseClickSound, 180);
+        ImageButton backToMenuBtn = new ImageButton(greyBtnImage, "Back to Menu", btnFont, mouseClickSound, 190);
 
         // Hành động nút Continue
         continueBtn.setOnAction(() -> {
@@ -233,9 +193,21 @@ public class WinLevel {
             winStage.close();
         });
 
-        // Hành động nút Exit
+        backToMenuBtn.setOnAction(() -> {
+            MainGame.cleanup();
+
+            winStage.close();
+
+            if (parentStage != null) {
+                parentStage.close();
+            }
+
+            Platform.runLater(() -> GameMenu.showMenu());
+        });
+
         exitBtn.setOnAction(() -> {
             MainGame.cleanup();
+
             winStage.close();
             if (parentStage != null) {
                 parentStage.close();
@@ -249,7 +221,7 @@ public class WinLevel {
         bottomBox.getChildren().add(buttonBox);
 
         // === GỘP TẤT CẢ ===
-        contentBox.getChildren().addAll(titleButton, centerBox, bottomBox);
+        contentBox.getChildren().addAll(titleText, centerBox, bottomBox);
         stackRoot.getChildren().add(contentBox);
 
         // === TẠO SCENE ===
@@ -257,6 +229,40 @@ public class WinLevel {
         scene.getStylesheets().add(Pause.class.getResource("/styles.css") != null ?
                 Pause.class.getResource("/styles.css").toExternalForm() : "");
         winStage.setScene(scene);
+
+        // Khi người dùng nhấn "X" ở góc trên phải => dừng gameLoop và đóng cả MainGame
+        winStage.setOnCloseRequest(event -> {
+            System.out.println("WinLevel window close requested.");
+            // Dừng game loop nếu còn chạy (an toàn)
+            try {
+                if (gameLoop != null) {
+                    System.out.println("Stopping gameLoop from WinLevel close handler.");
+                    gameLoop.stop();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            // Gọi cleanup + exit của MainGame (MainGame.exitMainGame() đã gọi cleanup() và System.exit(0))
+            try {
+                System.out.println("Calling MainGame.exitMainGame() from WinLevel close handler.");
+                MainGame.exitMainGame();
+                // Nếu MainGame.exitMainGame() thành công nó sẽ System.exit(0) -> process kết thúc.
+            } catch (Exception ex) {
+                // Nếu có lỗi, vẫn cố gắng đóng stage và thoát an toàn
+                ex.printStackTrace();
+                try {
+                    if (parentStage != null) parentStage.close();
+                } catch (Exception e2) {
+                    e2.printStackTrace();
+                }
+                Platform.exit();
+                System.exit(0);
+            }
+        });
+
         winStage.showAndWait();
     }
+
+
 }

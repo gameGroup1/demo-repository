@@ -85,7 +85,7 @@ public class GameMenu extends Application {
 
         continueBtn.setOnAction(() -> {
             int lastLevel = MainGame.getLastLevel();
-            if (lastLevel > 7) {
+            if (lastLevel > 8) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information");
                 alert.setHeaderText(null);

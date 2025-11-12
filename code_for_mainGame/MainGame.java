@@ -46,7 +46,7 @@ public class MainGame {
     private final int widthP = 150;
     private final int heightP = 30;
     private final int radiusB = 15;
-    private int speedB = 10; // Tốc độ bóng, tăng dần theo level
+    private int speedB = 7; // Tốc độ bóng, tăng dần theo level
     private final int speedC = 2;
     private final int wallThickness = 30;
     private Ball ball;
@@ -62,7 +62,7 @@ public class MainGame {
     private int score = 0;
     private static int bestLevel;
     private static int lastLevel;
-   // private static int numberLevel = 1;
+    // private static int numberLevel = 1;
     private static MediaPlayer mediaPlayer; // dùng cho background music (giữ nguyên)
     // --- Thêm cho video background ---
     private static MediaPlayer bgVideoPlayer;
@@ -445,26 +445,53 @@ public class MainGame {
                     lastLevel++;
                     levelText.setText("Level: " + lastLevel);
                     isPaused = true;
-                    // dừng game loop ngay (ngăn tiếp tục animation)
+                    // Dừng game loop ngay (ngăn tiếp tục animation)
                     if (gameLoop != null) gameLoop.stop();
-                    // đưa việc hiển thị cửa sổ ra ngoài pulse hiện tại để tránh IllegalStateException
-                    Platform.runLater(() -> WinLevel.show(primaryStage, gameLoop));
+
+                    // Đưa việc hiển thị cửa sổ ra ngoài pulse hiện tại để tránh IllegalStateException
+                    if (lastLevel < 9) Platform.runLater(() -> WinLevel.show(primaryStage, gameLoop));
+                    else {
+                        gameLoop.stop();
+                        if (mediaPlayer != null) {
+                            mediaPlayer.stop();
+                            VolumeManager.unregisterMediaPlayer(mediaPlayer);
+                        }
+                        // Stop & dispose background video player (nếu có)
+                        try {
+                            if (bgVideoPlayer != null) {
+                                bgVideoPlayer.stop();
+                                bgVideoPlayer.dispose();
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                        Platform.runLater(() -> {
+                            primaryStage.close();
+                            lastLevel = 9;
+                            saveBestAndLastLevel();
+                            WinMenu.show();
+                        });
+                    }
+
                     // Xóa brick cũ
                     for (Bricks brick : bricks) {
                         if (brick != null && brick.getNode() != null) {
                             root.getChildren().remove(brick.getNode());
                         }
                     }
+
                     // Xóa capsule cũ
                     for (Capsule capsule : capsules) {
                         if (capsule != null && capsule.getNode() != null) {
                             root.getChildren().remove(capsule.getNode());
                         }
                     }
+
                     // Xóa bóng
                     if (root.getChildren().contains(ball.getNode()))
                         root.getChildren().remove(ball.getNode());
                     capsuleIndex.clear();
+
                     // Xóa dư ảnh cũ
                     if (ballTrailEffect != null) {
                         ballTrailEffect.clear();
@@ -480,7 +507,8 @@ public class MainGame {
         // Nếu reset rồi thì thôi
         if (!needToReset) return;
         needToReset = false;
-        speedB += 5;
+        double incSpeed = lastLevel - 1;
+        speedB += incSpeed;
         ball.setSpeed(speedB);
         levelText.setText("Level: " + lastLevel);
         setPaddleDefault();
@@ -564,7 +592,7 @@ public class MainGame {
         ball.setX(centerX);
         ball.setY(centerY);
         ball.setSpeed(speedB);
-        ball.setPower(10);
+        ball.setPower(1);
         ball.setFireBall(false);
         // Xóa dư ảnh khi reset bóng
         if (ballTrailEffect != null) {

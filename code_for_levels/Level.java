@@ -63,8 +63,8 @@ public class Level {
                 int hardness = hardnessArray[random.nextInt(hardnessArray.length)];
                 bricks[index] = new Bricks(brickX, brickY, brickWidth, brickHeight, hardness);
 
-                // 25% cơ hội sinh capsule
-                if (random.nextDouble() < 0.3) {
+                // 20% cơ hội sinh capsule
+                if (random.nextDouble() < 0.2) {
                     capsules[index] = EffectManager.getCapsule(brickX, brickY, brickWidth, brickHeight, speedC);
                     capsules[index].setVisible(false);
                     capsuleIndex.add(index);

@@ -94,22 +94,20 @@ public class Update {
             // Chạm cạnh trái
             ball.setX(ox - radius - epsilon);
             ball.setDx(-Math.abs(ball.getDx())); // Đảo X sang trái
-            } 
-            else if (minDist == distRight) {
-                    // Chạm cạnh phải
-                    ball.setX(ox + ow + radius + epsilon);
-                    ball.setDx(Math.abs(ball.getDx())); // Đảo X sang phải
-                } 
-                else if (minDist == distTop) {
-                        // Chạm cạnh trên
-                        ball.setY(oy - radius - epsilon);
-                        ball.setDy(-Math.abs(ball.getDy())); // Bay lên
-                    } 
-                    else if (minDist == distBottom) {
-                            // Chạm cạnh dưới
-                            ball.setY(oy + oh + radius + epsilon);
-                            ball.setDy(Math.abs(ball.getDy())); // Bay xuống
-                        }
+        } else if (minDist == distRight) {
+            // Chạm cạnh phải
+            ball.setX(ox + ow + radius + epsilon);
+            ball.setDx(Math.abs(ball.getDx())); // Đảo X sang phải
+        } else if (minDist == distTop) {
+            // Chạm cạnh trên
+            ball.setY(oy - radius - epsilon);
+            ball.setDy(-Math.abs(ball.getDy())); // Bay lên
+        } else if (minDist == distBottom) {
+            // Chạm cạnh dưới
+            ball.setY(oy + oh + radius + epsilon);
+            ball.setDy(Math.abs(ball.getDy())); // Bay xuống
+        }
+
         // Chuẩn hóa lại vận tốc (đảm bảo tốc độ không đổi)
         double speed = ball.getSpeed();
         double v = Math.sqrt(ball.getDx() * ball.getDx() + ball.getDy() * ball.getDy());

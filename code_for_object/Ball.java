@@ -29,7 +29,7 @@ public class Ball extends GameObject{
         super(x, y,(int) radius * 2, (int) radius * 2);
         this.radius = radius;
         this.speed = speed;
-        this.power = 10;
+        this.power = 1;
         normalImage = new Image("file:resources/ball.png");
         fireImage = new Image("file:resources/fireball.gif");
         imageView = new ImageView(normalImage);

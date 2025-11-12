@@ -131,27 +131,17 @@ public class EndMenu {
         // Tạo các nút với ImageButton
         ImageButton playAgainBtn = new ImageButton(greyBtn, "Play Again", btnFont, mouseClickSound, 180);
         ImageButton exitBtn = new ImageButton(greyBtn, "Exit", btnFont, mouseClickSound, 180);
+        ImageButton backToMenuBtn = new ImageButton(greyBtn, "Back to Menu", btnFont, mouseClickSound, 190);
 
-        // ===== BẮT ĐẦU CODE THÊM (1/3) =====
-        ImageButton backToMenuBtn = new ImageButton(greyBtn, "Back to Menu", btnFont, mouseClickSound, 180);
-        // ===== KẾT THÚC CODE THÊM (1/3) =====
-
-
-        // === SỰ KIỆN NÚT (BẮT ĐẦU TỪ LEVEL 1) ===
         playAgainBtn.setOnAction(() -> {
             stopMusicAndClose();
             MainGame.createAndShowGame(1); // Bắt đầu game mới từ level 1
         });
 
-        // ===== BẮT ĐẦU CODE THÊM (2/3) =====
         backToMenuBtn.setOnAction(() -> {
-            // Dừng nhạc/đóng cửa sổ EndMenu
             stopMusicAndClose();
-
-            // Hiển thị lại Menu chính
             Platform.runLater(() -> GameMenu.showMenu());
         });
-        // ===== KẾT THÚC CODE THÊM (2/3) =====
 
         exitBtn.setOnAction(() -> {
             stopMusicAndClose();
@@ -159,10 +149,7 @@ public class EndMenu {
             System.exit(0); // Thoát hoàn toàn
         });
 
-        // ===== SỬA DÒNG SAU (3/3) =====
         HBox buttonBox = new HBox(15, playAgainBtn, backToMenuBtn, exitBtn);
-        // ===== KẾT THÚC SỬA (3/3) =====
-
         buttonBox.setAlignment(Pos.CENTER);
         bottomBox.getChildren().add(buttonBox);
         contentPane.setBottom(bottomBox);
