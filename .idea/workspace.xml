@@ -6,37 +6,61 @@
   <component name="ChangeListManager">
     <list default="true" id="b25bce6a-ec4f-471f-bd54-9518e911bc4b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/best_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/best_level.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code_for_mainGame/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/code_for_mainGame/MainGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code_for_menu/WinAllLevels.java" beforeDir="false" afterPath="$PROJECT_DIR$/code_for_menu/WinAllLevels.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code_for_menu/WinLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/code_for_menu/WinLevel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/last_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/last_level.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/best_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/best_level.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_mainGame/MainGame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_mainGame/MainGame$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_mainGame/MainGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_mainGame/MainGame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_menu/WinAllLevels.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_menu/WinAllLevels.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/last_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/last_level.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/WinLevel.gif" beforeDir="false" afterPath="$PROJECT_DIR$/resources/WinLevel.gif" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "hoanglamtung261106"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/gameGroup1/demo-repository.git",
+    "accountId": "ce734915-c094-43ca-90a3-d12c32fc0eff"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="35M3KBrvcYHHxTL1natNhB4RWUk" />
   <component name="ProjectRootManager" version="2" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.MainGame.executor": "Run",
-    "Application.Run MainGame.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "#41 on main",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.MainGame.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Run MainGame.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;#41 on main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -52,7 +76,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762877440157</updated>
-      <workItem from="1762877442637" duration="2746000" />
+      <workItem from="1762877442637" duration="3161000" />
+      <workItem from="1762906053380" duration="3461000" />
     </task>
     <servers />
   </component>

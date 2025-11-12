@@ -84,6 +84,11 @@ public class MainGame {
     private boolean needToReset = false;
     private BallTrailEffect ballTrailEffect;
 
+    // Get current level
+    public static int getCurrentLevel() {
+        return lastLevel;
+    }
+    
     // Constructor: Khởi tạo toàn bộ game
     public MainGame(int startLevel) {
         isPaused = false;
@@ -267,30 +272,67 @@ public class MainGame {
     // Phát video background
     private void playBackgroundVideo() {
         try {
-            // Thử load từ resource first (nếu đóng gói trong jar dưới resources root)
-            URL videoURL = getClass().getClassLoader().getResource("/resources/video_background.mp4");
+            // Nếu đã có player cũ, dừng và dispose trước khi (re)create
+            if (bgVideoPlayer != null) {
+                try {
+                    bgVideoPlayer.stop();
+                    bgVideoPlayer.dispose();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                bgVideoPlayer = null;
+                bgMediaView = null;
+            }
+
+            // THỬ load từ classpath (khi đóng gói jar: put file under resources root)
+            URL videoURL = getClass().getResource("/video_background.mp4"); // chú ý: resource path relative to resources root
             Media bgMedia;
             if (videoURL != null) {
-                bgMedia = new Media(videoURL.toString());
+                System.out.println("Background video URL: " + videoURL.toString());
+                bgMedia = new Media(videoURL.toExternalForm());
             } else {
-                // fallback: file path relative to project
+                // fallback: file hệ thống (chỉ dùng khi chạy từ IDE)
                 File f = new File("resources/video_background.mp4");
+                if (!f.exists()) {
+                    System.err.println("Background file not found: " + f.getAbsolutePath());
+                    return;
+                }
                 bgMedia = new Media(f.toURI().toString());
             }
+
+            // Tạo player và đăng ký handler
             bgVideoPlayer = new MediaPlayer(bgMedia);
+
+            bgVideoPlayer.setOnError(() -> {
+                System.err.println("bgVideoPlayer onError: " + bgVideoPlayer.getError());
+                if (bgVideoPlayer.getError() != null) bgVideoPlayer.getError().printStackTrace();
+            });
+            bgMedia.setOnError(() -> {
+                System.err.println("Media onError: " + bgMedia.getError());
+                if (bgMedia.getError() != null) bgMedia.getError().printStackTrace();
+            });
+
             bgVideoPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-            bgVideoPlayer.setAutoPlay(true);
-            bgVideoPlayer.setMute(true); // tắt tiếng background video (thay đổi nếu muốn âm thanh)
-            bgMediaView = new MediaView(bgVideoPlayer);
-            bgMediaView.setPreserveRatio(false); // fill toàn bộ màn hình
-            bgMediaView.setMouseTransparent(true); // để mouse event đi qua xuống các node bên dưới
-            // Bind kích thước video với scene
-            bgMediaView.fitWidthProperty().bind(scene.widthProperty());
-            bgMediaView.fitHeightProperty().bind(scene.heightProperty());
-            // Thêm background ở vị trí index 0 để nằm phía sau các node khác
-            root.getChildren().add(bgMediaView);
+            bgVideoPlayer.setMute(true);
+
+            // Chờ ready trước khi play để tránh freeze/seek bug
+            bgVideoPlayer.setOnReady(() -> {
+                System.out.println("Background video ready, duration: " + bgMedia.getDuration());
+                // Tạo MediaView chỉ sau khi ready (an toàn hơn)
+                bgMediaView = new MediaView(bgVideoPlayer);
+                bgMediaView.setPreserveRatio(false);
+                bgMediaView.setMouseTransparent(true);
+                bgMediaView.fitWidthProperty().bind(scene.widthProperty());
+                bgMediaView.fitHeightProperty().bind(scene.heightProperty());
+                // Đặt phía sau: index 0
+                if (!root.getChildren().contains(bgMediaView)) {
+                    root.getChildren().add(0, bgMediaView);
+                }
+                bgVideoPlayer.play();
+            });
+
         } catch (Exception e) {
-            System.err.println("Không thể load background video a.mp4");
+            System.err.println("Không thể load background video:");
             e.printStackTrace();
         }
     }

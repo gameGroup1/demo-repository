@@ -53,7 +53,7 @@ public class WinAllLevels {
                 backgroundImage = new Image(imageURL.toString(), true);
                 return backgroundImage;
             }
-            String[] paths = { "resources/PauseMenu.gif", "./resources/PauseMenu.gif", "../resources/PauseMenu.gif" };
+            String[] paths = { "resources/WinAll.gif", "./resources/WinAll.gif", "../resources/WinAll.gif" };
             for (String path : paths) {
                 File file = new File(path);
                 if (file.exists()) {
@@ -122,64 +122,64 @@ public class WinAllLevels {
         titleText.setStyle(glowShadowStyle);
         VBox.setMargin(titleText, new Insets(0, 0, 50, 0));
 
-        // === VOLUME CONTROLS – TRONG SUỐT, CÓ GLOW + SHADOW ===
+//        // === VOLUME CONTROLS – TRONG SUỐT, CÓ GLOW + SHADOW ===
         VBox volumeBox = new VBox(20);
-        volumeBox.setAlignment(Pos.CENTER);
-        volumeBox.setMaxWidth(360);
-        volumeBox.setFillWidth(false);
-        volumeBox.setStyle("-fx-background-color: transparent;");
-
-        // Background Volume Label
-        Text bgLabel = new Text("Background Volume: " + (int)(VolumeManager.getBackgroundVolume() * 100) + "%");
-        bgLabel.setFont(Font.font("Arial", 18));
-        bgLabel.setFill(Color.rgb(206, 245, 129, 0.95));
-        bgLabel.setStyle(glowShadowStyle);
-
-        Slider backgroundSlider = new Slider(0, 100, VolumeManager.getBackgroundVolume() * 100);
-        backgroundSlider.setMinWidth(280);
-        backgroundSlider.setMaxWidth(280);
-        backgroundSlider.setPrefWidth(280);
-        backgroundSlider.setStyle(
-                "-fx-pref-width: 280 !important; " +
-                        "-fx-min-width: 280 !important; " +
-                        "-fx-max-width: 280 !important; " +
-                        "-fx-background-color: #666; " +
-                        "-fx-background-radius: 14; " +
-                        "-fx-padding: 10;"
-        );
-
-        backgroundSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-            double volume = newVal.doubleValue() / 100.0;
-            VolumeManager.setBackgroundVolume(volume);
-            bgLabel.setText("Background Volume: " + newVal.intValue() + "%");
-        });
-
-        // Effect Volume Label
-        Text effectLabel = new Text("Effect Volume: " + (int)(VolumeManager.getEffectVolume() * 100) + "%");
-        effectLabel.setFont(Font.font("Arial", 18));
-        effectLabel.setFill(Color.rgb(206, 245, 129, 0.95));
-        effectLabel.setStyle(glowShadowStyle);
-
-        Slider effectSlider = new Slider(0, 100, VolumeManager.getEffectVolume() * 100);
-        effectSlider.setMinWidth(280);
-        effectSlider.setMaxWidth(280);
-        effectSlider.setPrefWidth(280);
-        effectSlider.setStyle(
-                "-fx-pref-width: 280 !important; " +
-                        "-fx-min-width: 280 !important; " +
-                        "-fx-max-width: 280 !important; " +
-                        "-fx-background-color: #666; " +
-                        "-fx-background-radius: 14; " +
-                        "-fx-padding: 10;"
-        );
-
-        effectSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-            double volume = newVal.doubleValue() / 100.0;
-            VolumeManager.setEffectVolume(volume);
-            effectLabel.setText("Effect Volume: " + newVal.intValue() + "%");
-        });
-
-        volumeBox.getChildren().addAll(bgLabel, backgroundSlider, effectLabel, effectSlider);
+//        volumeBox.setAlignment(Pos.CENTER);
+//        volumeBox.setMaxWidth(360);
+//        volumeBox.setFillWidth(false);
+//        volumeBox.setStyle("-fx-background-color: transparent;");
+//
+//        // Background Volume Label
+//        Text bgLabel = new Text("Background Volume: " + (int)(VolumeManager.getBackgroundVolume() * 100) + "%");
+//        bgLabel.setFont(Font.font("Arial", 18));
+//        bgLabel.setFill(Color.rgb(206, 245, 129, 0.95));
+//        bgLabel.setStyle(glowShadowStyle);
+//
+//        Slider backgroundSlider = new Slider(0, 100, VolumeManager.getBackgroundVolume() * 100);
+//        backgroundSlider.setMinWidth(280);
+//        backgroundSlider.setMaxWidth(280);
+//        backgroundSlider.setPrefWidth(280);
+//        backgroundSlider.setStyle(
+//                "-fx-pref-width: 280 !important; " +
+//                        "-fx-min-width: 280 !important; " +
+//                        "-fx-max-width: 280 !important; " +
+//                        "-fx-background-color: #666; " +
+//                        "-fx-background-radius: 14; " +
+//                        "-fx-padding: 10;"
+//        );
+//
+//        backgroundSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+//            double volume = newVal.doubleValue() / 100.0;
+//            VolumeManager.setBackgroundVolume(volume);
+//            bgLabel.setText("Background Volume: " + newVal.intValue() + "%");
+//        });
+//
+//        // Effect Volume Label
+//        Text effectLabel = new Text("Effect Volume: " + (int)(VolumeManager.getEffectVolume() * 100) + "%");
+//        effectLabel.setFont(Font.font("Arial", 18));
+//        effectLabel.setFill(Color.rgb(206, 245, 129, 0.95));
+//        effectLabel.setStyle(glowShadowStyle);
+//
+//        Slider effectSlider = new Slider(0, 100, VolumeManager.getEffectVolume() * 100);
+//        effectSlider.setMinWidth(280);
+//        effectSlider.setMaxWidth(280);
+//        effectSlider.setPrefWidth(280);
+//        effectSlider.setStyle(
+//                "-fx-pref-width: 280 !important; " +
+//                        "-fx-min-width: 280 !important; " +
+//                        "-fx-max-width: 280 !important; " +
+//                        "-fx-background-color: #666; " +
+//                        "-fx-background-radius: 14; " +
+//                        "-fx-padding: 10;"
+//        );
+//
+//        effectSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+//            double volume = newVal.doubleValue() / 100.0;
+//            VolumeManager.setEffectVolume(volume);
+//            effectLabel.setText("Effect Volume: " + newVal.intValue() + "%");
+//        });
+//
+//        volumeBox.getChildren().addAll(bgLabel, backgroundSlider, effectLabel, effectSlider);
 
         // === NÚT CONTINUE & EXIT ===
         VBox bottomBox = new VBox(20);
@@ -194,19 +194,11 @@ public class WinAllLevels {
         againBtn.setOnAction(() -> {
             //stopMusicAndClose();
             winStage.close();
-            MainGame.cleanup();
             MainGame.createAndShowGame(1); // Bắt đầu game mới từ level 1
         });
 
         backToMenuBtn.setOnAction(() -> {
-            // 1. Dọn dẹp game hiện tại (dừng game loop, nhạc, video...)
-            MainGame.cleanup();
-
-            // 2. Đóng cửa sổ Pause
             winStage.close();
-
-            // 4. Hiển thị lại Menu chính
-            // Phải chạy trên Platform.runLater để đảm bảo an toàn luồng FX
             Platform.runLater(() -> GameMenu.showMenu());
         });
 

@@ -22,6 +22,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.animation.AnimationTimer;
@@ -127,15 +128,17 @@ public class WinLevel {
 
         Font btnFont = Font.font("Arial", 20);
 
-        // === TIÊU ĐỀ: PAUSED (dùng green_button.png) ===
-        ImageButton titleButton = new ImageButton(greenBtnImage, "WIN LEVEL", Font.font("Arial", 43), null, 400);
-        titleButton.setMouseTransparent(true);
-        titleButton.setOnAction(() -> {});
-        titleButton.getChildren().stream()
-                .filter(node -> node instanceof javafx.scene.text.Text)
-                .map(node -> (javafx.scene.text.Text) node)
-                .forEach(text -> text.setFill(Color.rgb(206, 245, 129, 0.8)));
-        VBox.setMargin(titleButton, new Insets(0, 0, 30, 0));
+        // === HIỆU ỨNG GLOW + SHADOW CHO TEXT (NHƯ BESTSCORE) ===
+        String glowShadowStyle = "-fx-font-weight: bold; " +
+                "-fx-effect: dropshadow(gaussian, #565c4cff, 10, 0.8, 0, 0), " +
+                "dropshadow(gaussian, black, 10, 0.5, 2, 2);";
+
+        // === TIÊU ĐỀ: PAUSED ===
+        Text titleText = new Text("YOU WIN LEVEL " + (MainGame.getCurrentLevel() - 1));
+        titleText.setFont(Font.font("Arial", 50));
+        titleText.setFill(Color.rgb(206, 245, 129));
+        titleText.setStyle(glowShadowStyle);
+        VBox.setMargin(titleText, new Insets(0, 0, 50, 0));
 
         // === PHẦN GIỮA: SLIDER ÂM THANH ===
         VBox centerBox = new VBox(18);
@@ -249,7 +252,7 @@ public class WinLevel {
         bottomBox.getChildren().add(buttonBox);
 
         // === GỘP TẤT CẢ ===
-        contentBox.getChildren().addAll(titleButton, centerBox, bottomBox);
+        contentBox.getChildren().addAll(titleText, centerBox, bottomBox);
         stackRoot.getChildren().add(contentBox);
 
         // === TẠO SCENE ===
