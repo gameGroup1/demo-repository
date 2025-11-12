@@ -34,9 +34,9 @@ Có 4 loại gạch, tương ứng 4 mức độ khác nhau. Cụ thể:
   <p align="center"><em>Metal brick</em></p>
 </ul>
 <h3>5. Capsule</h3>
-Có tất cả 18 loại. Capsule có tác dụng khi paddle <b>hứng được</b> capsule đó.
+Có tất cả 16 loại. Capsule có tác dụng khi paddle <b>hứng được</b> capsule đó.
 <ul>
-  <li>Các loại capsule có ghi số với dấu +/- liền trước. Nếu là số dương thì điểm sẽ tăng một lượng được ghi trong capsule. Nếu số âm thì trừ điểm (điểm có thể là số âm). Dưới đây là một ví dụ:
+  <li>Các loại capsule có ghi số với dấu +/- liền trước. Nếu là số dương thì điểm sẽ tăng một lượng được ghi trong capsule. Nếu số âm thì trừ điểm (điểm có thể là số âm). Có tất cả 8 capsules. Dưới đây là một ví dụ:
   <p align="center"><img src="https://github.com/gameGroup1/demo-repository/blob/main/Image_Capsules/39-Breakout-Tiles.png" width=150></p></li>
   <p align="center"><em>Nếu paddle hứng được capsule này thì điểm sẽ tăng thêm 250</em></p>
   <li>Nới rộng paddle:
@@ -57,17 +57,18 @@ Có tất cả 18 loại. Capsule có tác dụng khi paddle <b>hứng được<
   <p align="center"><img src="https://github.com/gameGroup1/demo-repository/blob/main/Image_Capsules/health_capsule.png" width=150></p></li>
 </ul>
 
-<h2>IV. Giao diện Menu</h2>
-Có 5 button. Bao gồm
-<h3>1. New Game</h3>
-Click button này sẽ bắt đầu lượt chơi mới.
-<h3>2. Continue</h3>
-Click button này thì người chơi sẽ chơi lại level hiện tại.
-<h3>3. Best Level</h3>
-Mục này chỉ ra level cao nhất mà người chơi đã từng đạt được.
-<h3>4. Setting</h3>
-Người chơi sẽ thay đổi âm lượng của background music và effect music.
-<h3>5. Exit</h3>
-Để thoát game, người chơi click button này.
+<h2>IV. Các giao diện</h2>
+<h3>1. GameMenu</h3>
+Giao diện menu, có 5 button: New Game, Continue, Best Level, Settings, Exit
+<h3>2. Pause</h3>
+Đây là giao diện tạm dừng.
+<h3>3. Win Level</h3>
+Giao diện hiển thị khi người chơi qua được mỗi level (trừ level 7).
+<h3>4. Win Game</h3>
+Giao diện hiển thị khi người chơi thắng cuộc (thắng level 7).
+<h3>5. Setting Menu</h3>
+Người chơi có thể điều chỉnh âm lượng của Background Music hoặc Effect Music.
+<h3>6. End Menu</h3>
+Giao diện hiển thị khi người chơi thua cuộc.
 <h2>V. Cách tính điểm</h2>
-Cứ phá được 1 brick thì điểm sẽ tăng thêm 10. Khi paddle hứng được capsule có chức năng cộng/trừ điểm thì điểm sẽ thay đổi một lượng được ghi trên capsule (điểm có thể âm). Điểm chính thức của trò chơi là điểm sau khi thua cuộc.
+Cứ phá được 1 brick thì điểm sẽ tăng thêm 10. Khi paddle hứng được capsule có chức năng cộng/trừ điểm thì điểm sẽ thay đổi một lượng được ghi trên capsule (điểm có thể âm). Điểm chính thức của trò chơi là điểm sau khi thua cuộc hoặc chơi đủ 7 levels.
