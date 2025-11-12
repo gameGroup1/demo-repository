@@ -46,7 +46,7 @@ public class MainGame {
     private final int widthP = 150;
     private final int heightP = 30;
     private final int radiusB = 15;
-    private int speedB = 10; // Tốc độ bóng, tăng dần theo level
+    private int speedB = 15; // Tốc độ bóng, tăng dần theo level
     private final int speedC = 2;
     private final int wallThickness = 30;
     private Ball ball;
@@ -576,12 +576,12 @@ public class MainGame {
         else if (type.equals("dec50Point")) score -= 50;
         else if (type.equals("inc100Point")) score += 100;
         else if (type.equals("dec100Point")) score -= 100;
-        else if (type.equals("fastBall")) EffectManager.updateSpeed(ball, 1.5);
-        else if (type.equals("slowBall")) EffectManager.updateSpeed(ball, 0.5);
+        else if (type.equals("fastBall")) EffectManager.updateSpeed(ball, 1.5, speedB);
+        else if (type.equals("slowBall")) EffectManager.updateSpeed(ball, 0.5, speedB);
         else if (type.equals("fireBall")) EffectManager.activateFireBall(ball);
-        else if (type.equals("powerBall")) EffectManager.updatePower(ball, 3.0);
-        else if (type.equals("expandPaddle")) EffectManager.changeWidth(paddle, 2.0);
-        else if (type.equals("shrinkPaddle")) EffectManager.changeWidth(paddle, 0.5);
+        else if (type.equals("powerBall")) EffectManager.updatePower(ball, 3.0,1);
+        else if (type.equals("expandPaddle")) EffectManager.changeWidth(paddle, 2.0,widthP);
+        else if (type.equals("shrinkPaddle")) EffectManager.changeWidth(paddle, 0.5,widthP);
         else if (type.equals("healthCapsule")) {
             if (lives < 10) {
                 int newIndex = lives;

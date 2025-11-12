@@ -88,32 +88,30 @@ abstract public class EffectManager {
         }
     }
 
-    public static void updatePower(Ball ball, double factor) {
+    public static void updatePower(Ball ball, double factor, int defaultPower) {
         if (ball == null) {
             return;  // Xử lý edge case: ball null
         }
 
-        int originalPower = ball.getPower();
-        ball.setPower((int) (originalPower * factor));  // Tăng sức mạnh theo hệ số factor
+        ball.setPower((int) (ball.getPower() * factor));  // Tăng sức mạnh theo hệ số factor
 
         // Sử dụng Timeline để khôi phục sau 5 giây (5000ms)
         Timeline timeline = new Timeline(new KeyFrame(
                 Duration.millis(5000),
                 event -> {
-                    ball.setPower(originalPower);
+                    ball.setPower(defaultPower);
                 }
         ));
         timeline.setCycleCount(1);  // Chạy một lần
         timeline.play();  // Bắt đầu timer
     }
 
-    public static void updateSpeed(Ball ball, double factor) {
+    public static void updateSpeed(Ball ball, double factor, double defaultSpeed) {
         if (ball == null) {
             return;  // Xử lý edge case: ball null
         }
 
-        double originalSpeed = ball.getSpeed();
-        ball.setSpeed(originalSpeed * factor);
+        ball.setSpeed(ball.getSpeed() * factor);
         double angle = Math.atan2(ball.getDy(), ball.getDx());
         ball.setDx(ball.getSpeed() * Math.cos(angle));
         ball.setDy(ball.getSpeed() * Math.sin(angle));
@@ -122,7 +120,7 @@ abstract public class EffectManager {
         Timeline timeline = new Timeline(new KeyFrame(
                 Duration.millis(5000),
                 event -> {
-                    ball.setSpeed(originalSpeed);
+                    ball.setSpeed(defaultSpeed);
                     double angleRestore = Math.atan2(ball.getDy(), ball.getDx());
                     ball.setDx(ball.getSpeed() * Math.cos(angleRestore));
                     ball.setDy(ball.getSpeed() * Math.sin(angleRestore));
@@ -132,19 +130,18 @@ abstract public class EffectManager {
         timeline.play();  // Bắt đầu timer
     }
 
-    public static void changeWidth(Paddle paddle, double factor) {
+    public static void changeWidth(Paddle paddle, double factor, int defaultWidth) {
         if (paddle == null) {
             return;  // Xử lý edge case: paddle null
         }
 
-        int originalWidth = paddle.getWidth();
-        paddle.setWidth((int) (originalWidth * factor));
+        paddle.setWidth((int) (paddle.getWidth() * factor));
 
         // Sử dụng Timeline để khôi phục sau 5 giây (5000ms)
         Timeline timeline = new Timeline(new KeyFrame(
                 Duration.millis(5000),
                 event -> {
-                    paddle.setWidth(originalWidth);
+                    paddle.setWidth(defaultWidth);
                 }
         ));
         timeline.setCycleCount(1);  // Chạy một lần
