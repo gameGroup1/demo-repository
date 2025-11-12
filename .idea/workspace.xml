@@ -7,14 +7,8 @@
     <list default="true" id="b25bce6a-ec4f-471f-bd54-9518e911bc4b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code_for_mainGame/MainGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/code_for_mainGame/MainGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code_for_menu/WinAllLevels.java" beforeDir="false" afterPath="$PROJECT_DIR$/code_for_menu/WinAllLevels.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code_for_menu/WinLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/code_for_menu/WinLevel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/last_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/last_level.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_mainGame/MainGame$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_mainGame/MainGame$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_mainGame/MainGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_mainGame/MainGame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/code_for_menu/WinAllLevels.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/code_for_menu/WinAllLevels.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/demo-repository/last_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/demo-repository/last_level.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/WinLevel.gif" beforeDir="false" afterPath="$PROJECT_DIR$/resources/WinLevel.gif" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +71,7 @@
       <option name="presentableId" value="Default" />
       <updated>1762877440157</updated>
       <workItem from="1762877442637" duration="3161000" />
-      <workItem from="1762906053380" duration="3461000" />
+      <workItem from="1762906053380" duration="5132000" />
     </task>
     <servers />
   </component>

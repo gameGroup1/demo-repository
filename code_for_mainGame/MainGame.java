@@ -88,7 +88,7 @@ public class MainGame {
     public static int getCurrentLevel() {
         return lastLevel;
     }
-    
+
     // Constructor: Khởi tạo toàn bộ game
     public MainGame(int startLevel) {
         isPaused = false;
