@@ -206,7 +206,7 @@ public class WinLevel {
         });
 
         exitBtn.setOnAction(() -> {
-            MainGame.cleanup();
+            MainGame.exitMainGame();
 
             winStage.close();
             if (parentStage != null) {
@@ -216,7 +216,7 @@ public class WinLevel {
             System.exit(0);
         });
 
-        HBox buttonBox = new HBox(25, continueBtn, exitBtn);
+        HBox buttonBox = new HBox(25, continueBtn, backToMenuBtn, exitBtn);
         buttonBox.setAlignment(Pos.CENTER);
         bottomBox.getChildren().add(buttonBox);
 

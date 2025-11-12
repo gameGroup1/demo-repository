@@ -46,7 +46,7 @@ public class MainGame {
     private final int widthP = 150;
     private final int heightP = 30;
     private final int radiusB = 15;
-    private int speedB = 7; // Tốc độ bóng, tăng dần theo level
+    private final int speedB = 7; // Tốc độ bóng, tăng dần theo level
     private final int speedC = 2;
     private final int wallThickness = 30;
     private Ball ball;
@@ -103,6 +103,9 @@ public class MainGame {
         ball = new Ball(centerX, centerY, radiusB, speedB);
         ball.setDx(0);
         ball.setDy(0);
+
+        setBallDefault();
+        setPaddleDefault();
         // Tạo tường
         leftWall = new Wall("left", 0, 0, wallThickness, heightW, wallThickness);
         rightWall = new Wall("right", widthW - wallThickness, 0, wallThickness, heightW, wallThickness);
@@ -347,7 +350,7 @@ public class MainGame {
         scene.setOnMouseClicked(event -> {
             if (isAttached) {
                 isAttached = false;
-                ball.setDy(-speedB);
+                ball.setDy(-ball.getSpeed());
             }
         });
         // Nhấn ESC để pause
@@ -507,9 +510,6 @@ public class MainGame {
         // Nếu reset rồi thì thôi
         if (!needToReset) return;
         needToReset = false;
-        double incSpeed = lastLevel - 1;
-        speedB += incSpeed;
-        ball.setSpeed(speedB);
         levelText.setText("Level: " + lastLevel);
         setPaddleDefault();
         setBallDefault();
@@ -537,12 +537,12 @@ public class MainGame {
         else if (type.equals("dec50Point")) score -= 50;
         else if (type.equals("inc100Point")) score += 100;
         else if (type.equals("dec100Point")) score -= 100;
-        else if (type.equals("fastBall")) EffectManager.updateSpeed(ball, 1.5);
-        else if (type.equals("slowBall")) EffectManager.updateSpeed(ball, 0.5);
+        else if (type.equals("fastBall")) EffectManager.updateSpeed(ball, 1.5, speedB);
+        else if (type.equals("slowBall")) EffectManager.updateSpeed(ball, 0.5, speedB);
         else if (type.equals("fireBall")) EffectManager.activateFireBall(ball);
-        else if (type.equals("powerBall")) EffectManager.updatePower(ball, 3.0);
-        else if (type.equals("expandPaddle")) EffectManager.changeWidth(paddle, 2.0);
-        else if (type.equals("shrinkPaddle")) EffectManager.changeWidth(paddle, 0.5);
+        else if (type.equals("powerBall")) EffectManager.updatePower(ball, 3.0, 1);
+        else if (type.equals("expandPaddle")) EffectManager.changeWidth(paddle, 2.0, widthP);
+        else if (type.equals("shrinkPaddle")) EffectManager.changeWidth(paddle, 0.5, widthP);
         else if (type.equals("healthCapsule")) {
             if (lives < 10) {
                 int newIndex = lives;
@@ -591,7 +591,7 @@ public class MainGame {
         ball.setDy(0);
         ball.setX(centerX);
         ball.setY(centerY);
-        ball.setSpeed(speedB);
+        ball.setSpeed(speedB + lastLevel - 1);
         ball.setPower(1);
         ball.setFireBall(false);
         // Xóa dư ảnh khi reset bóng
@@ -634,6 +634,7 @@ public class MainGame {
 
     private static void saveBestAndLastLevel() {
         bestLevel = Math.max(bestLevel, lastLevel);
+        bestLevel = bestLevel > 8 ? 8 : bestLevel;
         try (BufferedWriter bestWriter = new BufferedWriter(new FileWriter(Path.bestLevel));
              BufferedWriter lastWriter = new BufferedWriter(new FileWriter(Path.lastLevel))) {
             bestWriter.write(String.valueOf(bestLevel));
