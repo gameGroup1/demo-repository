@@ -11,7 +11,7 @@
 <ul>
   <li><b>Video demo game: </b><a href="https://www.youtube.com/watch?v=DJcHESalCps">Video</a></li>
   <li><b>Ngôn ngữ lập trình:</b> Java có kết hợp JavaFX library</li>
-  <li><b>Tóm tắt:</b> Trò chơi có 7 levels. Ở mỗi level, người chơi dùng chuột điều khiển paddle hứng bóng sao cho bóng phá hết tất cả bricks. Nếu để bóng rơi xuống hố thì sẽ bị mất 1 mạng, nếu hết mạng thì thua cuộc.</li>
+  <li><b>Tóm tắt:</b> Trò chơi có 7 levels. Ở mỗi level, người chơi dùng chuột điều khiển paddle hứng bóng sao cho bóng phá hết tất cả bricks. Nếu để bóng rơi xuống hố thì sẽ bị mất 1 mạng, nếu hết mạng thì thua cuộc. Sau mỗi ván, tốc độ bóng ngày càng nhanh hơn, khiến trò chơi khó hơn.</li>
 </ul>
 
 <h2>III. Object</h2>
@@ -60,8 +60,14 @@ Có tất cả 18 loại. Capsule có tác dụng khi paddle <b>hứng được<
 <h2>IV. Giao diện Menu</h2>
 Có 5 button. Bao gồm
 <h3>1. New Game</h3>
-Ấn ô này sẽ bắt đầu lượt chơi mới.
+Click button này sẽ bắt đầu lượt chơi mới.
 <h3>2. Continue</h3>
-<h3>3. 
+Click button này thì người chơi sẽ chơi lại level hiện tại.
+<h3>3. Best Level</h3>
+Mục này chỉ ra level cao nhất mà người chơi đã từng đạt được.
+<h3>4. Setting</h3>
+Người chơi sẽ thay đổi âm lượng của background music và effect music.
+<h3>5. Exit</h3>
+Để thoát game, người chơi click button này.
 <h2>V. Cách tính điểm</h2>
 Cứ phá được 1 brick thì điểm sẽ tăng thêm 10. Khi paddle hứng được capsule có chức năng cộng/trừ điểm thì điểm sẽ thay đổi một lượng được ghi trên capsule (điểm có thể âm). Điểm chính thức của trò chơi là điểm sau khi thua cuộc.
